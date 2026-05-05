@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject CameraViewPoint;
 
-    private float PlCaDistance = 24.0f; // 플레이어와 카메라의 거리
+    private float PlCaDistance = 10.0f; // 플레이어와 카메라의 거리
     private float PlCaAngle = 0.0f;
     public float RotationSpeed = 600.0f;
 
