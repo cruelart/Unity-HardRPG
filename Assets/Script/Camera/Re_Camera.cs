@@ -7,6 +7,8 @@ public class Re_Camera : MonoBehaviour
     public Transform target;
     public float PlCaDistance = 10f; // 플레이어와 카메라의 거리
     public float InitDistance; // 플레이어와 카메라의 초기 거리
+
+    public LayerMask obstacleLayer; // 카메라가 부딪힐 레이어선택
     //public Vector3 offset = new Vector3(0, 2f, -5f);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -73,12 +75,9 @@ public class Re_Camera : MonoBehaviour
         RaycastHit rayhit;
         Vector3 cam_dir = _rotation * Vector3.back;
 
-        if (Physics.Raycast(target.position, cam_dir, out rayhit, InitDistance)) // 플레이어에서 카메라로 레이캐스트 쏘고 (InitDistance쓰는 이유는 
+        if (Physics.Raycast(target.position, cam_dir, out rayhit, InitDistance, obstacleLayer)) // 플레이어에서 카메라로 레이캐스트 쏘고 (InitDistance쓰는 이유는 
         {
-            if (rayhit.transform.tag == "Wall") // 플레이어가 벽에 막혀있다면, 벽이 발견됐다면
-            {
-                PlCaDistance = Mathf.Lerp(PlCaDistance, rayhit.distance - 0.5f, 30 * Time.deltaTime); // 벽 앞에다가 카메라 세워두기
-            }
+            PlCaDistance = Mathf.Lerp(PlCaDistance, rayhit.distance - 0.5f, 30 * Time.deltaTime); // 벽 앞에다가 카메라 세워두기
 
         }
         else

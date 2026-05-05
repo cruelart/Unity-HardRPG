@@ -277,6 +277,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7326308086656437384, guid: 81d960fe44e3f6b46bcda7b24988e254, type: 3}
   m_PrefabInstance: {fileID: 2053975575}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &48800847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3993087692160705722, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
+  m_PrefabInstance: {fileID: 692136921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &56743021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1294,6 +1299,7 @@ GameObject:
   - component: {fileID: 259606706}
   - component: {fileID: 259606705}
   - component: {fileID: 259606708}
+  - component: {fileID: 259606709}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1388,10 +1394,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1632715686}
-  offset: {x: 0, y: 2, z: -5}
+  PlCaDistance: 10
+  InitDistance: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
   sensitivity: 5
   minYAngle: -20
   maxYAngle: 80
+--- !u!114 &259606709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259606704}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78df666bf64d21b4c914f95c6d70f876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 48800847}
+  CameraViewPoint: {fileID: 1632715685}
+  RotationSpeed: 600
 --- !u!1001 &266806546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3142,9 +3167,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 779552926}
     m_Modifications:
+    - target: {fileID: 2474318364919342916, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_Name
       value: Rock Cliff 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763398485800194716, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 3394956790909324380, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3185,6 +3222,18 @@ PrefabInstance:
     - target: {fileID: 3394956790909324380, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911015825305824555, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073296656763300751, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907150660972085647, guid: 232241c4030929146b8c0b57349f65a4, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5211,6 +5260,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock Cliff 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1326364778710077615, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326364778710077615, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 2069797885948091226, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.443588
@@ -5250,6 +5307,22 @@ PrefabInstance:
     - target: {fileID: 2069797885948091226, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589673172261459208, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382795107233414892, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630384057809572959, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188035783435480282, guid: 7ece6646ef2475b44959032f5d55a8f6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6355,7 +6428,7 @@ GameObject:
   - component: {fileID: 1223052904}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -7864,6 +7937,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4db940c31d61ac149801c850fc645d68, type: 3}
+--- !u!1 &1632715685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1069140937751115581, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
+  m_PrefabInstance: {fileID: 692136921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1632715686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5545268023885193969, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
