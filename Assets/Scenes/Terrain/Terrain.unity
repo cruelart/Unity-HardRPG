@@ -277,11 +277,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7326308086656437384, guid: 81d960fe44e3f6b46bcda7b24988e254, type: 3}
   m_PrefabInstance: {fileID: 2053975575}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &48800847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3993087692160705722, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
-  m_PrefabInstance: {fileID: 692136921}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &56743021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1374,7 +1369,7 @@ Transform:
   m_GameObject: {fileID: 259606704}
   serializedVersion: 2
   m_LocalRotation: {x: 0.28637815, y: -0, z: -0, w: 0.95811665}
-  m_LocalPosition: {x: 55.01, y: 12.52, z: 15.63}
+  m_LocalPosition: {x: 60.36, y: 8.65, z: 5.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1389,12 +1384,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 259606704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78df666bf64d21b4c914f95c6d70f876, type: 3}
+  m_Script: {fileID: 11500000, guid: edb22337a8a7eec42af33cd0b475af1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 48800847}
-  CameraViewPoint: {fileID: 0}
-  RotationSpeed: 600
+  target: {fileID: 1632715686}
+  offset: {x: 0, y: 2, z: -5}
+  sensitivity: 5
+  minYAngle: -20
+  maxYAngle: 80
 --- !u!1001 &266806546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4065,7 +4062,7 @@ PrefabInstance:
       objectReference: {fileID: 259606704}
     - target: {fileID: 6317176564033183324, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6324394044724051274, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
       propertyPath: m_Enabled
@@ -7867,6 +7864,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4db940c31d61ac149801c850fc645d68, type: 3}
+--- !u!4 &1632715686 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5545268023885193969, guid: e560023dd0d1c7f45804f30a4f0950a6, type: 3}
+  m_PrefabInstance: {fileID: 692136921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1644266602
 PrefabInstance:
   m_ObjectHideFlags: 0

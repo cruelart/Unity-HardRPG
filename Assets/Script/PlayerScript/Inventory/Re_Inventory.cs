@@ -16,14 +16,14 @@ public class Re_Inventory : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AddEquipmentItem(ItemDataManager.Instance.CreateEquipmentItemInstance(10001)); // 테스트용 나무검 생성
+        //AddEquipmentItem(ItemDataManager.Instance.CreateEquipmentItemInstance(10001)); // 테스트용 나무검 생성
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("구매 금액:" + equipmentItemList[0].data.buy_gold);
-        Debug.Log("판매 금액:" + equipmentItemList[0].data.sell_gold);
+        //Debug.Log("구매 금액:" + equipmentItemList[0].data.buy_gold);
+        //Debug.Log("판매 금액:" + equipmentItemList[0].data.sell_gold);
     }
 
     //장비아이템 인벤토리 추가 함수
