@@ -1398,11 +1398,7 @@ MonoBehaviour:
   InitDistance: 10
   obstacleLayer:
     serializedVersion: 2
-<<<<<<< HEAD
-    m_Bits: 0
-=======
     m_Bits: 64
->>>>>>> feat-ZenScript
   sensitivity: 5
   minYAngle: -20
   maxYAngle: 80
