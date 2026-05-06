@@ -175,7 +175,7 @@ public class playerInteraction : MonoBehaviour
             swordAttack_section.SetActive(true);
             return;
         }
-        swordAttack_section.SetActive(false);
+        //swordAttack_section.SetActive(false);
 
     }
 
