@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: bb74bf68c93bad944b173cc71bfe7240
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: -3100369314251171874
@@ -19,9 +19,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
-      human bone 'RightUpperLeg' not found\n"
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -68,11 +65,12 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 30
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -100,6 +98,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -136,17 +135,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: root
       parentName: SlimeIdle(Clone)
-      position: {x: -0, y: 0.013947841, z: -0.01319942}
+      position: {x: -0, y: 0.0041843522, z: -0.0039598257}
       rotation: {x: -0.22805393, y: 0.6693216, z: -0.22805393, w: 0.6693216}
       scale: {x: 1, y: 1, z: 1}
     - name: top
       parentName: root
-      position: {x: -0.030755997, y: 7.342348e-18, z: 3.7909693e-34}
+      position: {x: -0.009226799, y: 2.2027044e-18, z: 1.1372908e-34}
       rotation: {x: 0.22805393, y: -0.6693216, z: 0.22805393, w: 0.6693216}
       scale: {x: 1, y: 1, z: 1}
     - name: bottom
       parentName: root
-      position: {x: -0.020194743, y: -0.022613801, z: -1.8625318e-18}
+      position: {x: -0.006058423, y: -0.00678414, z: -5.587595e-19}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
@@ -156,7 +155,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.29999998
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
@@ -167,6 +166,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
