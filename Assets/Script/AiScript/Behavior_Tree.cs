@@ -99,13 +99,12 @@ namespace BehaviorTree
 
     public class ActionNode : Node
     {
-        public delegate tasks Action(); // states를 반환하는 delegate 선언
-        public Action action = null;
+        private Func<tasks> action; // states를 반환하는 delegate 선언
+        public ActionNode(Func<tasks> _action) => action = _action;
 
-        public override tasks Evaluate()
-        {
-            return action();
-        }
+        public override tasks Evaluate() => action?.Invoke() ?? tasks.Failure;
+        // ?.invoke() : null이면 그냥 null이라고 해라
+        // ?? 왼쪽이 null이면 task.Failure다로 표현
 
     }
 }
