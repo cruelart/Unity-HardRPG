@@ -1,35 +1,13 @@
 using UnityEngine;
 using BehaviorTree; // 만든 커스텀 테스트용 행동트리 사용예정
 
-public class SlimeAIScript : MonoBehaviour
+public class SlimeAIScript : MonsterBase, IMonsterDamageable
 {
     //먼저 슬라임의 행동트리 구성
     //대기, 공격, 사망, 이동, 피격
 
-    //------------------------------
-    [Header("추격대상")]
-    public Transform target; // 테스트용으로 public일단 선언하자
-
-    //-------------------------------
-    [Header("인지 범위 설정")]
-    [SerializeField]
-    private float viewAngle = 90f;
-
-    //탐지범위
-    [SerializeField]
-    private float detectionRange = 10f;
-
-    //공격범위
-    [SerializeField]
-    private float attackRange = 2f;
-
-    [SerializeField]
-    private LayerMask playerLayer;
-    //-------------------------------
-
     //몬스터 AI
     private Node root; // 루트노드
-    private Blackboard blackboard = new Blackboard(); // 슬라임에 필요한 데이터를 다루는 블랙보드생성
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,6 +38,11 @@ public class SlimeAIScript : MonoBehaviour
     void Update()
     {
         root.Evaluate();
+    }
+
+    void OnDamaged(int _damage, Vector3 _attackerPos)
+    {
+        return;
     }
 
     //공격, 추격 범위확인 함수
