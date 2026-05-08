@@ -24,9 +24,15 @@ public abstract class MonsterBase : MonoBehaviour
     protected LayerMask playerLayer;
     //-------------------------------
 
+    [Header("속도 조절")]
+    public float moveSpeed = 2.0f;
+
     //몬스터 애니메이션
     protected Animator animator;
     private string currentAnime_name = ""; // 실행 중인 애니메이션 저장
+
+    //몬스터 RigidBody
+    protected Rigidbody rigid;
 
     //블랙보드
     protected Blackboard blackboard = new Blackboard(); // 슬라임에 필요한 데이터를 다루는 블랙보드생성
@@ -34,6 +40,9 @@ public abstract class MonsterBase : MonoBehaviour
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
+
+        rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // X축과 Z축 회전을 막아서 이상한 회전 방지하기
 
         blackboard.SetData("IsHitted", false);
         blackboard.SetData("Target", null);
