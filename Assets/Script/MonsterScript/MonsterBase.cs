@@ -4,8 +4,7 @@ using BehaviorTree;
 public abstract class MonsterBase : MonoBehaviour
 {
     //------------------------------
-    [Header("추격대상")]
-    public Transform target; // 테스트용으로 public일단 선언하자
+    protected GameObject target;
 
     //-------------------------------
     [Header("인지 범위 설정")]
@@ -27,9 +26,11 @@ public abstract class MonsterBase : MonoBehaviour
     [Header("속도 조절")]
     public float moveSpeed = 2.0f;
 
+    public float rotationSpeed = 100.0f;
+
     //몬스터 애니메이션
     protected Animator animator;
-    private string currentAnime_name = ""; // 실행 중인 애니메이션 저장
+    protected string currentAnime_name = ""; // 실행 중인 애니메이션 저장
 
     //몬스터 RigidBody
     protected Rigidbody rigid;
@@ -49,20 +50,25 @@ public abstract class MonsterBase : MonoBehaviour
         blackboard.SetData("IsDead", false);
     }
 
+    protected virtual void Start()
+    {
+        target = GameObject.FindWithTag("Player");
+    }
+
     //애니메이션 재생 함수
     protected void PlayAnime(string _anime_name, float crossFade)
     {
-        if (currentAnime_name == _anime_name) return; // 애니메이션이 같으면 바꿀필요 없음
+        if (currentAnime_name == _anime_name) return; // 애니메이션이 같으면 바꿀필요 없음 -> 이렇게 되면 공격을 계속해야되는데 문제생김(한번 공격하고 맘)
 
         animator.CrossFade(_anime_name, crossFade); // 애니메이션간 부드럽게 교체하고
         currentAnime_name = _anime_name; // 실행 중인 애니메이션 교체
     }
 
-    //애니메이션이 끝났는지 체크
-    protected bool IsAnimationFinished(string _anime_name, float stopTime)
+    //애니메이션이 실행중인지 체크
+    protected bool IsAnimationPlaying(string _anime_name, float stopTime)
     {
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-        return info.IsName(name) && info.normalizedTime >= stopTime;
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0); // 현재 재생중인 애니메이션
+        return info.IsName(_anime_name) && info.normalizedTime < stopTime; // 의 이름이 _anime_name이면서 실행시간이 멈추는 시간보다 짧다면
     }
 
 }
