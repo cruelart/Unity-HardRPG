@@ -20,14 +20,17 @@ public class MonsterHitBox : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision _col)
+    private void OnTriggerEnter(Collider _col)
     {
-        if(_col.gameObject.CompareTag("Player"))
+
+        Debug.Log("뭔가 충돌하긴함");
+        if (_col.gameObject.CompareTag("Player"))
         {
             IT_PlayerDamaged it_playerDamaged = _col.gameObject.GetComponent<IT_PlayerDamaged>();
 
             if(it_playerDamaged != null)
             {
+                Debug.Log("몬스터가 플레이어를 공격성공");
                 it_playerDamaged.OnDamaged(monsterAttackValue); // 데미지 100을 입힌다.
             }
         }
