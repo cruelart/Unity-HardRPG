@@ -1,45 +1,25 @@
 using UnityEngine;
 using BehaviorTree; // 만든 커스텀 테스트용 행동트리 사용예정
 
-public class SlimeAIScript : MonoBehaviour
+public class SlimeAIScript : MonsterBase, IMonsterDamageable
 {
     //먼저 슬라임의 행동트리 구성
     //대기, 공격, 사망, 이동, 피격
 
-    //------------------------------
-    [Header("추격대상")]
-    public Transform target; // 테스트용으로 public일단 선언하자
-
-    //-------------------------------
-    [Header("인지 범위 설정")]
-    [SerializeField]
-    private float viewAngle = 90f;
-
-    //탐지범위
-    [SerializeField]
-    private float detectionRange = 10f;
-
-    //공격범위
-    [SerializeField]
-    private float attackRange = 2f;
-
-    [SerializeField]
-    private LayerMask playerLayer;
-    //-------------------------------
-
     //몬스터 AI
     private Node root; // 루트노드
-    private Blackboard blackboard = new Blackboard(); // 슬라임에 필요한 데이터를 다루는 블랙보드생성
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         SelectorNode rootSelector = new SelectorNode();
         //root = new SelectorNode(); // 처음엔 설렉터로 가자 -> 이렇게하면 root의 자료형이 Node이기 때문에 ListAdd호출이 불가능
 
         //공격노드 생성
         ConditionNode attackNode = new ConditionNode(
-            () => IsTargetInRange(attackRange), new ActionNode(Attack) // 너무 가까워지면 바로 공격
+            () => IsTargetInRange(attackRange) || IsAnimationPlaying("Attack", 0.95f), new ActionNode(Attack) // 너무 가까워지면 바로 공격 but 애니메이션 재생중이라면 또 실행
             );
 
         //추적노드 생성
@@ -47,8 +27,15 @@ public class SlimeAIScript : MonoBehaviour
             () => ViewAngle.isFindPlayer(detectionRange, viewAngle, target.transform, transform) , new ActionNode(Chase)
             );
 
+        //피격노드 생성
+        ConditionNode reactNode = new ConditionNode(
+            () => blackboard.GetData<bool>("IsHitted"), new ActionNode(React)
+            );
+
+        //대기노드 생성 -> 얘는 그냥 조건 필요없으니 바로 생성
         ActionNode idleNode = new ActionNode(Idle);
 
+        rootSelector.ListAdd(reactNode);
         rootSelector.ListAdd(attackNode);
         rootSelector.ListAdd(chaseNode);
         rootSelector.ListAdd(idleNode);
@@ -59,7 +46,23 @@ public class SlimeAIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        root.Evaluate();
+        //최적화
+        if (Time.frameCount % 4 == 0)
+        {
+            root.Evaluate();
+        }
+    }
+
+    void LateUpdate()
+    {
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0); // 몬스터 뒤집히는거 방지용
+        rigid.angularVelocity = Vector3.zero; // 몬스터와 충돌시 몬스터가 빙글빙글 도는 문제 방지용으로 회전에너지 삭제
+    }
+
+    //이 함수는 플레이어가 호출할 예정인 함수로 ㄱㄱ
+    public void OnDamaged(int _damage, Vector3 _attackerPos)
+    {
+        return;
     }
 
     //공격, 추격 범위확인 함수
@@ -68,28 +71,86 @@ public class SlimeAIScript : MonoBehaviour
         if (target == null)
             return false;
 
-        return Vector3.Distance(this.transform.position, target.position) < _range;
+        return Vector3.Distance(this.transform.position, target.transform.position) < _range;
+    }
+
+    void ViewToPlayer()
+    {
+        Vector3 dir = (target.transform.position - this.transform.position).normalized;
+
+        dir.y = 0f; // 바닥, 하늘 보는거 방지용
+
+        if(dir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up); // dir방향을 쿼터니언으로 교체
+
+            this.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime); // 천천히 회전하게 설정
+        }
+    }
+
+    void MoveToPlayer()
+    {
+        ViewToPlayer();
+
+        Vector3 forwardDir = transform.forward;
+
+        Vector3 nextPos = transform.position + (forwardDir * moveSpeed * Time.deltaTime);
+        rigid.MovePosition(nextPos);
+
+    }
+
+    void StopMove()
+    {
+        rigid.linearVelocity = new Vector3(0, rigid.linearVelocity.y, 0); // y는 중력이므로 생략
+    }
+
+
+    //데코레이터 조건 함수들
+    bool Deco_attack()
+    {
+
+        return true;
     }
 
     tasks Attack()
     {
-        return tasks.Success;
+        StopMove();
+
+        if(!IsAnimationPlaying("Attack", 0.95f) && !ViewAngle.isFindPlayer(detectionRange, viewAngle, target.transform, transform)) // 공격범위에 있는데 시야각에는 플레이어가 안잡히면 빠르게 회전
+        {
+            ViewToPlayer();
+            return tasks.Running;
+        }
+
+        PlayAnime("Attack", 0.1f);
+        Debug.Log("슬라임이 공격 상태 진입");
+
+        return tasks.Running; // 공격 진행중
     }
 
     tasks Chase()
     {
         //먼저 플레이어를 바라보는 방향으로 전환
         //전환 후 실제 플레이어의 위치로 이동하는 로직
+        Debug.Log("슬라임이 이동 상태 진입");
+        MoveToPlayer();
+        PlayAnime("Move", 0.1f);
         return tasks.Running;
     }
 
     tasks Idle()
     {
+        Debug.Log("슬라임이 대기 상태 진입");
+        StopMove();
+        PlayAnime("Idle", 0.1f);
         return tasks.Success;
     }
 
     tasks React()
     {
+        Debug.Log("슬라임이 피격 상태 진입");
+        StopMove();
+        PlayAnime("React", 0.1f);
         return tasks.Success;
     }
 }
