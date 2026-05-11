@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class playerInteraction : MonoBehaviour
 {
-    [SerializeField]
-    GameObject player_sword;
+    //[SerializeField]
+    //GameObject player_sword;
 
     [SerializeField]
     GameObject swordAttack_section;
@@ -98,7 +98,7 @@ public class playerInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && PlayerData.playerData.equip_weapon != null)
         {
-            player_sword.SetActive(true);
+            //player_sword.SetActive(true);
         }
 
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -111,7 +111,7 @@ public class playerInteraction : MonoBehaviour
         {
             if (stopwatch.stop_watch(swordDrawOffTime, 0.75f))
             {
-                player_sword.SetActive(false);
+                //player_sword.SetActive(false);
                 isKeyDownEsc = false;
             }
         }
