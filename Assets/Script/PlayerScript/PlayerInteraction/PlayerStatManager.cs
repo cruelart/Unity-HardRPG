@@ -18,6 +18,7 @@ public class PlayerStatManager : MonoBehaviour, IT_PlayerDamaged
     public void OnDamaged(int _damage)
     {
         playerHp -= _damage;
+        Debug.Log("플레이어가 데미지를 입었다" + _damage);
 
         if(playerHp <= 0)
         {
