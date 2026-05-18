@@ -8,19 +8,15 @@ public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
     private PlayerDB playerDB;
 
     //이벤트
-    public event Action<int> OnLevelUp;
-    public event Action<float> OnHpChanged;
+    public static event Action<int> OnLevelUp;
+    public static event Action<int, int> OnHpChanged;
 
     private Dictionary<StatType, Stat> statDict; // 편의를 위한 해시작성
-
-    void Start()
-    {
-        statDict = playerDB.stats.ToDictionary(s => s.type); // playerDB를 해시와 연결
-    }
 
     public void Init(PlayerDB _data)
     {
         playerDB = _data;
+        statDict = playerDB.stats.ToDictionary(s => s.type); // playerDB를 해시와 연결
     }
 
     public Stat GetStat(StatType _type)
@@ -33,7 +29,9 @@ public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
     public void OnDamaged(int _damage)
     {
         playerDB.currentHp -= _damage;
-        OnHpChanged?.Invoke(playerDB.currentHp); // hp 변동사항 알림
+        OnHpChanged?.Invoke(playerDB.currentHp, playerDB.MaxHp); // hp 변동사항 알림
+
+        Debug.Log("PlayerStatManager에 있는 OnDamage함수 호출");
 
         //if(playerHp <= 0)
         //{

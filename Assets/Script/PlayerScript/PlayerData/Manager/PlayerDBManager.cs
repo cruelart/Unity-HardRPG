@@ -17,14 +17,15 @@ public class PlayerDBManager : MonoBehaviour
             return;
         }
 
-        instance = this;
+        instance = this; 
+        playerDB = Load();
 
         DontDestroyOnLoad(gameObject); // 씬 전환때 오브젝트 파괴 방지
     }
 
-    private void Start()
+    private void Update()
     {
-        playerDB = Load();
+        //Debug.Log("PlayerDBManager에서 보여주는 maxHp는 " + instance.playerDB.MaxHp);
     }
 
     public void Save(PlayerDB _data)
@@ -41,6 +42,7 @@ public class PlayerDBManager : MonoBehaviour
             PlayerDB data = JsonUtility.FromJson<PlayerDB>(json); // json을 PlayerDB클래스에 맞게 변환
             return data;
         }
+        Debug.Log("PlayerDBManager에서 제이슨파일을 찾지 못해서 새롭게 PlayeDB를 생성합니다");
         return new PlayerDB(); // 파일 없으면 기본값으로 세팅
     }
 
