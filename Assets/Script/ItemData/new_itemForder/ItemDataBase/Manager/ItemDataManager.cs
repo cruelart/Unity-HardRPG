@@ -9,9 +9,20 @@ public class ItemDataManager : MonoBehaviour
     [Header("Asset Database")]
     private Dictionary<int, ItemRawData> itemRawDataMap = new Dictionary<int, ItemRawData>();
 
+    private Dictionary<int, EquipmentItemDB> equipDataMap = new Dictionary<int, EquipmentItemDB>();
+    private Dictionary<int, ConsumerItemDB> consumerDataMap = new Dictionary<int, ConsumerItemDB>();
+
+
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+        DontDestroyOnLoad(gameObject); // 파괴 방지
+
+        LoadItems();
         LoadAllJsonData();
     }
 
@@ -49,48 +60,81 @@ public class ItemDataManager : MonoBehaviour
         {
             string jsonText = File.ReadAllText(path); // 제이슨에 있는 파일 내용 받아오고
             Debug.Log(jsonText);
-            ItemDataWrapper wrapper = JsonUtility.FromJson<ItemDataWrapper>(jsonText);
+            ItemDataList itemList = JsonUtility.FromJson<ItemDataList>(jsonText);
 
-            foreach (ItemRawData data in wrapper.items)
+            foreach (ItemRawData data in itemList.items)
             {
                 itemRawDataMap[data.id] = data; // id를 키값으로 두고 id포함 데이터 저장
             }
         }
     }
 
+    void LoadItems()
+    {
+        //장비 아이템 받아오기
+        EquipmentItemDB[] equip_items = Resources.LoadAll<EquipmentItemDB>("Items");
+
+        foreach (EquipmentItemDB item in equip_items)
+        {
+            if(equipDataMap.ContainsKey(item.itemID))
+            {
+                continue; //중복 키 있으면 넘어가기
+            }
+            equipDataMap.Add(item.itemID, item);
+        }
+
+        //소비 아이템 받아오기
+        ConsumerItemDB[] consumer_items = Resources.LoadAll<ConsumerItemDB>("items");
+
+        foreach(ConsumerItemDB item in consumer_items)
+        {
+            if (consumerDataMap.ContainsKey(item.itemID))
+            {
+                continue; //중복 키 있으면 넘어가기
+            }
+            consumerDataMap.Add(item.itemID, item);
+        }
+        
+        //완료시 장비,소비아이템이 해시에 들어간 상황(키값은 아이템id로)
+    }
+
     public EquipmentItemInstance CreateEquipmentItemInstance(int id)
     {
         // 데이터 찾기
-        if (!itemRawDataMap.TryGetValue(id, out ItemRawData raw)) return null;
+        //if (!itemRawDataMap.TryGetValue(id, out ItemRawData raw)) return null;
 
         // 일치하는 이름을 가진 ScriptableObject 에셋 찾기
         //EquipmentItemDB asset = itemAssets.Find(a => a.itemName == raw.itemName); -> 이거보단 아래가 더 나을듯 리스트에 하나하나 등록하는걸 방지하기위함
-        EquipmentItemDB asset = Resources.Load<EquipmentItemDB>($"Items/{raw.itemName}");
+        //EquipmentItemDB asset = Resources.Load<EquipmentItemDB>($"Items/{raw.itemName}");
 
-        if (asset != null)
+        //if (asset != null)
+        //{
+        //    return new EquipmentItemInstance(asset);
+        //}
+
+        if (equipDataMap == null || !equipDataMap.ContainsKey(id))
         {
-            return new EquipmentItemInstance(asset, raw);
+            return null;
         }
 
-        Debug.LogError($"{raw.itemName}에 해당하는 SO 에셋을 찾을 수 없습니다!");
-        return null;
+        return new EquipmentItemInstance(equipDataMap[id]);
     }
 
     public ConsumerItemInstance CreateConsumerItemInstance(int id)
     {
         // 데이터 찾기
-        if (!itemRawDataMap.TryGetValue(id, out ItemRawData raw)) return null;
+        //if (!itemRawDataMap.TryGetValue(id, out ItemRawData raw)) return null;
 
         // 일치하는 이름을 가진 ScriptableObject 에셋 찾기
         //EquipmentItemDB asset = itemAssets.Find(a => a.itemName == raw.itemName); -> 이거보단 아래가 더 나을듯 리스트에 하나하나 등록하는걸 방지하기위함
-        ConsumerItemDB asset = Resources.Load<ConsumerItemDB>($"Items/{raw.itemName}");
+        //ConsumerItemDB asset = Resources.Load<ConsumerItemDB>($"Items/{raw.itemName}");
 
-        if (asset != null)
-        {
-            return new ConsumerItemInstance(asset, raw);
-        }
+        //if (asset != null)
+        //{
+        //   return new ConsumerItemInstance(asset, raw);
+        //}
 
-        Debug.LogError($"{raw.itemName}에 해당하는 SO 에셋을 찾을 수 없습니다!");
+        //Debug.LogError($"{raw.itemName}에 해당하는 SO 에셋을 찾을 수 없습니다!");
         return null;
     }
 
