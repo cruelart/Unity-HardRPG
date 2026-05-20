@@ -6,8 +6,13 @@ public class PlayerDB
 {
     public string playerName; // ¿Ã∏ß
     public int level;
+
+    public int MaxHp;
     public int currentHp;
+
+    public int MaxMp;
     public int currentMp;
+
     public float currentExp;
     public float maxExp;
 
@@ -23,6 +28,13 @@ public class PlayerDB
     {
         playerName = "New Player";
         level = 1;
+
+        MaxHp = 100;
+        currentHp = MaxHp;
+
+        MaxMp = 100;
+        currentMp = MaxMp;
+
         currentExp = 0;
         maxExp = level * 100;
         currentMap = "tutorialMap";

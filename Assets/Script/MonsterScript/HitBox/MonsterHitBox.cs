@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MonsterHitBox : MonoBehaviour
 {
-    int monsterAttackValue = 100;
+    int monsterAttackValue = 10;
 
     private void Awake()
     {

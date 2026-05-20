@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0c39c99af422a43a4ed6e0ac52837d, type: 3}
   m_Name: Wood Sword
   m_EditorClassIdentifier: 
+  itemID: 10001
   itemName: 
   itemIcon: {fileID: 0}
   description: 
@@ -19,5 +20,6 @@ MonoBehaviour:
   stats:
   - type: 0
     value: 0
+  sell_gold: 200
+  buy_gold: 300
   type: 0
-  maxDurability: 100

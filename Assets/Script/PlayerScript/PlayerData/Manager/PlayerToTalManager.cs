@@ -8,11 +8,15 @@ public class PlayerToTalManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadData(); // 총사령관인 이 스크립트가 플레이어데이터가 필요한 매니저에게 플레이어정보 분배
+
     }
 
     void Start()
     {
+        //데이터 로드
+        LoadData();
+
+        //게임 로드
         LoadGame();
     }
 
@@ -27,6 +31,7 @@ public class PlayerToTalManager : MonoBehaviour
         playerStatManager = GetComponent<PlayerStatManager>();
 
         PlayerDB playerDB = PlayerDBManager.instance.playerDB; // 플레이어 데이터 관리 매니저에게서 데이터 받아옴
+        Debug.Log("플레이어의 맥스 체력은" + playerDB.MaxHp);
         playerStatManager.Init(playerDB); // 값 넣어줌
     }
 
