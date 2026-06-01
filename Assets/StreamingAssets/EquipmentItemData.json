@@ -2,28 +2,12 @@
   "items": [
     {
       "id": 10001,
-      "itemName": "Wood Sword",
-      "stats": [
-        {
-          "type": 0,
-          "value": 10
-        }
-      ],
-      "sell_gold": 100,
-      "buy_gold": 200
+      "itemName": "Wood Sword"
     },
 
     {
       "id": 20001,
-      "itemName": "Wood Shield",
-      "stats": [
-        {
-          "type": 1,
-          "value": 5
-        }
-      ],
-      "sell_gold": 100,
-      "buy_gold": 200
+      "itemName": "Wood Shield"
     }
   ]
 }

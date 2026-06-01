@@ -14,7 +14,7 @@ public static class ViewAngle
 
         if (playerMonsterDistance < _viewDistance) // 몬스터가 시야거리 안에 들어왔고
         {
-            Debug.Log("플레이어가 시야거리안에 들어왔다");
+            //Debug.Log("플레이어가 시야거리안에 들어왔다");
             if (playerMonsterAngle < _viewAngle * 0.5f) // 몬스터가 시야각 내로 들어 왔을 경우
             {
                 Debug.Log("플레이어가 시야각안에 들어왔다");

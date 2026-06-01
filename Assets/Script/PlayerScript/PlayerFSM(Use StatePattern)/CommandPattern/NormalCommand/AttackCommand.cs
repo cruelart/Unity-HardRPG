@@ -19,7 +19,7 @@ public class AttackCommand : Command
     public override void Execute()
     {
         CheckNormalCommand();
-        Debug.Log("AttackCommand가 실행");
+        //Debug.Log("AttackCommand가 실행");
     }
 
     private void CheckNormalCommand() // foreach보다 좀 더 빠른 코드 추정
