@@ -6,6 +6,7 @@ public enum StatType
     Attack, // 공격력
     Defense, // 방어력
     MoveSpeed, // 이동속도
+    RotationSpeed, // 회전 속도
     CriticalPercent, // 치명타확률
     HP, // 체력
     MP, // 마나

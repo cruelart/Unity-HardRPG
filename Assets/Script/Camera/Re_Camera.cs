@@ -62,7 +62,7 @@ public class Re_Camera : MonoBehaviour
 
         //메인 카메라의 위치 target중심으로 변경
         this.transform.position = target.position + (rotation * dir);
-        Debug.Log("플레이어 현재 위치: " + target.position);
+        //Debug.Log("플레이어 현재 위치: " + target.position);
 
         transform.LookAt(target.position); // 플레이어 중심 바라보기;
 
