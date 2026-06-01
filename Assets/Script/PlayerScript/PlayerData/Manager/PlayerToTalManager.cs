@@ -4,8 +4,11 @@ using UnityEngine;
 //플레이어 관련 모든 것을 관리하는 스크립트
 public class PlayerToTalManager : MonoBehaviour
 {
-    public PlayerStatManager playerStatManager { get; private set; }
-
+    private PlayerDB playerDB;
+    private PlayerStatManager playerStatManager;
+    private PlayerAnimationEvents playerAnimationEvents;
+    private PlayerAttackManager playerAttackManager;
+    private PlayerReactManager playerReactManager;
     private void Awake()
     {
 
@@ -28,11 +31,17 @@ public class PlayerToTalManager : MonoBehaviour
 
     public void LoadData()
     {
+        playerDB = PlayerDBManager.instance.playerDB; // 플레이어 데이터 관리 매니저에게서 데이터 받아옴
         playerStatManager = GetComponent<PlayerStatManager>();
+        playerAnimationEvents = GetComponent<PlayerAnimationEvents>();
+        playerAttackManager = GetComponent<PlayerAttackManager>();
+        playerReactManager = GetComponent<PlayerReactManager>();
 
-        PlayerDB playerDB = PlayerDBManager.instance.playerDB; // 플레이어 데이터 관리 매니저에게서 데이터 받아옴
-        Debug.Log("플레이어의 맥스 체력은" + playerDB.MaxHp);
+
         playerStatManager.Init(playerDB); // 값 넣어줌
+        playerAnimationEvents.Init(playerAttackManager);
+        playerAttackManager.Init(playerStatManager);
+        playerReactManager.Init(playerStatManager);
     }
 
     public void LoadGame()

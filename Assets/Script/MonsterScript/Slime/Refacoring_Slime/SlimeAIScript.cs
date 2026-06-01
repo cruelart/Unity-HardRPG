@@ -1,7 +1,7 @@
 using UnityEngine;
 using BehaviorTree; // 만든 커스텀 테스트용 행동트리 사용예정
 
-public class SlimeAIScript : MonsterBase, IMonsterDamageable
+public class SlimeAIScript : MonsterAIController, IMonsterDamageable
 {
     //먼저 슬라임의 행동트리 구성
     //대기, 공격, 사망, 이동, 피격
@@ -19,12 +19,12 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
 
         //공격노드 생성
         ConditionNode attackNode = new ConditionNode(
-            () => IsTargetInRange(attackRange) || IsAnimationPlaying("Attack", 0.95f), new ActionNode(Attack) // 너무 가까워지면 바로 공격 but 애니메이션 재생중이라면 또 실행
+            () => IsTargetInRange(monsterStatManager.attackRange) || IsAnimationPlaying("Attack", 0.95f), new ActionNode(Attack) // 너무 가까워지면 바로 공격 but 애니메이션 재생중이라면 또 실행
             );
 
         //추적노드 생성
         ConditionNode chaseNode = new ConditionNode(
-            () => ViewAngle.isFindPlayer(detectionRange, viewAngle, target.transform, transform) , new ActionNode(Chase)
+            () => ViewAngle.isFindPlayer(monsterStatManager.detectionRange, monsterStatManager.viewAngle, target.transform, transform) , new ActionNode(Chase)
             );
 
         //피격노드 생성
@@ -84,7 +84,7 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up); // dir방향을 쿼터니언으로 교체
 
-            this.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime); // 천천히 회전하게 설정
+            this.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, monsterStatManager.statDict[StatType.RotationSpeed].value * Time.deltaTime); // 천천히 회전하게 설정
         }
     }
 
@@ -94,7 +94,7 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
 
         Vector3 forwardDir = transform.forward;
 
-        Vector3 nextPos = transform.position + (forwardDir * moveSpeed * Time.deltaTime);
+        Vector3 nextPos = transform.position + (forwardDir * monsterStatManager.statDict[StatType.MoveSpeed].value * Time.deltaTime);
         rigid.MovePosition(nextPos);
 
     }
@@ -116,7 +116,7 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
     {
         StopMove();
 
-        if(!IsAnimationPlaying("Attack", 0.95f) && !ViewAngle.isFindPlayer(detectionRange, viewAngle, target.transform, transform)) // 공격범위에 있는데 시야각에는 플레이어가 안잡히면 빠르게 회전
+        if(!IsAnimationPlaying("Attack", 0.95f) && !ViewAngle.isFindPlayer(monsterStatManager.detectionRange, monsterStatManager.viewAngle, target.transform, transform)) // 공격범위에 있는데 시야각에는 플레이어가 안잡히면 빠르게 회전
         {
             ViewToPlayer();
             return tasks.Running;
@@ -140,7 +140,7 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
 
     tasks Idle()
     {
-        Debug.Log("슬라임이 대기 상태 진입");
+        //Debug.Log("슬라임이 대기 상태 진입");
         StopMove();
         PlayAnime("Idle", 0.1f);
         return tasks.Success;
@@ -151,6 +151,13 @@ public class SlimeAIScript : MonsterBase, IMonsterDamageable
         Debug.Log("슬라임이 피격 상태 진입");
         StopMove();
         PlayAnime("React", 0.1f);
+        return tasks.Success;
+    }
+
+    tasks Dead()
+    {
+        Debug.Log("슬라임 사망");
+        StopMove();
         return tasks.Success;
     }
 }

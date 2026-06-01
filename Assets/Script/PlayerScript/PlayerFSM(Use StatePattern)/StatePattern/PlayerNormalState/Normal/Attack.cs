@@ -110,7 +110,7 @@ public override void DoAction()
     }
     private void CheckAttack()
     {
-        Debug.Log(normalAttackNum);
+        //Debug.Log(normalAttackNum);
 
         switch(normalAttackNum)
         {

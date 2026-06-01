@@ -14,6 +14,7 @@ public class PlayerDBManager : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
+            Destroy(gameObject);
             return;
         }
 
