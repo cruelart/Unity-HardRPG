@@ -1,20 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class PlayerDB
 {
     public string playerName; // 이름
+
     public int level;
-
-    public int MaxHp;
-    public int currentHp;
-
-    public int MaxMp;
-    public int currentMp;
-
-    public float currentExp;
-    public float maxExp;
+    public long maxExp;
 
     //플레이어 위치
     public string currentMap; // 플레이어가 현재 위치하고 있는 맵
@@ -28,19 +22,40 @@ public class PlayerDB
     {
         playerName = "New Player";
         level = 1;
+        maxExp = 100;
 
-        MaxHp = 100;
-        currentHp = MaxHp;
-
-        MaxMp = 100;
-        currentMp = MaxMp;
-
-        currentExp = 0;
-        maxExp = level * 100;
         currentMap = "tutorialMap";
         posX = 0;
         posY = 1.0f;
         posZ = 0;
+
         stats = new List<Stat>();
+
+        //초기 스텟
+        InitStat();
+    }
+
+    private void AddStat(StatType _type, float _value)
+    {
+        stats.Add(new Stat()
+        {
+            type = _type,
+            value = _value
+        });
+    }
+
+    private void InitStat()
+    {
+        AddStat(StatType.Attack, 10);
+        AddStat(StatType.Defense, 10);
+        AddStat(StatType.MoveSpeed, 1);
+        AddStat(StatType.CriticalPercent, 0);
+        AddStat(StatType.HP, 100);
+        AddStat(StatType.MP, 100);
+        AddStat(StatType.Accuracy, 10);
+        AddStat(StatType.STR, 5);
+        AddStat(StatType.DEX, 5);
+        AddStat(StatType.INT, 5);
+        AddStat(StatType.LUK, 5);
     }
 }

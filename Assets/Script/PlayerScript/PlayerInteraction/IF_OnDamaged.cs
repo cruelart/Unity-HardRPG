@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IT_PlayerDamaged
+public interface IF_OnDamaged
 {
     void OnDamaged(int _damage); // 데미지 함수
 }

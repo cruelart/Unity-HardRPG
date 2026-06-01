@@ -22,8 +22,8 @@ public class Re_Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("구매 금액:" + equipmentItemList[0].settings.buy_gold);
-        Debug.Log("판매 금액:" + equipmentItemList[0].settings.sell_gold);
+        //Debug.Log("구매 금액:" + equipmentItemList[0].settings.buy_gold);
+        //Debug.Log("판매 금액:" + equipmentItemList[0].settings.sell_gold);
     }
 
     //장비아이템 인벤토리 추가 함수

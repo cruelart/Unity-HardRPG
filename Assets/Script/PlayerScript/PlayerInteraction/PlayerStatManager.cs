@@ -3,9 +3,15 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
+public class PlayerStatManager : MonoBehaviour , IF_OnDamaged
 {
+    //플레이어의 고정 데이터
     private PlayerDB playerDB;
+
+    //플레이어의 유동 데이터
+    private int currentHp;
+    private int currentMp;
+    private long currentExp;
 
     //이벤트
     public static event Action<int> OnLevelUp;
@@ -17,6 +23,10 @@ public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
     {
         playerDB = _data;
         statDict = playerDB.stats.ToDictionary(s => s.type); // playerDB를 해시와 연결
+
+        currentHp = (int)statDict[StatType.HP].value;
+        currentMp = (int)statDict[StatType.MP].value;
+        currentExp = 0;
     }
 
     public Stat GetStat(StatType _type)
@@ -25,11 +35,17 @@ public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
         return stat;
     }
 
+    public float GetStatValue(StatType _type)
+    {
+        statDict.TryGetValue(_type, out var stat);
+        return stat.value;
+    }
+
 
     public void OnDamaged(int _damage)
     {
-        playerDB.currentHp -= _damage;
-        OnHpChanged?.Invoke(playerDB.currentHp, playerDB.MaxHp); // hp 변동사항 알림
+        currentHp -= _damage;
+        OnHpChanged?.Invoke(currentHp, (int)GetStatValue(StatType.HP)); // hp 변동사항 알림
 
         Debug.Log("PlayerStatManager에 있는 OnDamage함수 호출");
 
@@ -41,12 +57,12 @@ public class PlayerStatManager : MonoBehaviour , IT_PlayerDamaged
 
     public void GetExp(int _exp)
     {
-        playerDB.currentExp += _exp;
+        currentExp += _exp;
         //경험치가 너무많이 오르면
-        if (playerDB.maxExp < playerDB.currentExp)
+        if (playerDB.maxExp < currentExp)
         {
             LevelUp();
-            playerDB.currentExp -= playerDB.maxExp; // 레벨업했으니 경험치 다시 초기화
+            currentExp -= playerDB.maxExp; // 레벨업했으니 경험치 다시 초기화
         }
     }
 
