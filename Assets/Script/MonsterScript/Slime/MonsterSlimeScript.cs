@@ -74,11 +74,11 @@ public class MonsterSlimeScript : MonoBehaviour
         isFindPlayer = new SelectorNode();
         inVisibleRangePlayer = new SelectorNode();
 
-        attackPlayer = new ActionNode();
-        moveTowardPlayer = new ActionNode();
-        randomStroll = new ActionNode();
-        exeReactMotion = new ActionNode();
-        deathState = new ActionNode();
+        //attackPlayer = new ActionNode();
+        //moveTowardPlayer = new ActionNode();
+        //randomStroll = new ActionNode();
+        //exeReactMotion = new ActionNode();
+        //deathState = new ActionNode();
 
         rootNode.ListAdd(isFindPlayer);
         isFindPlayer.ListAdd(inVisibleRangePlayer);
@@ -90,11 +90,11 @@ public class MonsterSlimeScript : MonoBehaviour
 
         //---------------------------------------------
 
-        attackPlayer.action += AttackPlayer;
-        moveTowardPlayer.action += MoveTowardPlayer;
-        randomStroll.action += RandomStroll;
-        exeReactMotion.action += MonsterReact;
-        deathState.action += MonsterDeath;
+        //attackPlayer.action += AttackPlayer;
+        //moveTowardPlayer.action += MoveTowardPlayer;
+        //randomStroll.action += RandomStroll;
+        //exeReactMotion.action += MonsterReact;
+        //deathState.action += MonsterDeath;
 
         anime = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();

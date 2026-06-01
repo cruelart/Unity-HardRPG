@@ -89,20 +89,20 @@ public class BossScript : MonoBehaviour
         //Seq_ComboAttack = new SequenceNode();
         //Seq_JumpAttack = new SequenceNode();
 
-        ifRunningNormalAttack = new ActionNode();
-        ifRunningComboAttack = new ActionNode();
-        ifRunningJumpAttack = new ActionNode();
-        MonsterHealHp = new ActionNode();
-        MonsterStroll = new ActionNode();
         //ifRunningNormalAttack = new ActionNode();
-        MonsterNormalAttack = new ActionNode();
         //ifRunningComboAttack = new ActionNode();
-        MonsterAttackCombo = new ActionNode();
-        isPlayerHp50down = new ActionNode();
-        MoveTowardPlayerRun = new ActionNode();
-        MoveTowardPlayerWalk = new ActionNode();
         //ifRunningJumpAttack = new ActionNode();
-        MonsterJumpAttack = new ActionNode();
+        //MonsterHealHp = new ActionNode();
+        //MonsterStroll = new ActionNode();
+        ////ifRunningNormalAttack = new ActionNode();
+        //MonsterNormalAttack = new ActionNode();
+        ////ifRunningComboAttack = new ActionNode();
+        //MonsterAttackCombo = new ActionNode();
+        //isPlayerHp50down = new ActionNode();
+        //MoveTowardPlayerRun = new ActionNode();
+        //MoveTowardPlayerWalk = new ActionNode();
+        ////ifRunningJumpAttack = new ActionNode();
+        //MonsterJumpAttack = new ActionNode();
 
         // 행동트리연결
 
@@ -152,17 +152,17 @@ public class BossScript : MonoBehaviour
 
         //----------------------------------------------------------------행동트리 노드연결 설정
 
-        MonsterHealHp.action += aMonsterHeal;
-        MonsterStroll.action += aMonsterStroll;
-        ifRunningNormalAttack.action += aIfRunningNormalAttack;
-        MonsterNormalAttack.action += aMonsterNormalAtttack;
-        ifRunningComboAttack.action += aIfRunningComboAttack;
-        MonsterAttackCombo.action += aMonsterAttackCombo;
-        isPlayerHp50down.action += aisPlayerHp50down;
-        MoveTowardPlayerRun.action += aMoveTowardPlayerRun;
-        MoveTowardPlayerWalk.action += aMoveTowardPlayerWalk;
-        ifRunningJumpAttack.action += aIfRunningJumpAttack;
-        MonsterJumpAttack.action += aMonsterJumpAttack;
+        //MonsterHealHp.action += aMonsterHeal;
+        //MonsterStroll.action += aMonsterStroll;
+        //ifRunningNormalAttack.action += aIfRunningNormalAttack;
+        //MonsterNormalAttack.action += aMonsterNormalAtttack;
+        //ifRunningComboAttack.action += aIfRunningComboAttack;
+        //MonsterAttackCombo.action += aMonsterAttackCombo;
+        //isPlayerHp50down.action += aisPlayerHp50down;
+        //MoveTowardPlayerRun.action += aMoveTowardPlayerRun;
+        //MoveTowardPlayerWalk.action += aMoveTowardPlayerWalk;
+        //ifRunningJumpAttack.action += aIfRunningJumpAttack;
+        //MonsterJumpAttack.action += aMonsterJumpAttack;
 
         //----------------------------------------------------------------액션에 들어갈 delegate설정
         anime = GetComponent<Animator>();

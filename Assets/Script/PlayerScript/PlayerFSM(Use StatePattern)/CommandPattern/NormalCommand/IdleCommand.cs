@@ -16,7 +16,7 @@ public class IdleCommand : Command
         anime.SetBool("isNormalState", true);
         anime.SetBool("isSwordState", false);
         anime.SetBool("isSwordIdle", false);
-        anime.SetBool("isIdle", true);
+        //anime.SetBool("isIdle", true);
         anime.SetBool("isRun", false);
         anime.SetBool("isWalk", false);
         anime.SetBool("isJump", false);
