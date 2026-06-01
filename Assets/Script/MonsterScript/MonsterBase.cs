@@ -1,74 +1,34 @@
 using UnityEngine;
 using BehaviorTree;
 
-public abstract class MonsterBase : MonoBehaviour
+public class MonsterBase : MonoBehaviour
 {
-    //------------------------------
-    protected GameObject target;
+    private MonsterStatManager stat; // 구독할 곳
+    private MonsterAIController ai;
 
-    //-------------------------------
-    [Header("인지 범위 설정")]
-    [SerializeField]
-    protected float viewAngle = 90f;
+    private MonsterType monsterType;
 
-    //탐지범위
-    [SerializeField]
-    protected float detectionRange = 10f;
-
-    //공격범위
-    [SerializeField]
-    protected float attackRange = 2f;
-
-    [SerializeField]
-    protected LayerMask playerLayer;
-    //-------------------------------
-
-    [Header("속도 조절")]
-    public float moveSpeed = 2.0f;
-
-    public float rotationSpeed = 100.0f;
-
-    //몬스터 애니메이션
-    protected Animator animator;
-    protected string currentAnime_name = ""; // 실행 중인 애니메이션 저장
-
-    //몬스터 RigidBody
-    protected Rigidbody rigid;
-
-    //블랙보드
-    protected Blackboard blackboard = new Blackboard(); // 슬라임에 필요한 데이터를 다루는 블랙보드생성
-
-    protected virtual void Awake()
+    public void Init()
     {
-        animator = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody>();
+        stat = GetComponent<MonsterStatManager>();
+        ai = GetComponent<MonsterAIController>();
 
-        rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // X축과 Z축 회전을 막아서 이상한 회전 방지하기
-
-        blackboard.SetData("IsHitted", false);
-        blackboard.SetData("Target", null);
-        blackboard.SetData("IsDead", false);
+        stat.OnDeath += HandleDeath;
     }
 
-    protected virtual void Start()
+    public void SetMonsterType(MonsterType _monsterType)
     {
-        target = GameObject.FindWithTag("Player");
+        monsterType = _monsterType;
     }
-
-    //애니메이션 재생 함수
-    protected void PlayAnime(string _anime_name, float crossFade)
+    //몬스터의 자체 상태를 관리
+    private void HandleDeath()
     {
-        if (currentAnime_name == _anime_name) return; // 애니메이션이 같으면 바꿀필요 없음 -> 이렇게 되면 공격을 계속해야되는데 문제생김(한번 공격하고 맘)
+        if(ai == null)
+        {
+            return;
+        }
+        ai.enabled = false;
 
-        animator.CrossFade(_anime_name, crossFade); // 애니메이션간 부드럽게 교체하고
-        currentAnime_name = _anime_name; // 실행 중인 애니메이션 교체
+        MonsterZen.instance.ReturnMonster(monsterType, gameObject);
     }
-
-    //애니메이션이 실행중인지 체크
-    protected bool IsAnimationPlaying(string _anime_name, float stopTime)
-    {
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0); // 현재 재생중인 애니메이션
-        return info.IsName(_anime_name) && info.normalizedTime < stopTime; // 의 이름이 _anime_name이면서 실행시간이 멈추는 시간보다 짧다면
-    }
-
 }
