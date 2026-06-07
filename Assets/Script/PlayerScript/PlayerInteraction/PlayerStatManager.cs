@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerStatManager : MonoBehaviour , IF_OnDamaged
+public class PlayerStatManager : MonoBehaviour
 {
     //플레이어의 고정 데이터
     private PlayerDB playerDB;
