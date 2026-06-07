@@ -48,14 +48,16 @@ public class DamageTextManager : MonoBehaviour
         }
     }
 
-    public void ShowDamagerText(Transform _monsterTransform, int _damage)
+    public void ShowDamageText(Transform _targetTransform, int _damage, Color _color)
     {
         DamageText damageText = damageTextPool.Dequeue();
 
-        damageText.transform.position = _monsterTransform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-        damageText.gameObject.SetActive(true);
+        Vector3 showPos = Camera.main.WorldToScreenPoint(_targetTransform.position + new Vector3(Random.Range(-0.4f,0.4f), 2.3f, Random.Range(-0.4f,0.4f)));
+        damageText.GetRectTransform().position = showPos;
+        damageText.Setup(_damage, _color);
 
-        damageText.Setup(_damage);
+        //설정 완료 후 활성화
+        damageText.gameObject.SetActive(true);
     }
 
     public void ReturnDamageText(DamageText _damageText)
