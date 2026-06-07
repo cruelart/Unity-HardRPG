@@ -5,11 +5,11 @@ public class Re_Inventory : MonoBehaviour
 {
     //장비 아이템
     public List<EquipmentItemInstance> equipmentItemList = new List<EquipmentItemInstance>(); // 인벤토리 나열용
-    public Dictionary<int, EquipmentItemInstance> equipmentItemMap = new Dictionary<int, EquipmentItemInstance>(); // 검색, 탐색용 ex) 퀘스트 아이템확인용? 
+    public Dictionary<long, EquipmentItemInstance> equipmentItemMap = new Dictionary<long, EquipmentItemInstance>(); // 검색, 탐색용 ex) 퀘스트 아이템확인용? 
 
     //소비 아이템
     public List<ConsumerItemInstance> consumerItemList = new List<ConsumerItemInstance>(); // 인벤토리 나열용
-    public Dictionary<int, ConsumerItemInstance> consumerItemMap = new Dictionary<int, ConsumerItemInstance>(); // 아이템 고유id, 실제 아이템
+    public Dictionary<long, ConsumerItemInstance> consumerItemMap = new Dictionary<long, ConsumerItemInstance>(); // 아이템 인스턴스id, 실제 아이템
 
     //기타아이템
 
@@ -30,14 +30,14 @@ public class Re_Inventory : MonoBehaviour
     public void AddEquipmentItem(EquipmentItemInstance _item)
     {
         equipmentItemList.Add(_item);
-        equipmentItemMap.Add(_item.settings.itemID, _item);
+        equipmentItemMap.Add(_item.instanceID, _item);
     }
 
     //소비아이템 인벤토리 추가 함수
     public void AddConsumerItem(ConsumerItemInstance _item)
     {
         consumerItemList.Add(_item);
-        consumerItemMap.Add(_item.setting.itemID, _item);
+        consumerItemMap.Add(_item.instanceID, _item);
     }
 
     //장비아이템 정렬
