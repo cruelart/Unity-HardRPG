@@ -50,4 +50,5 @@ public class EquipmentItemInstance
         return baseStat.value + (upgradeLv * 5.0f); // 기본 스텟 + 추가 스텟합산 반환하기
     }
 
+
 }
