@@ -59,7 +59,7 @@ public class ItemDataManager : MonoBehaviour
         if (File.Exists(path)) // 파일 존재시
         {
             string jsonText = File.ReadAllText(path); // 제이슨에 있는 파일 내용 받아오고
-            Debug.Log(jsonText);
+            //Debug.Log(jsonText);
             ItemDataList itemList = JsonUtility.FromJson<ItemDataList>(jsonText);
 
             foreach (ItemRawData data in itemList.items)
@@ -98,6 +98,11 @@ public class ItemDataManager : MonoBehaviour
         //완료시 장비,소비아이템이 해시에 들어간 상황(키값은 아이템id로)
     }
 
+    public EquipmentItemDB GetEquipmentItemDB(int _itemID)
+    {
+        return equipDataMap[_itemID];
+    }
+
     public EquipmentItemInstance CreateEquipmentItemInstance(int id)
     {
         // 데이터 찾기
@@ -120,6 +125,11 @@ public class ItemDataManager : MonoBehaviour
         return new EquipmentItemInstance(equipDataMap[id]);
     }
 
+    public ConsumerItemDB GetConsumerItemDB(int _itemID)
+    {
+        return consumerDataMap[_itemID];
+    }
+
     public ConsumerItemInstance CreateConsumerItemInstance(int id)
     {
         // 데이터 찾기
@@ -135,7 +145,14 @@ public class ItemDataManager : MonoBehaviour
         //}
 
         //Debug.LogError($"{raw.itemName}에 해당하는 SO 에셋을 찾을 수 없습니다!");
-        return null;
+
+
+        if (consumerDataMap == null || !consumerDataMap.ContainsKey(id))
+        {
+            return null;
+        }
+
+        return new ConsumerItemInstance(consumerDataMap[id]);
     }
 
 
