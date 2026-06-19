@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7715dcbc4d60bfa409ac3e08a775225c, type: 3}
   m_Name: RedPotion
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 2
   itemName: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: b3ed403ace9583a47a455514589276b5, type: 3}
   description: 
   itemType: 0
   stats: []
@@ -25,4 +25,4 @@ MonoBehaviour:
   duration: 0
   isDisposable: 0
   isPercentage: 0
-  maxNum: 0
+  maxNum: 99

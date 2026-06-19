@@ -1,34 +1,11 @@
+using System;
 using UnityEngine;
-using BehaviorTree;
 
 public class MonsterBase : MonoBehaviour
 {
-    private MonsterStatManager stat; // 구독할 곳
-    private MonsterAIController ai;
-
-    private MonsterType monsterType;
-
-    public void Init()
-    {
-        stat = GetComponent<MonsterStatManager>();
-        ai = GetComponent<MonsterAIController>();
-
-        stat.OnDeath += HandleDeath;
-    }
-
-    public void SetMonsterType(MonsterType _monsterType)
-    {
-        monsterType = _monsterType;
-    }
-    //몬스터의 자체 상태를 관리
-    private void HandleDeath()
-    {
-        if(ai == null)
-        {
-            return;
-        }
-        ai.enabled = false;
-
-        MonsterZen.instance.ReturnMonster(monsterType, gameObject);
-    }
+    public MonsterSpawnZone spawnZone;
 }
+
+//문제점
+//-> OnEnable함수 호출에 있어서 유니티의 생명주기로 인해 오류발생
+//-> MosnterToTalManager에서 start에서 호출했기때문에 OnEnable입장에서 stat이 비어있는데? 선언 따라서 이벤트 OnDeath가 정상적으로 HandleDeath를 구독하지못해 문제

@@ -8,27 +8,34 @@ public class MonsterToTalManager : MonoBehaviour
 
     private MonsterDB monsterDB;
 
+    private MonsterBase monsterBase;
     private MonsterStatManager monsterStatManager;
     private MonsterHitBox monsterHitbox;
     private MonsterAIController monsterAIController;
     private MonsterHpUIManager monsterHpUIManager;
     private MonsterReactManager monsterReactManager;
-    private MonsterBase monsterBase;
+    private MonsterDeathHandler monsterDeathHandler;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
     {
+        Debug.Log($"{gameObject.name} TotalManager Awake");
         //이 스크립트의 주인 오브젝트의 하위 컴포넌트들 받아오기
+
+        monsterBase = GetComponent<MonsterBase>();
         monsterStatManager = GetComponent<MonsterStatManager>();
         monsterHitbox = GetComponentInChildren<MonsterHitBox>(true);
         monsterAIController = GetComponent<MonsterAIController>();
         monsterHpUIManager = GetComponentInChildren<MonsterHpUIManager>();
         monsterReactManager = GetComponent<MonsterReactManager>();
-        monsterBase = GetComponent<MonsterBase>();
+        monsterDeathHandler = GetComponent<MonsterDeathHandler>();
+
+        LoadData(); // MonsterDBManager의 instance 내용물은 Awake에서 처리되기때문에 Start에 넣어줌 -> 수정본(부트스트랩씬에서 미리 초기화했기떄문에 Awake로 옮김)
     }
     void Start()
     {
-        LoadData();
+
     }
 
     // Update is called once per frame
@@ -47,5 +54,6 @@ public class MonsterToTalManager : MonoBehaviour
         monsterAIController.Init(monsterStatManager);
         monsterHpUIManager.Init(monsterStatManager);
         monsterReactManager.Init(monsterStatManager);
+        monsterDeathHandler.Init(monsterID, monsterStatManager, monsterBase);
     }
 }

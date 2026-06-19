@@ -14,7 +14,7 @@ public class MonsterDBManager : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(gameObject); // ÆÄ±« ¹æÁö
+        DontDestroyOnLoad(transform.root.gameObject); // ÆÄ±« ¹æÁö
 
         LoadData();
     }
