@@ -36,6 +36,18 @@ public class MonsterStatManager : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        current_monsterHp = GetStat(StatType.HP);
+        current_monsterMp = GetStat(StatType.MP);
+
+        viewAngle = monsterDB.viewAngle;
+        detectionRange = monsterDB.detectionRange;
+        attackRange = monsterDB.attackRange;
+
+        OnHPChange?.Invoke(current_monsterHp, GetStat(StatType.HP));
+    }
+
     public void Init(MonsterDB _data)
     {
         monsterDB = _data;
