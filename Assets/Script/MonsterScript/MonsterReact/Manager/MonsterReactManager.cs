@@ -3,6 +3,7 @@ using UnityEngine;
 public class MonsterReactManager : MonoBehaviour, IF_OnDamaged
 {
     MonsterStatManager monsterStatManager;
+    private Color damageColor = new Color(1,1,0);
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,6 +26,7 @@ public class MonsterReactManager : MonoBehaviour, IF_OnDamaged
         if(monsterStatManager != null)
         {
             monsterStatManager.OnDamaged(_damage);
+            DamageTextManager.Instance.ShowDamageText(this.transform, _damage, damageColor);
         }
     }
 }
