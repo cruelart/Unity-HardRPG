@@ -59,11 +59,19 @@ public class DropItemPoolManager : MonoBehaviour
         GameObject instanceDropItemObj = instanceDropItem.gameObject;
 
         // 꺼낸 오브젝트를 드랍시킬 아이템으로 둔갑시키기
-        instanceDropItem.SettingDropItem(itemDB.dropMesh, itemDB.dropMaterial, itemDB.dropRotation, itemDB.dropScale, _itemPostion);
+        instanceDropItem.SettingDropItem(itemDB.dropMesh, itemDB.dropMaterial, itemDB.dropRotation, itemDB.dropScale, _itemPostion, _itemID);
 
         //씬에 활성화시키기
         instanceDropItemObj.SetActive(true);
 
         instanceDropItem.RealDrop();
+    }
+
+    public void ReturnPool(InstanceDropItem _dropItem)
+    {
+        GameObject instanceDropItemObj = _dropItem.gameObject;
+        instanceDropItemObj.SetActive(false);
+
+        instanceDropItemList.Enqueue(_dropItem);
     }
 }

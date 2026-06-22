@@ -39,3 +39,7 @@ MonoBehaviour:
     dropPercent: 40.6
     minCount: 1
     maxCount: 1
+  - itemID: 2
+    dropPercent: 40.6
+    minCount: 1
+    maxCount: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wood Sword
   m_EditorClassIdentifier: 
   itemID: 1
-  itemName: 
+  itemName: Wood Sword
   itemIcon: {fileID: 0}
   description: 
   itemType: 0
@@ -24,6 +24,6 @@ MonoBehaviour:
   buy_gold: 300
   dropMesh: {fileID: 5822147625732376093, guid: 7e1331c45cacd984e81c4c6309d91cdc, type: 3}
   dropMaterial: {fileID: 2100000, guid: 4156db01ddbed1c47afaab79debb90d9, type: 2}
-  dropScale: {x: 3, y: 3, z: 3}
+  dropScale: {x: 2, y: 2, z: 2}
   dropRotation: {x: 0, y: 0, z: 0}
   type: 0
