@@ -81,13 +81,13 @@ public class MoveCommand : Command
        {
            Walk();
             PlayerData.playerData.player_hungry -= 0.003f;
-            Debug.Log("걷는다");
+            //Debug.Log("걷는다");
        }
        if (Move.move.moveNum == (short)Move.move_num.Rolling)
        {
            Rolling();
             PlayerData.playerData.player_hungry -= 0.005f;
-            Debug.Log("구른다");
+            //Debug.Log("구른다");
        }
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlimeDB
   m_EditorClassIdentifier: 
   monsterID: 1
-  monsterName: Slime
+  monsterType: 0
   monsterImage: {fileID: 0}
   stats:
   - type: 0
@@ -33,3 +33,13 @@ MonoBehaviour:
   viewAngle: 140
   detectionRange: 10
   attackRange: 2
+  publicdropTables: []
+  personalDropItems:
+  - itemID: 1
+    dropPercent: 40.6
+    minCount: 1
+    maxCount: 1
+  - itemID: 2
+    dropPercent: 40.6
+    minCount: 1
+    maxCount: 1
