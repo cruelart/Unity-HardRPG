@@ -35,7 +35,11 @@ MonoBehaviour:
   attackRange: 2
   publicdropTables: []
   personalDropItems:
-  - itemDB: {fileID: 11400000, guid: e543e51af34f1ec4f83888b20b5f6fe0, type: 2}
-    dropPercent: 100
+  - itemID: 1
+    dropPercent: 40.6
+    minCount: 1
+    maxCount: 1
+  - itemID: 2
+    dropPercent: 40.6
     minCount: 1
     maxCount: 1

@@ -28,11 +28,16 @@ public class MonsterSpawnZone : MonoBehaviour
         //Debug.Log("SpawnMonster에 있는 monsterList의 수는" + monsterList.Count);
     }
 
+    private void FixedUpdate()
+    {
+        Debug.Log("Physics Tick");
+    }
+
     private void OnEnable()
     {
         float monsterSpawnTime = monsterPoolManager.GetMonsterSpawnTime();
         //기존 몬스터들 스폰
-        SpawnMonster(monsterSpawnTime); // 리스폰 대기시간비교
+        StartCoroutine(ReSpawnCoroutine()); // 리스폰 대기시간비교
 
         MonsterEvent.OnMonsterDead -= ReSpawnMonster;
         MonsterEvent.OnMonsterDead += ReSpawnMonster; // 다시 구독
@@ -43,6 +48,7 @@ public class MonsterSpawnZone : MonoBehaviour
         MonsterEvent.OnMonsterDead -= ReSpawnMonster; // 비활성화면 구독해제
         StopCoroutine(ReSpawnCoroutine());
         ActiveMonsterReturnPool();
+        isMonsterDeadHandle = false; // 비활성화되면 진항하던 몬스터죽음으로 인한 스폰 중지하고 false 처리할게
     }
 
     private void DeadMonsterReturnPool(MonsterDeadInfo _monsterDeadInfo)
@@ -56,7 +62,6 @@ public class MonsterSpawnZone : MonoBehaviour
     {
         foreach (GameObject monster in activeMonsterList)
         {
-            activeMonsterList.Remove(monster);
             monsterPoolManager.ReturnMonster(monster);
         }
         activeMonsterList.Clear();

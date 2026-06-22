@@ -9,6 +9,10 @@ public class ItemDataManager : MonoBehaviour
     [Header("Asset Database")]
     private Dictionary<int, ItemRawData> itemRawDataMap = new Dictionary<int, ItemRawData>();
 
+    //통합형 데이터베이스
+    private Dictionary<int, BaseitemDB> totalDataMap = new Dictionary<int, BaseitemDB>();
+
+    //타입별 데이터베이스
     private Dictionary<int, EquipmentItemDB> equipDataMap = new Dictionary<int, EquipmentItemDB>();
     private Dictionary<int, ConsumerItemDB> consumerDataMap = new Dictionary<int, ConsumerItemDB>();
 
@@ -81,6 +85,7 @@ public class ItemDataManager : MonoBehaviour
                 continue; //중복 키 있으면 넘어가기
             }
             equipDataMap.Add(item.itemID, item);
+            totalDataMap.Add(item.itemID, item);
         }
 
         //소비 아이템 받아오기
@@ -93,9 +98,15 @@ public class ItemDataManager : MonoBehaviour
                 continue; //중복 키 있으면 넘어가기
             }
             consumerDataMap.Add(item.itemID, item);
+            totalDataMap.Add(item.itemID, item);
         }
         
         //완료시 장비,소비아이템이 해시에 들어간 상황(키값은 아이템id로)
+    }
+
+    public BaseitemDB GetBaseitemDB(int _itemID)
+    {
+        return totalDataMap[_itemID];
     }
 
     public EquipmentItemDB GetEquipmentItemDB(int _itemID)

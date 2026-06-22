@@ -23,7 +23,7 @@ public static class DropSystem
         }
 
         //다 몰아넣었으면 개인용 아이템도 넣자
-        monsterDropList.AddRange(monsterDropList);
+        monsterDropList.AddRange(personalDropList);
 
         return monsterDropList;
     }

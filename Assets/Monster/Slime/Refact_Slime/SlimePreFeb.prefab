@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3887493348350220202}
   - component: {fileID: 4017116332314203390}
   - component: {fileID: 4117494048804001719}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8174644511950935392}
   - component: {fileID: 3018740483432663578}
   - component: {fileID: 2942165662903990778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 3480250812871060031}
   - component: {fileID: 2668075963618706003}
   - component: {fileID: 8046957802088549886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 6846218498455609166}
   - component: {fileID: 9097805563313985357}
   - component: {fileID: 7968017408099232494}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HpBarBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,14 +408,54 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8296588758925047980, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -5151492872390713093, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3460877837250834767, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1206874426333947015, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
       propertyPath: m_Name
       value: SlimePreFeb
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576322942326195508, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5149322524051379661, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791404206753928785, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: fa63d6b65666c324e982edcca96a2d01, type: 2}
+    - target: {fileID: 8765074171732742357, guid: a4cbfcd2aab72ff49aa8cea7a4855372, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -481,7 +521,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &5261977868654013431
 MonoBehaviour:
@@ -558,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9d628658923cb489dc1bfb66cf0d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnZone: {fileID: 0}
 --- !u!114 &-2599916585629190695
 MonoBehaviour:
   m_ObjectHideFlags: 0
