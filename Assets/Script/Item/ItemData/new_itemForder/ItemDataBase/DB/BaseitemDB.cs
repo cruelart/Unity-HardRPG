@@ -23,4 +23,12 @@ public abstract class BaseitemDB : ScriptableObject
     [Header("Public character")]
     public int sell_gold; // 판매 가격
     public int buy_gold; // 구매 가격
+
+    [Header("아이템 매쉬 정보")] 
+    public Mesh dropMesh;
+    public Material dropMaterial;
+
+    [Header("아이템 Transform 정보")]
+    public Vector3 dropScale = Vector3.one;
+    public Vector3 dropRotation;
 }

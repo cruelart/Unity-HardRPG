@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class DropTableEntry
 {
-    public BaseitemDB itemDB; // 드랍할 아이템
+    public int itemID; // 드랍할 아이템 아이디
 
     [Range(0f, 100f)]
     public float dropPercent; // 드랍 확률

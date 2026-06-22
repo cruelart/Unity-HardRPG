@@ -46,7 +46,7 @@ public class PlayerDB
 
     private void InitStat()
     {
-        AddStat(StatType.Attack, 10);
+        AddStat(StatType.Attack, 60);
         AddStat(StatType.Defense, 10);
         AddStat(StatType.MoveSpeed, 1);
         AddStat(StatType.CriticalPercent, 0);

@@ -28,6 +28,11 @@ public class MonsterSpawnZone : MonoBehaviour
         //Debug.Log("SpawnMonster에 있는 monsterList의 수는" + monsterList.Count);
     }
 
+    private void FixedUpdate()
+    {
+        Debug.Log("Physics Tick");
+    }
+
     private void OnEnable()
     {
         float monsterSpawnTime = monsterPoolManager.GetMonsterSpawnTime();

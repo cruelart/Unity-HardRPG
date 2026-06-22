@@ -44,6 +44,7 @@ public class MonsterDeathHandler : MonoBehaviour
     {
         if (monsterStatManager != null)
         {
+            monsterStatManager.OnDeath -= HandleDeath;
             monsterStatManager.OnDeath += HandleDeath;
         }
     }
