@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Re_Inventory : MonoBehaviour
 {
+    //아이템이 추가됐음을 알리는 이벤트 -> UI변경용
+    public event Action OnChangeInventory;
+
     //장비 아이템
     public List<EquipmentItemInstance> equipmentItemList = new List<EquipmentItemInstance>(); // 인벤토리 나열용
     //public Dictionary<long, EquipmentItemInstance> equipmentItemMap = new Dictionary<long, EquipmentItemInstance>(); // 검색, 탐색용 ex) 퀘스트 아이템확인용? 
@@ -34,6 +38,7 @@ public class Re_Inventory : MonoBehaviour
     //장비아이템 인벤토리 추가 함수
     public void AddEquipmentItem(int _itemID, int _amount)
     {
+        OnChangeInventory?.Invoke();
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
 
@@ -66,6 +71,7 @@ public class Re_Inventory : MonoBehaviour
 
                 if(_amount <= 0)
                 {
+                    OnChangeInventory?.Invoke();
                     return;
                 }
             }
@@ -87,6 +93,8 @@ public class Re_Inventory : MonoBehaviour
             RegisterConsumerItem(newConsumerItem, count);
             _amount -= count;
         }
+
+        OnChangeInventory?.Invoke();
     }
 
     //아이템 추가시 등록 함수

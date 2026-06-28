@@ -49,7 +49,7 @@ public class DropItemPoolManager : MonoBehaviour
         }
     }
 
-    public void DropItem(int _itemID, Vector3 _itemPostion)
+    public void DropItem(int _itemID, int _amount, Vector3 _itemPostion)
     {
         BaseitemDB itemDB = ItemDataManager.Instance.GetBaseitemDB(_itemID); // 드랍시킬 아이템의 정보를 불러옴
 
@@ -59,7 +59,7 @@ public class DropItemPoolManager : MonoBehaviour
         GameObject instanceDropItemObj = instanceDropItem.gameObject;
 
         // 꺼낸 오브젝트를 드랍시킬 아이템으로 둔갑시키기
-        instanceDropItem.SettingDropItem(itemDB.dropMesh, itemDB.dropMaterial, itemDB.dropRotation, itemDB.dropScale, _itemPostion, _itemID);
+        instanceDropItem.SettingDropItem(itemDB.dropMesh, itemDB.dropMaterial, itemDB.dropRotation, itemDB.dropScale, _itemPostion, _itemID, _amount);
 
         //씬에 활성화시키기
         instanceDropItemObj.SetActive(true);

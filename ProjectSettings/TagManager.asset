@@ -16,6 +16,7 @@ TagManager:
   - BossAttack
   - NormalAttackArea
   - BigAttackSecion
+  - DropItem
   layers:
   - Default
   - TransparentFX

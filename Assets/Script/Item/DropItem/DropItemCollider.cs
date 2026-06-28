@@ -1,14 +1,19 @@
 using UnityEngine;
 
-public class DropItemCollider : MonoBehaviour
+public interface IT_ShowItemName
+{
+    public void ShowItemName();
+    public void HideItemName();
+}
+public class DropItemCollider : MonoBehaviour, IT_ShowItemName
 {
     [SerializeField]
-    GameObject CanvasObj;
+    GameObject TextObj;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CanvasObj.SetActive(true);
+            TextObj.SetActive(true);
         }
     }
 
@@ -16,12 +21,22 @@ public class DropItemCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            CanvasObj.SetActive(false);
+            TextObj.SetActive(false);
         }
     }
 
     private void OnDisable()
     {
-        CanvasObj.SetActive(false);
+        TextObj.SetActive(false);
+    }
+
+    public void ShowItemName()
+    {
+        TextObj.SetActive(true);
+    }
+
+    public void HideItemName()
+    {
+        TextObj.SetActive(false);
     }
 }

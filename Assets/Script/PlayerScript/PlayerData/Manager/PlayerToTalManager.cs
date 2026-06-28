@@ -9,6 +9,7 @@ public class PlayerToTalManager : MonoBehaviour
     private PlayerAnimationEvents playerAnimationEvents;
     private PlayerAttackManager playerAttackManager;
     private PlayerReactManager playerReactManager;
+
     private void Awake()
     {
 

@@ -26,6 +26,11 @@ public class InstanceDropItem : MonoBehaviour
     private float returnTime = 60.0f;
 
     private Rigidbody rigid;
+
+    //자체적으로 이 오브젝트가 들고있는 정보들 나열
+    public int itemID { get; private set; }
+    public int amount;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -42,17 +47,26 @@ public class InstanceDropItem : MonoBehaviour
         
     }
 
-    public void SettingDropItem(Mesh _itemMesh, Material _itemMaterial, Vector3 _itemRotation, Vector3 _itemScale, Vector3 _itemPosition, int _itemID)
+    public void SettingDropItem(Mesh _itemMesh, Material _itemMaterial, Vector3 _itemRotation, Vector3 _itemScale, Vector3 _itemPosition, int _itemID, int _amount)
     {
+        //이미지 변경
         meshFilter.sharedMesh = _itemMesh;
         meshRenderer.sharedMaterial = _itemMaterial;
 
+        //이미지 위치 조절
         visualRootTransform.localEulerAngles = _itemRotation + new Vector3(-90, 0,0);
         visualRootTransform.localScale = _itemScale;
         this.transform.position = _itemPosition + new Vector3(0, 1.5f, 0);
         visualRootTransform.position = _itemPosition + new Vector3(0,1.5f,0);
         effectTransform.position = visualRootTransform.position;
+
+        //UI정보 초기화
         dropItemUI.Init(_itemPosition, _itemID);
+
+        //아이템 아이디 저장
+        itemID = _itemID;
+
+        amount = _amount;
     }
 
     public void RealDrop()
@@ -60,6 +74,11 @@ public class InstanceDropItem : MonoBehaviour
         Vector3 random_force = new Vector3(Random.Range(-3f, 3f), Random.Range(4f, 6f), Random.Range(-3f, 3f));
 
         rigid.AddForce(random_force, ForceMode.Impulse);
+    }
+    
+    public void ImmediatelyreturnDropItem()
+    {
+        DropItemPoolManager.Instance.ReturnPool(this);
     }
 
     //돌아가야지, 일정 시간지나면 다시 풀로
