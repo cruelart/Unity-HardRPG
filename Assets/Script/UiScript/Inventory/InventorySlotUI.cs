@@ -21,6 +21,7 @@ public class InventorySlotUI : MonoBehaviour
 
         if (item.count > 1)
         {
+            Debug.Log("item.count" + item.count);
             countText.text = item.count.ToString();
         }
         else
@@ -28,4 +29,20 @@ public class InventorySlotUI : MonoBehaviour
             countText.text = "";
         }
     }
+
+    //public void SetItem(EquipmentItemInstance _item)
+    //{
+    //    item = _item;
+
+    //    itemIcon.sprite = item.setting.itemIcon;
+
+    //    if (item.count > 1)
+    //    {
+    //        countText.text = item.count.ToString();
+    //    }
+    //    else
+    //    {
+    //        countText.text = "";
+    //    }
+    //}
 }

@@ -4,18 +4,12 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    public Re_Inventory Inventory { get; private set; }
-
-    [SerializeField]
-    private InventoryUI inventoryUI;
-
     private void Awake()
     {
-        Instance = this;
-
-        Inventory = new Re_Inventory();
-
-        inventoryUI.init(Inventory);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,5 +21,37 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private BaseitemDB GetItemInformation(int _itemID)
+    {
+        return ItemDataManager.Instance.GetBaseitemDB(_itemID);
+    }
+
+    public void AddItemInInventory(Re_Inventory _inventoryDB, int _itemID, int _amount)
+    {
+        BaseitemDB Item = GetItemInformation(_itemID); // 인벤토리에 집어넣을 아이템
+
+        BaseitemDB.ItemType itemTypeName = Item.itemType;
+        Debug.Log("BaseitemDB.ItemType" + itemTypeName);
+        
+        //타입에 따라 아이템넣기
+        switch(itemTypeName)
+        {
+            //장비
+            case BaseitemDB.ItemType.Equipment:
+                _inventoryDB.AddEquipmentItem(_itemID, _amount);
+                break;
+
+            //소비
+            case BaseitemDB.ItemType.Consumable:
+                Debug.Log("InventoryManager : MonoBehaviour : 소비아이템을 획득하였습니다");
+                _inventoryDB.AddConsumerItem(_itemID, _amount);
+                break;
+
+            //기타
+            case BaseitemDB.ItemType.Etc:
+                break;
+        }
     }
 }

@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 5070255154302016780}
   m_Layer: 9
   m_Name: DropItem
-  m_TagString: Untagged
+  m_TagString: DropItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,6 +258,7 @@ MonoBehaviour:
   dropItemUI: {fileID: 5982655695677300673}
   effectTransform: {fileID: 1536839223767755527}
   returnTime: 60
+  amount: 0
 --- !u!54 &7516790577008733757
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -455,7 +456,7 @@ GameObject:
   - component: {fileID: 6905934886237707574}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DropItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506e16b7ec35afd48a0e84dca15d29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasObj: {fileID: 770615262324450471}
+  TextObj: {fileID: 5637099548725274186}
 --- !u!1001 &2880719599709935423
 PrefabInstance:
   m_ObjectHideFlags: 0

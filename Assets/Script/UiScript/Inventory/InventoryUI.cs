@@ -18,7 +18,8 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        inventory.AddConsumerItem(2, 300);
+        inventory.AddConsumerItem(2, 99);
+        inventory.OnChangeInventory += ShowInventory;
         ShowInventory();
     }
 
@@ -40,7 +41,7 @@ public class InventoryUI : MonoBehaviour
     {
         foreach(var slot in slotList) // 남아있는 ui찌꺼기들 싹다 제거
         {
-            Destroy(slot);
+            Destroy(slot.gameObject);
         }
 
         slotList.Clear(); // 다 비워버리기

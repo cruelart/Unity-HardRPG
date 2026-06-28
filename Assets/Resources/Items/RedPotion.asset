@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Red Potion
   itemIcon: {fileID: 21300000, guid: b3ed403ace9583a47a455514589276b5, type: 3}
   description: 
-  itemType: 0
+  itemType: 1
   stats: []
   sell_gold: 0
   buy_gold: 0

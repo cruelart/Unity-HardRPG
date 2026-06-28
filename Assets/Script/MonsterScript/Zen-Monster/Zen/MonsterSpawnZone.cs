@@ -30,7 +30,7 @@ public class MonsterSpawnZone : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("Physics Tick");
+        //Debug.Log("Physics Tick");
     }
 
     private void OnEnable()
