@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     private Re_Inventory inventoryDB;
+    private EquipSpace equipSpace;
     private PlayerDropItemInteraction playerDropItemInteraction;
 
     [SerializeField]
@@ -12,6 +13,12 @@ public class PlayerInventory : MonoBehaviour
     {
         inventoryDB = GetComponent<Re_Inventory>();
         inventoryDB.Init();
+
+        InventoryManager.Instance.Init(inventoryDB);
+
+        equipSpace = GetComponent<EquipSpace>();
+
+        EquipSpaceManager.Instance.Init(equipSpace);
 
         playerDropItemInteraction = GetComponent<PlayerDropItemInteraction>();
         inventoryUI.init(inventoryDB);

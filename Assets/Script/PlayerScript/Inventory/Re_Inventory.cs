@@ -25,7 +25,10 @@ public class Re_Inventory : MonoBehaviour
     //아이템이 추가됐음을 알리는 이벤트 -> UI변경용
     public event Action<int, bool> OnChangeConsumerInventory; // 슬롯 번호, 교체할 것인지 여부
     public event Action<int> OnChangeEquipInventory;
-    public event Action OnChangeEtcInventory;
+    //public event Action OnChangeEtcInventory;
+
+    //아이템 장착용 이벤트
+    public event Action OnEquipItem;
 
     //장비 아이템
     public List<EquipInventorySlot> equipmentItemSlotList = new List<EquipInventorySlot>(); // 인벤토리 나열용
@@ -215,6 +218,20 @@ public class Re_Inventory : MonoBehaviour
         }
 
         list.Add(_slotIndex);
+    }
+
+    public void EquipItem(int _slotIndex)
+    {
+        RemoveEquipmentItem(_slotIndex);
+        OnEquipItem?.Invoke();
+    }
+
+    //인벤토리에서 장비아이템 제거
+    //1. 슬롯자체 번호전달받아서 제거 -> 장비창으로 옮기는 용도
+    public void RemoveEquipmentItem(int _slotIndex)
+    {
+        equipmentItemSlotList[_slotIndex].item = null;
+        OnChangeEquipInventory?.Invoke(_slotIndex);
     }
 
     private int FindEmptyEquipSlot()

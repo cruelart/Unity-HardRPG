@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,10 +18,18 @@ public class ConsumerSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField]
     private RectTransform rectTansform;
 
+    public int slotIndex {get; private set;}
+
     public bool isSettingItem { get; private set; }
+
+    public void Init(int _slotIndex)
+    {
+        slotIndex = _slotIndex;
+    }
 
     public void SetItem(ConsumerItemInstance _item)
     {
+
         isSettingItem = true;
         itemIcon.enabled = true;
 

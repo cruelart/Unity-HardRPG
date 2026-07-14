@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
 
 [System.Serializable]
 public class PlayerDB
@@ -17,6 +18,7 @@ public class PlayerDB
     public float posZ;
 
     public List<Stat> stats;
+    public Dictionary<StatType, Stat> statDict = new Dictionary<StatType, Stat>();
 
     public PlayerDB()
     {
@@ -33,6 +35,7 @@ public class PlayerDB
 
         //ÃÊ±â ½ºÅÝ
         InitStat();
+        statDict = stats.ToDictionary(s => s.type);
     }
 
     private void AddStat(StatType _type, float _value)
@@ -57,5 +60,15 @@ public class PlayerDB
         AddStat(StatType.DEX, 5);
         AddStat(StatType.INT, 5);
         AddStat(StatType.LUK, 5);
+    }
+
+    public void SetAddStat(StatType _type, float value)
+    {
+        statDict[_type].value += value;
+    }
+
+    public void SetRemoveStat(StatType _type, float value)
+    {
+        statDict[_type].value -= value;
     }
 }
