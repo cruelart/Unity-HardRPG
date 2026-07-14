@@ -28,6 +28,31 @@ public class InventoryManager : MonoBehaviour
         return ItemDataManager.Instance.GetBaseitemDB(_itemID);
     }
 
+    public bool isPossibleGetItem(Re_Inventory _inventoryDB, int _itemID, int _amount)
+    {
+        BaseitemDB Item = GetItemInformation(_itemID); // 인벤토리에 집어넣을 아이템
+
+        BaseitemDB.ItemType itemTypeName = Item.itemType;
+        //Debug.Log("BaseitemDB.ItemType" + itemTypeName);
+
+        //타입에 따라 아이템넣기
+        switch (itemTypeName)
+        {
+            //장비
+            case BaseitemDB.ItemType.Equipment:
+                return !_inventoryDB.isFullEquipItem();
+
+            //소비
+            case BaseitemDB.ItemType.Consumable:
+                return !_inventoryDB.isFullConsumerItem(_itemID, _amount);
+            //기타
+            case BaseitemDB.ItemType.Etc:
+                break;
+        }
+
+        return true;
+    }
+
     public void AddItemInInventory(Re_Inventory _inventoryDB, int _itemID, int _amount)
     {
         BaseitemDB Item = GetItemInformation(_itemID); // 인벤토리에 집어넣을 아이템
