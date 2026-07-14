@@ -7,10 +7,16 @@ public class DropItemUI : MonoBehaviour
     private TextMeshProUGUI dropItemName;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public void Init(Vector3 _itemPosition, int _itemID)
+    public void Init(Vector3 _itemPosition, int _itemID, int _amount)
     {
+        string amount = "";
+        if(_amount != 1)
+        {
+            amount = _amount.ToString() + "°³";
+        }
+
         this.transform.position = _itemPosition + new Vector3(0.0f, 3.0f, 0.0f);
-        dropItemName.text = ItemDataManager.Instance.GetBaseitemDB(_itemID).itemName;
+        dropItemName.text = ItemDataManager.Instance.GetBaseitemDB(_itemID).itemName + " " + amount;
     }
     void Start()
     {

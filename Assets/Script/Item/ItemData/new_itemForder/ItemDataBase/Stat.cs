@@ -15,6 +15,7 @@ public enum StatType
     DEX, // 민첩
     INT, // 지력
     LUK, // 행운
+    Mental, // 정신력
 }
 
 [System.Serializable]

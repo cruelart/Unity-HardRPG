@@ -9,5 +9,7 @@ public class MonsterDeadEventData
 
 public static class GameEventChannel
 {
-    public static Action<MonsterDeadEventData> OnMonsterDead;
+    //public static Action<MonsterDeadEventData> OnMonsterDead;
+
+    public static Action<string> OnNotify;
 }

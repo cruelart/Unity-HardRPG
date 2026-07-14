@@ -47,6 +47,7 @@ public class PlayerDropItemInteraction : MonoBehaviour
         inventoryDB = _inventoryDB;
     }
 
+
     public void GetDropItem()
     {
         //드랍할거 없으면 그냥 return
@@ -76,8 +77,11 @@ public class PlayerDropItemInteraction : MonoBehaviour
         InventoryManager.Instance.AddItemInInventory(inventoryDB, real_dropitem.itemID, real_dropitem.amount); // 플레이어 인벤토리에 해당 아이템 아이디를 가진 것을 amount만큼 넣어주세요~
 
         //해제타임
-        real_dropitem.ImmediatelyreturnDropItem(); // 쓴건 반환하기
-        dropItemsHash.Remove(real_dropitem);
+        if (InventoryManager.Instance.isPossibleGetItem(inventoryDB, real_dropitem.itemID, real_dropitem.amount))
+        {
+            real_dropitem.ImmediatelyreturnDropItem(); // 쓴건 반환하기
+            dropItemsHash.Remove(real_dropitem);
+        }
 
     }
 }

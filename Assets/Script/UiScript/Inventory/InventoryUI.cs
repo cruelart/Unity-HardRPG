@@ -1,26 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
+//using static UnityEditor.Progress;
 
 public class InventoryUI : MonoBehaviour
 {
     [Header("상위 부모 설정")]
     [SerializeField]
-    private Transform content;
+    private Transform equip_content;
 
-    [Header("인벤토리 슬롯 프리팹 투입")]
     [SerializeField]
-    private InventorySlotUI slotPrefab;
+    private Transform consumer_content;
+
+    [SerializeField]
+    private Transform etx_content;
+
+    [Header("인벤토리 장비 슬롯 프리팹 투입")]
+    [SerializeField]
+    private EquipSlotUI equip_slotPrefab;
+
+    [Header("인벤토리 소비 슬롯 프리팹 투입")]
+    [SerializeField]
+    private ConsumerSlotUI consumer_slotPrefab;
 
     private Re_Inventory inventory;
 
-    private List<InventorySlotUI> slotList = new List<InventorySlotUI>();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private List<EquipSlotUI> equip_slotList = new List<EquipSlotUI>();
+    private List<ConsumerSlotUI> consumer_slotList = new List<ConsumerSlotUI>();
 
     void Start()
     {
-        inventory.AddConsumerItem(2, 99);
-        inventory.OnChangeInventory += ShowInventory;
-        ShowInventory();
+        inventory.OnChangeConsumerInventory += AddConsumer_In_Inventory;
+        inventory.OnChangeEquipInventory += AddEquip_In_Inventory;
+        //ShowConsumerInventory();
     }
 
     // Update is called once per frame
@@ -33,31 +44,86 @@ public class InventoryUI : MonoBehaviour
     public void init(Re_Inventory _inventory)
     {
         inventory = _inventory;
-        
+
         //ShowInventory();
+
+        foreach (var itemSlot in inventory.equipmentItemSlotList)
+        {
+            EquipSlotUI slot = Instantiate(equip_slotPrefab, equip_content);
+            //slot.SetItem(itemSlot.item);
+
+            equip_slotList.Add(slot);
+        }
+
+        foreach (var itemSlot in inventory.consumerItemSlotList)
+        {
+            ConsumerSlotUI slot = Instantiate(consumer_slotPrefab, consumer_content);
+
+            //slot.SetItem(itemSlot.item);
+
+            consumer_slotList.Add(slot);
+        }
     }
 
-    private void ClearSlots()
+    private void ClearEquipSlots()
     {
-        foreach(var slot in slotList) // 남아있는 ui찌꺼기들 싹다 제거
+        foreach(var slot in equip_slotList) // 남아있는 ui찌꺼기들 싹다 제거
         {
             Destroy(slot.gameObject);
         }
 
-        slotList.Clear(); // 다 비워버리기
+        equip_slotList.Clear(); // 다 비워버리기
     }
 
-    public void ShowInventory()
+    private void ClearConsumerSlots()
     {
-        ClearSlots();
-        //Debug.Log("ShowInventory가 호출됐습니다");
-        foreach (var item in inventory.consumerItemList)
+        foreach (var slot in consumer_slotList) // 남아있는 ui찌꺼기들 싹다 제거
         {
-            InventorySlotUI slot = Instantiate(slotPrefab, content);
+            Destroy(slot.gameObject);
+        }
 
-            slot.SetItem(item);
+        consumer_slotList.Clear(); // 다 비워버리기
+    }
 
-            slotList.Add(slot);
+    public void AddEquip_In_Inventory(int _slotIndex)
+    {
+        EquipInventorySlot itemSlot = inventory.equipmentItemSlotList[_slotIndex];
+
+        equip_slotList[_slotIndex].SetItem(itemSlot.item);
+    }
+
+    public void AddConsumer_In_Inventory(int _slotIndex, bool _isNeedSlot)
+    {
+        var itemSlot = inventory.consumerItemSlotList[_slotIndex];
+        consumer_slotList[_slotIndex].SetItem(itemSlot.item);
+    }
+
+    //정렬용
+    public void ShowSortedEquipInventory()
+    {
+        ClearEquipSlots();
+        //Debug.Log("ShowInventory가 호출됐습니다");
+        foreach (var itemSlot in inventory.equipmentItemSlotList)
+        {
+            EquipSlotUI slot = Instantiate(equip_slotPrefab, equip_content);
+
+            slot.SetItem(itemSlot.item);
+
+            equip_slotList.Add(slot);
+        }
+    }
+
+    public void ShowSortedConsumerInventory()
+    {
+        ClearConsumerSlots();
+        //Debug.Log("ShowInventory가 호출됐습니다");
+        foreach (var itemSlot in inventory.consumerItemSlotList)
+        {
+            ConsumerSlotUI slot = Instantiate(consumer_slotPrefab, consumer_content);
+
+            slot.SetItem(itemSlot.item);
+
+            consumer_slotList.Add(slot);
         }
     }
 }

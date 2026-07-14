@@ -61,7 +61,7 @@ public class InstanceDropItem : MonoBehaviour
         effectTransform.position = visualRootTransform.position;
 
         //UI정보 초기화
-        dropItemUI.Init(_itemPosition, _itemID);
+        dropItemUI.Init(_itemPosition, _itemID, _amount);
 
         //아이템 아이디 저장
         itemID = _itemID;

@@ -11,6 +11,8 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         inventoryDB = GetComponent<Re_Inventory>();
+        inventoryDB.Init();
+
         playerDropItemInteraction = GetComponent<PlayerDropItemInteraction>();
         inventoryUI.init(inventoryDB);
         playerDropItemInteraction.Init(inventoryDB);
