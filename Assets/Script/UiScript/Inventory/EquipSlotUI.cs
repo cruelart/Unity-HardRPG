@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EquipSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    //public event Action<int> OnDoubleClick; // 슬롯번호 전달예정
+    public event Action<int> OnEquipRequest; // 슬롯번호 전달예정
 
     [SerializeField]
     private Image itemIcon;
@@ -58,6 +58,7 @@ public class EquipSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void ClearItem()
     {
+        equip_item = null;
         isSettingItem = false;
 
         itemIcon.sprite = null;
@@ -126,6 +127,6 @@ public class EquipSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return; // 아이템 비어있으면 아무것도 안되야 정상
         }
 
-        InventoryManager.Instance.RemoveItemInInventory(slotIndex); // 해당 슬롯 지워버리기
+        OnEquipRequest?.Invoke(slotIndex);
     }
 }

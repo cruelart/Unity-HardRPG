@@ -9,6 +9,9 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField]
     private InventoryUI inventoryUI;
 
+    [SerializeField]
+    private EquipSpaceUI equipSpaceUI;
+
     private void Awake()
     {
         inventoryDB = GetComponent<Re_Inventory>();
@@ -23,6 +26,7 @@ public class PlayerInventory : MonoBehaviour
         playerDropItemInteraction = GetComponent<PlayerDropItemInteraction>();
         inventoryUI.init(inventoryDB);
         playerDropItemInteraction.Init(inventoryDB);
+        equipSpaceUI.Init(equipSpace);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

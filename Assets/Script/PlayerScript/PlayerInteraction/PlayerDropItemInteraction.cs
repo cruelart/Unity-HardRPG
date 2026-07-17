@@ -72,16 +72,16 @@ public class PlayerDropItemInteraction : MonoBehaviour
         }
         //-> 가까운 아이템 찾기 완료
 
-        Debug.Log("획득할 아이템 id 는" + real_dropitem.itemID);
+        if (!InventoryManager.Instance.isPossibleGetItem(real_dropitem.itemID, real_dropitem.amount))
+        {
+            GameEventChannel.OnNotify("인벤토리를 가득찼습니다.");
+            return;
+        }
+
         Debug.Log("획득할 아이템 갯수 는" + real_dropitem.amount);
         InventoryManager.Instance.AddItemInInventory(real_dropitem.itemID, real_dropitem.amount); // 플레이어 인벤토리에 해당 아이템 아이디를 가진 것을 amount만큼 넣어주세요~
-
-        //해제타임
-        if (InventoryManager.Instance.isPossibleGetItem(real_dropitem.itemID, real_dropitem.amount))
-        {
-            real_dropitem.ImmediatelyreturnDropItem(); // 쓴건 반환하기
-            dropItemsHash.Remove(real_dropitem);
-        }
+        real_dropitem.ImmediatelyreturnDropItem(); // 쓴건 반환하기
+        dropItemsHash.Remove(real_dropitem);
 
     }
 }

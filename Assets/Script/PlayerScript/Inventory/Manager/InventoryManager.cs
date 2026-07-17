@@ -47,7 +47,7 @@ public class InventoryManager : MonoBehaviour
         {
             //장비
             case BaseitemDB.ItemType.Equipment:
-                return !inventoryDB.isFullEquipItem();
+                return !inventoryDB.isFullEquipItem(_amount);
 
             //소비
             case BaseitemDB.ItemType.Consumable:
@@ -60,10 +60,6 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    public void RemoveItemInInventory(int _slotIndex)
-    {
-        inventoryDB.RemoveEquipmentItem(_slotIndex);
-    }
 
     public void AddItemInInventory(int _itemID, int _amount)
     {
@@ -92,13 +88,21 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public bool AddItemInInventory(EquipmentItemInstance _equipItem, int _amount)
+    {
+        return inventoryDB.AddEquipmentItem(_equipItem, _amount);
+    }
+
     public void EquipItem(int _slotIndex)
     {
         EquipmentItemInstance item = inventoryDB.equipmentItemSlotList[_slotIndex].item;
 
-        //인벤토리에서 장비 지우고
-        RemoveItemInInventory(_slotIndex);
-
         EquipSpaceManager.Instance.EquipItem(item);
+        inventoryDB.EquipItem(_slotIndex);
+    }
+
+    public bool IsFullEquipSlot(int _amount)
+    {
+        return inventoryDB.isFullEquipItem(_amount);
     }
 }

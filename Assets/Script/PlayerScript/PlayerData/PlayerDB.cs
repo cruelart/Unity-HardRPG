@@ -52,6 +52,7 @@ public class PlayerDB
         AddStat(StatType.Attack, 60);
         AddStat(StatType.Defense, 10);
         AddStat(StatType.MoveSpeed, 1);
+        AddStat(StatType.Mental, 10);
         AddStat(StatType.CriticalPercent, 0);
         AddStat(StatType.HP, 100);
         AddStat(StatType.MP, 100);

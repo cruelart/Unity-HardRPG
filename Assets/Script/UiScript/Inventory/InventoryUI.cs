@@ -27,12 +27,6 @@ public class InventoryUI : MonoBehaviour
     private List<EquipSlotUI> equip_slotList = new List<EquipSlotUI>();
     private List<ConsumerSlotUI> consumer_slotList = new List<ConsumerSlotUI>();
 
-    void Start()
-    {
-        inventory.OnChangeConsumerInventory += AddConsumer_In_Inventory;
-        inventory.OnChangeEquipInventory += AddEquip_In_Inventory;
-        //ShowConsumerInventory();
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,6 +39,9 @@ public class InventoryUI : MonoBehaviour
     {
         inventory = _inventory;
 
+        inventory.OnChangeConsumerInventory += AddConsumer_In_Inventory;
+        inventory.OnChangeEquipInventory += AddEquip_In_Inventory;
+
         //ShowInventory();
 
         int equipIndex = 0;
@@ -53,6 +50,9 @@ public class InventoryUI : MonoBehaviour
         foreach (var itemSlot in inventory.equipmentItemSlotList)
         {
             EquipSlotUI slot = Instantiate(equip_slotPrefab, equip_content);
+
+            slot.OnEquipRequest += InventoryManager.Instance.EquipItem;
+
             //slot.SetItem(itemSlot.item);
             slot.Init(equipIndex++);
 
@@ -62,6 +62,8 @@ public class InventoryUI : MonoBehaviour
         foreach (var itemSlot in inventory.consumerItemSlotList)
         {
             ConsumerSlotUI slot = Instantiate(consumer_slotPrefab, consumer_content);
+
+            slot.OnConsumerRequest += InventoryManager.Instance.EquipItem;
 
             //slot.SetItem(itemSlot.item);
             slot.Init(consumerIndex++);

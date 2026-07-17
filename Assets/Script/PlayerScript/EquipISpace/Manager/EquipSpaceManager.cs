@@ -21,6 +21,11 @@ public class EquipSpaceManager : MonoBehaviour
 
     public void EquipItem(EquipmentItemInstance _item)
     {
-        equipSpace.EquipItem(_item);
+       equipSpace.EquipItem(_item);
+    }
+
+    public void TakeOffItem(EquipmentItemInstance _item)
+    {
+        equipSpace.TakeOffItem(_item);
     }
 }
