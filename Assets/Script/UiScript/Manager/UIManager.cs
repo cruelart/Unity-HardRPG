@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     private InventoryUI inventoryUI;
 
     [SerializeField]
+    private EquipSpaceUI equipSpaceUI;
+
+    [SerializeField]
     private EquipToolTip equipToolTip;
 
     [SerializeField]
@@ -30,6 +33,17 @@ public class UIManager : MonoBehaviour
     public void HideInventoryUI()
     {
         inventoryUI.gameObject.SetActive(false);
+    }
+
+    public void ShowEquipSpaceUI()
+    {
+        equipSpaceUI.gameObject.transform.SetAsLastSibling();
+        equipSpaceUI.gameObject.SetActive(true);
+    }
+
+    public void HideEquipSpaceUI()
+    {
+        equipSpaceUI.gameObject.SetActive(false);
     }
 
     public void ShowEquipToolTip(EquipmentItemInstance _item, RectTransform _slotRect)

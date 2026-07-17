@@ -27,12 +27,6 @@ public class InventoryUI : MonoBehaviour
     private List<EquipSlotUI> equip_slotList = new List<EquipSlotUI>();
     private List<ConsumerSlotUI> consumer_slotList = new List<ConsumerSlotUI>();
 
-    void Start()
-    {
-        inventory.OnChangeConsumerInventory += AddConsumer_In_Inventory;
-        inventory.OnChangeEquipInventory += AddEquip_In_Inventory;
-        //ShowConsumerInventory();
-    }
 
     // Update is called once per frame
     void Update()
@@ -45,12 +39,22 @@ public class InventoryUI : MonoBehaviour
     {
         inventory = _inventory;
 
+        inventory.OnChangeConsumerInventory += AddConsumer_In_Inventory;
+        inventory.OnChangeEquipInventory += AddEquip_In_Inventory;
+
         //ShowInventory();
+
+        int equipIndex = 0;
+        int consumerIndex = 0;
 
         foreach (var itemSlot in inventory.equipmentItemSlotList)
         {
             EquipSlotUI slot = Instantiate(equip_slotPrefab, equip_content);
+
+            slot.OnEquipRequest += InventoryManager.Instance.EquipItem;
+
             //slot.SetItem(itemSlot.item);
+            slot.Init(equipIndex++);
 
             equip_slotList.Add(slot);
         }
@@ -59,8 +63,10 @@ public class InventoryUI : MonoBehaviour
         {
             ConsumerSlotUI slot = Instantiate(consumer_slotPrefab, consumer_content);
 
-            //slot.SetItem(itemSlot.item);
+            slot.OnConsumerRequest += InventoryManager.Instance.EquipItem;
 
+            //slot.SetItem(itemSlot.item);
+            slot.Init(consumerIndex++);
             consumer_slotList.Add(slot);
         }
     }
@@ -102,6 +108,7 @@ public class InventoryUI : MonoBehaviour
     public void ShowSortedEquipInventory()
     {
         ClearEquipSlots();
+
         //Debug.Log("ShowInventory가 호출됐습니다");
         foreach (var itemSlot in inventory.equipmentItemSlotList)
         {
@@ -116,6 +123,9 @@ public class InventoryUI : MonoBehaviour
     public void ShowSortedConsumerInventory()
     {
         ClearConsumerSlots();
+
+        //int slotNum = 1;
+
         //Debug.Log("ShowInventory가 호출됐습니다");
         foreach (var itemSlot in inventory.consumerItemSlotList)
         {
@@ -124,6 +134,30 @@ public class InventoryUI : MonoBehaviour
             slot.SetItem(itemSlot.item);
 
             consumer_slotList.Add(slot);
+        }
+    }
+
+    private void EquipItem(int _slotIndex)
+    {
+        //장착할 아이템
+        EquipmentItemInstance item = inventory.equipmentItemSlotList[_slotIndex].item;
+
+        if(item == null)
+        {
+            Debug.Log("InventoryUI에서 장착할 아이템을 찾는데 실패했습니다");
+            return;
+        }
+    }
+
+    private void UseConsumerItem(int _slotIndex)
+    {
+        //장착할 아이템
+        ConsumerItemInstance item = inventory.consumerItemSlotList[_slotIndex].item;
+
+        if (item == null)
+        {
+            Debug.Log("InventoryUI에서 장착할 아이템을 찾는데 실패했습니다");
+            return;
         }
     }
 }

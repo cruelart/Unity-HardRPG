@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerUIScript : MonoBehaviour
 {
     bool onInventoryPanel = false;
+    bool onEquipSpacePanel = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,25 @@ public class PlayerUIScript : MonoBehaviour
                     onInventoryPanel = true;
                     ShowMouseButton();
                     UIManager.Instance.ShowInventoryUI();
+                    break;
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            switch (onEquipSpacePanel)
+            {
+                case true:
+                    onEquipSpacePanel = false;
+                    HideMouseButton();
+                    UIManager.Instance.HideEquipSpaceUI();
+                    break;
+
+                case false:
+                    onEquipSpacePanel = true;
+                    ShowMouseButton();
+                    UIManager.Instance.ShowEquipSpaceUI();
                     break;
 
             }

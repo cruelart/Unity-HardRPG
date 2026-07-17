@@ -1,10 +1,13 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ConsumerSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ConsumerSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    public event Action<int> OnConsumerRequest; // 슬롯번호 전달예정
+
     [SerializeField]
     private Image itemIcon;
 
@@ -17,10 +20,24 @@ public class ConsumerSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField]
     private RectTransform rectTansform;
 
+    public int slotIndex {get; private set;}
+
     public bool isSettingItem { get; private set; }
+
+    [Header("더블 클릭 설정")]
+    [SerializeField]
+    private float doubleClickTime = 0.2f;
+
+    private float lastClickTime;
+
+    public void Init(int _slotIndex)
+    {
+        slotIndex = _slotIndex;
+    }
 
     public void SetItem(ConsumerItemInstance _item)
     {
+
         isSettingItem = true;
         itemIcon.enabled = true;
 
@@ -87,5 +104,26 @@ public class ConsumerSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         UIManager.Instance.HideConsumerToolTip();
+    }
+
+    //아이템 더블 클릭시 소비아이템 사용 함수모음
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (Time.unscaledTime - lastClickTime <= doubleClickTime)
+        {
+            OnDoubleClick();
+        }
+
+        lastClickTime = Time.unscaledTime;
+    }
+
+    public void OnDoubleClick()
+    {
+        if (consumer_item == null)
+        {
+            return; // 아이템 비어있으면 아무것도 안되야 정상
+        }
+
+        OnConsumerRequest?.Invoke(slotIndex);
     }
 }

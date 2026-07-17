@@ -37,8 +37,8 @@ MonoBehaviour:
   personalDropItems:
   - itemID: 1
     dropPercent: 40.6
-    minCount: 1
-    maxCount: 1
+    minCount: 10
+    maxCount: 11
   - itemID: 2
     dropPercent: 40.6
     minCount: 1
@@ -49,5 +49,9 @@ MonoBehaviour:
     maxCount: 1
   - itemID: 4
     dropPercent: 83.3
-    minCount: 800
-    maxCount: 801
+    minCount: 1
+    maxCount: 3
+  - itemID: 100
+    dropPercent: 83.3
+    minCount: 1
+    maxCount: 1

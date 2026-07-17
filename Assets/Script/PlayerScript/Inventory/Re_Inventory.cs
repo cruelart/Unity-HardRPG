@@ -25,7 +25,7 @@ public class Re_Inventory : MonoBehaviour
     //아이템이 추가됐음을 알리는 이벤트 -> UI변경용
     public event Action<int, bool> OnChangeConsumerInventory; // 슬롯 번호, 교체할 것인지 여부
     public event Action<int> OnChangeEquipInventory;
-    public event Action OnChangeEtcInventory;
+    //public event Action OnChangeEtcInventory;
 
     //장비 아이템
     public List<EquipInventorySlot> equipmentItemSlotList = new List<EquipInventorySlot>(); // 인벤토리 나열용
@@ -82,7 +82,7 @@ public class Re_Inventory : MonoBehaviour
         string notify_str = "";
 
         //장비창이 꽉찼을 경우
-        if (isFullEquipItem())
+        if (isFullEquipItem(_amount))
         {
             notify_str = $"아이템이 가득찼습니다";
             GameEventChannel.OnNotify?.Invoke(notify_str);
@@ -113,6 +113,49 @@ public class Re_Inventory : MonoBehaviour
         }
 
         GameEventChannel.OnNotify?.Invoke(notify_str);
+        //equipmentItemList.Add(_item);
+        //equipmentItemMap.Add(_item.instanceID, _item);
+
+    }
+
+    public bool AddEquipmentItem(EquipmentItemInstance _item, int _amount)
+    {
+        string notify_str = "";
+
+        //장비창이 꽉찼을 경우
+        if (isFullEquipItem(_amount))
+        {
+            notify_str = $"장비 인벤토리를 1칸이상 비워주세요";
+            GameEventChannel.OnNotify?.Invoke(notify_str);
+            return false;
+        }
+
+        //Debug.Log("여긴 아직 버그가 아님");
+
+        //EquipmentItemDB new_equipmentItemDB = ItemDataManager.Instance.GetEquipmentItemDB(_itemID);
+
+        //notify_str = $"{new_equipmentItemDB.itemName}을(를) {_amount}개 획득하였습니다.";
+
+        while (_amount > 0)
+        {
+            int emptySlotIndex = FindEmptyEquipSlot();
+            Debug.Log("emptySlotIndex" + emptySlotIndex);
+
+            if (emptySlotIndex == -1)
+            {
+                notify_str = $"장비 인벤토리를 1칸이상 비워주세요.";
+                GameEventChannel.OnNotify?.Invoke(notify_str);
+                return false; // 빈자리없으니 더 이상 획득은 불가능
+            }
+
+            equipmentItemSlotList[emptySlotIndex].item = _item;
+            current_equipNum++;
+
+            OnChangeEquipInventory?.Invoke(emptySlotIndex);
+            _amount--;
+        }
+
+        return true;
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
 
@@ -217,6 +260,24 @@ public class Re_Inventory : MonoBehaviour
         list.Add(_slotIndex);
     }
 
+    public void EquipItem(int _slotIndex)
+    {
+        RemoveEquipmentItem(_slotIndex);
+    }
+
+    //인벤토리에서 장비아이템 제거
+    //1. 슬롯자체 번호전달받아서 제거 -> 장비창으로 옮기는 용도
+    public void RemoveEquipmentItem(int _slotIndex)
+    {
+        if(current_equipNum == 0)
+        {
+            return;
+        }
+        equipmentItemSlotList[_slotIndex].item = null;
+        current_equipNum--;
+        OnChangeEquipInventory?.Invoke(_slotIndex);
+    }
+
     private int FindEmptyEquipSlot()
     {
         for(int i = 0; i < equip_ListMaxNum; i++)
@@ -254,13 +315,12 @@ public class Re_Inventory : MonoBehaviour
             return true;
         }
 
-        return current_consumerNum >= consumer_ListMaxNum;
+        return current_consumerNum > consumer_ListMaxNum;
     }
 
-    public bool isFullEquipItem()
+    public bool isFullEquipItem(int _amount)
     {
-
-        return current_equipNum >= equip_ListMaxNum;
+        return current_equipNum + _amount > equip_ListMaxNum;
     }
 
     //장비아이템 정렬
