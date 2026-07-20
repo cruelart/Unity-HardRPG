@@ -52,7 +52,7 @@ public class DamageTextManager : MonoBehaviour
     {
         DamageText damageText = damageTextPool.Dequeue();
 
-        Vector3 showPos = Camera.main.WorldToScreenPoint(_targetTransform.position + new Vector3(Random.Range(-0.4f,0.4f), 2.3f, Random.Range(-0.4f,0.4f)));
+        Vector3 showPos = Camera.main.WorldToScreenPoint(_targetTransform.position + new Vector3(Random.Range(-0.4f,0.4f), 1.3f, Random.Range(-0.4f,0.4f)));
         damageText.GetRectTransform().position = showPos;
         damageText.Setup(_damage, _color);
 

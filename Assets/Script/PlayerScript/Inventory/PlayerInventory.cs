@@ -1,16 +1,17 @@
 using UnityEngine;
 
+//더미데이터로 남겨놓자
 public class PlayerInventory : MonoBehaviour
 {
     private Re_Inventory inventoryDB;
-    private EquipSpace equipSpace;
+    private EquipSpace equipSpaceDB;
     private PlayerDropItemInteraction playerDropItemInteraction;
 
     [SerializeField]
-    private InventoryUI inventoryUI;
+    private InventoryUIManager inventoryUI;
 
     [SerializeField]
-    private EquipSpaceUI equipSpaceUI;
+    private EquipSpaceUIManager equipSpaceUI;
 
     private void Awake()
     {
@@ -19,14 +20,14 @@ public class PlayerInventory : MonoBehaviour
 
         InventoryManager.Instance.Init(inventoryDB);
 
-        equipSpace = GetComponent<EquipSpace>();
+        equipSpaceDB = GetComponent<EquipSpace>();
 
-        EquipSpaceManager.Instance.Init(equipSpace);
+        EquipSpaceManager.Instance.Init(equipSpaceDB);
 
         playerDropItemInteraction = GetComponent<PlayerDropItemInteraction>();
-        inventoryUI.init(inventoryDB);
+        inventoryUI.Init(inventoryDB);
         playerDropItemInteraction.Init(inventoryDB);
-        equipSpaceUI.Init(equipSpace);
+        equipSpaceUI.Init(equipSpaceDB);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

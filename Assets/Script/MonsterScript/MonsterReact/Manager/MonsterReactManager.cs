@@ -21,11 +21,11 @@ public class MonsterReactManager : MonoBehaviour, IF_OnDamaged
         monsterStatManager = _monsterStatmanager;
     }
 
-    public void OnDamaged(int _damage)
+    public void OnDamaged(int _damage, GameObject _attacker)
     {
         if(monsterStatManager != null)
         {
-            monsterStatManager.OnDamaged(_damage);
+            monsterStatManager.OnDamaged(_damage, _attacker);
             DamageTextManager.Instance.ShowDamageText(this.transform, _damage, damageColor);
         }
     }

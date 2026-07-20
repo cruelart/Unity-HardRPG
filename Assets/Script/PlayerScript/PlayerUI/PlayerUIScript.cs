@@ -1,9 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class PlayerUIScript : MonoBehaviour
 {
+    List<Action> orderUIList = new List<Action>();
+
     bool onInventoryPanel = false;
     bool onEquipSpacePanel = false;
+    bool onStatusPanel = false;
+
+    int totalUINum = 0; // 현재 켜져잇는 모든 UI창의 갯수
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,6 +54,25 @@ public class PlayerUIScript : MonoBehaviour
                     onEquipSpacePanel = true;
                     ShowMouseButton();
                     UIManager.Instance.ShowEquipSpaceUI();
+                    break;
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            switch (onStatusPanel)
+            {
+                case true:
+                    onStatusPanel = false;
+                    HideMouseButton();
+                    UIManager.Instance.HidePlayerStatusUI();
+                    break;
+
+                case false:
+                    onStatusPanel = true;
+                    ShowMouseButton();
+                    UIManager.Instance.ShowPlayerStatusUI();
                     break;
 
             }

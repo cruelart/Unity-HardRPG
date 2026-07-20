@@ -6,7 +6,7 @@ public static class DropSystem
 {
     public static List<DropTableEntry> GetMonsterDropList(int _monsterID)
     {
-        MonsterDB monsterDB = MonsterDBManager.instance.monsterDBMap[_monsterID]; // 해당 몬스터의 데이터를 받아오고
+        MonsterDB monsterDB = MonsterDBManager.Instance.GetMonsterDB(_monsterID); // 해당 몬스터의 데이터를 받아오고
 
         List<DropTableEntry> monsterDropList = new List<DropTableEntry>(); // 해당 몬스터가 떨굴 모든 아이템을 담는 리스트
 

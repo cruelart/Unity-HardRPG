@@ -45,7 +45,7 @@ public class MonsterToTalManager : MonoBehaviour
 
     private void LoadData()
     {
-        monsterDB = MonsterDBManager.instance.monsterDBMap[monsterID]; // 해당 몬스터의 데이터를 받아옴
+        monsterDB = MonsterDBManager.Instance.GetMonsterDB(monsterID); // 해당 몬스터의 데이터를 받아옴
 
         //데이터전달
         monsterStatManager.Init(monsterDB);

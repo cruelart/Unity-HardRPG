@@ -5,7 +5,8 @@ public class MonsterDeathHandler : MonoBehaviour
 {
     private MonsterStatManager monsterStatManager; // 구독할 곳
     private MonsterBase monsterBase;
-    private MonsterDeadInfo mosnterDeadInfo; // 몬스터가 죽으면 내보내야될 정보들
+    private MonsterDeadInfo monsterDeadInfo; // 몬스터가 죽으면 내보내야될 정보들
+
 
     private int monsterID;
 
@@ -32,11 +33,12 @@ public class MonsterDeathHandler : MonoBehaviour
         monsterStatManager.OnDeath -= HandleDeath;
         monsterStatManager.OnDeath += HandleDeath;
 
-        mosnterDeadInfo = new MonsterDeadInfo(monsterID, this.gameObject, monsterBase.spawnZone);
+       monsterDeadInfo = new MonsterDeadInfo(monsterID, this.gameObject, monsterBase.spawnZone, null);
     }
     private void HandleDeath()
     {
-        MonsterEvent.OnMonsterDead?.Invoke(mosnterDeadInfo);
+        monsterDeadInfo.killerPlayer = monsterStatManager.playerStatManager; // 누가 죽였는지 정보 넣어주기
+        MonsterEvent.OnMonsterDead?.Invoke(monsterDeadInfo);
         //MonsterZen.instance.ReturnMonster(monsterType, gameObject);
     }
 

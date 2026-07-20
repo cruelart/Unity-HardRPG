@@ -17,6 +17,10 @@ public class MonsterStatManager : MonoBehaviour
     float current_monsterHp;
     float current_monsterMp;
 
+    public int Monster_exp { get; private set; } = 100;
+
+    public PlayerStatManager playerStatManager { get; private set; } = null;
+
     //상태이상에 따라 조정할 수 있으므로 MonsterDB 말고 여기다 넣자
     public float viewAngle = 140.0f;
 
@@ -64,9 +68,11 @@ public class MonsterStatManager : MonoBehaviour
         OnHPChange?.Invoke(current_monsterHp, GetStat(StatType.HP));
     }
 
-    public void OnDamaged(int _damage)
+    public void OnDamaged(int _damage, GameObject _attacker)
     {
         current_monsterHp -= (_damage - (int)GetStat(StatType.Defense));
+        playerStatManager = _attacker.GetComponent<PlayerStatManager>();
+        
         OnHPChange?.Invoke(current_monsterHp, GetStat(StatType.HP));
 
         if (current_monsterHp < 0)
@@ -79,5 +85,10 @@ public class MonsterStatManager : MonoBehaviour
     public float GetStat(StatType _type)
     {
         return statDict[_type].value;
+    }
+
+    public void SetKiller(PlayerStatManager _killer)
+    {
+        playerStatManager = _killer;
     }
 }

@@ -3,20 +3,25 @@ using UnityEngine;
 
 public class MonsterDBManager : MonoBehaviour
 {
-    public static MonsterDBManager instance;
+    public static MonsterDBManager Instance;
     //모든 몬스터의 데이터를 담을 해시테이블 선언
-    public Dictionary<int, MonsterDB> monsterDBMap = new Dictionary<int, MonsterDB>();
+    private Dictionary<int, MonsterDB> monsterDBMap = new Dictionary<int, MonsterDB>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         DontDestroyOnLoad(transform.root.gameObject); // 파괴 방지
 
         LoadData();
+    }
+
+    public MonsterDB GetMonsterDB(int _monsterID)
+    {
+        return monsterDBMap[_monsterID];
     }
 
     private void LoadData()

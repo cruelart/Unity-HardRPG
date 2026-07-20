@@ -5,10 +5,20 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField]
-    private InventoryUI inventoryUI;
+    private PlayerStatusUI playerStatusUI;
+    public PlayerStatusUI StatusUI => playerStatusUI; // 받아오고 읽기전용으로 변경(식 본문 프로펄티)
 
     [SerializeField]
-    private EquipSpaceUI equipSpaceUI;
+    private PlayerStateUI playerStateUI;
+    public PlayerStateUI StateUI => playerStateUI; // 받아오고 읽기전용으로 변경(식 본문 프로펄티)
+
+    [SerializeField]
+    private InventoryUIManager playerInventoryUI;
+    public InventoryUIManager InventoryUI => playerInventoryUI;
+
+    [SerializeField]
+    private EquipSpaceUIManager playerEquipSpaceUI;
+    public EquipSpaceUIManager EquipSpaceUI => playerEquipSpaceUI;
 
     [SerializeField]
     private EquipToolTip equipToolTip;
@@ -26,24 +36,24 @@ public class UIManager : MonoBehaviour
 
     public void ShowInventoryUI()
     {
-        inventoryUI.gameObject.transform.SetAsLastSibling();
-        inventoryUI.gameObject.SetActive(true);
+        playerInventoryUI.gameObject.transform.SetAsLastSibling();
+        playerInventoryUI.gameObject.SetActive(true);
     }
 
     public void HideInventoryUI()
     {
-        inventoryUI.gameObject.SetActive(false);
+        playerInventoryUI.gameObject.SetActive(false);
     }
 
     public void ShowEquipSpaceUI()
     {
-        equipSpaceUI.gameObject.transform.SetAsLastSibling();
-        equipSpaceUI.gameObject.SetActive(true);
+        playerEquipSpaceUI.gameObject.transform.SetAsLastSibling();
+        playerEquipSpaceUI.gameObject.SetActive(true);
     }
 
     public void HideEquipSpaceUI()
     {
-        equipSpaceUI.gameObject.SetActive(false);
+        playerEquipSpaceUI.gameObject.SetActive(false);
     }
 
     public void ShowEquipToolTip(EquipmentItemInstance _item, RectTransform _slotRect)
@@ -66,6 +76,17 @@ public class UIManager : MonoBehaviour
     public void HideConsumerToolTip()
     {
         consumerToolTip.Hide();
+    }
+
+    public void ShowPlayerStatusUI()
+    {
+        playerStatusUI.transform.SetAsLastSibling();
+        playerStatusUI.gameObject.SetActive(true);
+    }
+
+    public void HidePlayerStatusUI()
+    {
+        playerStatusUI.gameObject.SetActive(false);
     }
 
 }
