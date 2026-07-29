@@ -1,9 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class PlayerUIScript : MonoBehaviour
 {
-    bool onInventoryPanel = false;
-    bool onEquipSpacePanel = false;
+    bool lockCamera = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,18 +15,23 @@ public class PlayerUIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            GameEventChannel.OnLockCamera?.Invoke(!lockCamera);
+            lockCamera = !lockCamera;
+        }
+
+        //----------------------------------------------------UI On - Off
         if(Input.GetKeyDown(KeyCode.I))
         {
-            switch(onInventoryPanel)
+            switch(UIManager.Instance.IsOpenUI<InventoryUIManager>())
             {
                 case true:
-                    onInventoryPanel = false;
                     HideMouseButton();
                     UIManager.Instance.HideInventoryUI();
                     break;
 
                 case false:
-                    onInventoryPanel = true;
                     ShowMouseButton();
                     UIManager.Instance.ShowInventoryUI();
                     break;
@@ -35,21 +41,41 @@ public class PlayerUIScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            switch (onEquipSpacePanel)
+            switch (UIManager.Instance.IsOpenUI<EquipSpaceUIManager>())
             {
                 case true:
-                    onEquipSpacePanel = false;
                     HideMouseButton();
                     UIManager.Instance.HideEquipSpaceUI();
                     break;
 
                 case false:
-                    onEquipSpacePanel = true;
                     ShowMouseButton();
                     UIManager.Instance.ShowEquipSpaceUI();
                     break;
 
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            switch (UIManager.Instance.IsOpenUI<PlayerStatusUIManager>())
+            {
+                case true:
+                    HideMouseButton();
+                    UIManager.Instance.HidePlayerStatusUI();
+                    break;
+
+                case false:
+                    ShowMouseButton();
+                    UIManager.Instance.ShowPlayerStatusUI();
+                    break;
+
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.InOrderUIHide();
         }
     }
 

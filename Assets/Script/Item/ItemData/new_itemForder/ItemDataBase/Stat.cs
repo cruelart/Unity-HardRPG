@@ -16,6 +16,7 @@ public enum StatType
     INT, // 지력
     LUK, // 행운
     Mental, // 정신력
+    Avoidance // 회피율
 }
 
 [System.Serializable]

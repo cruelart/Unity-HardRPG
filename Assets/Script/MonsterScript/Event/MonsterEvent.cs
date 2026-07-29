@@ -7,11 +7,15 @@ public class MonsterDeadInfo
     public GameObject monsterObj;
     public MonsterSpawnZone spawnZone;
 
-    public MonsterDeadInfo(int _monsterID, GameObject _monsterObj, MonsterSpawnZone _monsterSpawnZone)
+    public PlayerStatManager killerPlayer;
+
+    public MonsterDeadInfo(int _monsterID, GameObject _monsterObj, MonsterSpawnZone _monsterSpawnZone, PlayerStatManager _killerPlayer)
     {
         monsterID = _monsterID;
         spawnZone = _monsterSpawnZone;
         monsterObj = _monsterObj;
+
+        killerPlayer = _killerPlayer;
     }
 }
 public static class MonsterEvent

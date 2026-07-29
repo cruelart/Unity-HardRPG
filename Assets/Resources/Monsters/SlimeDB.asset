@@ -30,6 +30,8 @@ MonoBehaviour:
     value: 100
   - type: 6
     value: 10
+  exp_value: 25
+  gold_value: 98
   viewAngle: 140
   detectionRange: 10
   attackRange: 2

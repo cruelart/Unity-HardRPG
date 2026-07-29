@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    public Image hpBar;
+    [SerializeField]
+    private Image hpBar;
 
     private void OnEnable()
     {
-        PlayerStatManager.OnHpChanged += UpdateHpBar;
+        //PlayerStatManager.OnHpChanged += UpdateHpBar;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

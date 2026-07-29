@@ -22,6 +22,13 @@ public class EquipSpace : MonoBehaviour
     //귀걸이
     private EquipmentItemInstance shield;
 
+    private PlayerStatManager playerStatManager;
+
+    public void Init(PlayerStatManager _playerStatManager)
+    {
+        playerStatManager = _playerStatManager;
+    }
+
     public void Setitem(EquipmentItemInstance _newItem, ref EquipmentItemInstance _usingItem)
     {
         //장착중인 장비가 있었다면
@@ -158,7 +165,7 @@ public class EquipSpace : MonoBehaviour
         //무기에 담긴 모든 스텟을 더해주기
         foreach (var stats in _item.setting.stats)
         {
-            PlayerDBManager.instance.playerDB.SetAddStat(stats.type, stats.value);
+            playerStatManager.PlusStat(stats.type, (int)stats.value);
         }
     }
 
@@ -168,7 +175,7 @@ public class EquipSpace : MonoBehaviour
         //무기에 담긴 모든 스텟을 더해주기
         foreach (var stats in _item.setting.stats)
         {
-            PlayerDBManager.instance.playerDB.SetRemoveStat(stats.type, stats.value);
+            playerStatManager.MinusStat(stats.type, (int)stats.value);
         }
     }
 

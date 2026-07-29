@@ -4,45 +4,66 @@ using UnityEngine;
 //플레이어 관련 모든 것을 관리하는 스크립트
 public class PlayerToTalManager : MonoBehaviour
 {
-    private PlayerDB playerDB;
+    private PlayerSaveData playerDB;
     private PlayerStatManager playerStatManager;
     private PlayerAnimationEvents playerAnimationEvents;
     private PlayerAttackManager playerAttackManager;
     private PlayerReactManager playerReactManager;
 
+    private Re_Inventory playerInventoryDB;
+    private EquipSpace playerEquipSpaceDB;
+    private PlayerDropItemInteraction playerDropItemInteraction;
+
     private void Awake()
     {
-
-    }
-
-    void Start()
-    {
         //데이터 로드
-        LoadData();
+        InitPlayer();
 
         //게임 로드
         LoadGame();
     }
 
+    void Start()
+    {
+        UIManager.Instance.StatusUI.Init(playerStatManager);
+        UIManager.Instance.StateUI.Init(playerStatManager);
+        UIManager.Instance.EquipSpaceUI.Init(playerEquipSpaceDB);
+        UIManager.Instance.InventoryUI.Init(playerInventoryDB);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void LoadData()
+    public void InitPlayer()
     {
         playerDB = PlayerDBManager.instance.playerDB; // 플레이어 데이터 관리 매니저에게서 데이터 받아옴
         playerStatManager = GetComponent<PlayerStatManager>();
         playerAnimationEvents = GetComponent<PlayerAnimationEvents>();
         playerAttackManager = GetComponent<PlayerAttackManager>();
         playerReactManager = GetComponent<PlayerReactManager>();
+        playerDropItemInteraction = GetComponent<PlayerDropItemInteraction>();
+        playerInventoryDB = GetComponent<Re_Inventory>();
+        playerEquipSpaceDB = GetComponent<EquipSpace>();
 
+        if(playerEquipSpaceDB == null)
+        {
+            Debug.Log("뭉뭉탱탱이이");
+        }
 
         playerStatManager.Init(playerDB); // 값 넣어줌
         playerAnimationEvents.Init(playerAttackManager);
         playerAttackManager.Init(playerStatManager);
         playerReactManager.Init(playerStatManager);
+        playerInventoryDB.Init();
+        playerEquipSpaceDB.Init(playerStatManager);
+        playerDropItemInteraction.Init(playerInventoryDB);
+
+        InventoryManager.Instance.Init(playerInventoryDB);
+        EquipSpaceManager.Instance.Init(playerEquipSpaceDB);
+
     }
 
     public void LoadGame()
