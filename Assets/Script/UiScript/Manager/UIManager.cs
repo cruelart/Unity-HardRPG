@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -5,8 +7,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField]
-    private PlayerStatusUI playerStatusUI;
-    public PlayerStatusUI StatusUI => playerStatusUI; // 받아오고 읽기전용으로 변경(식 본문 프로펄티)
+    private PlayerStatusUIManager playerStatusUI;
+    public PlayerStatusUIManager StatusUI => playerStatusUI; // 받아오고 읽기전용으로 변경(식 본문 프로펄티)
 
     [SerializeField]
     private PlayerStateUI playerStateUI;
@@ -26,9 +28,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private ConsumerToolTip consumerToolTip;
 
+    private List<UIBase> OpenUIList = new List<UIBase>();
+
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -36,24 +40,27 @@ public class UIManager : MonoBehaviour
 
     public void ShowInventoryUI()
     {
-        playerInventoryUI.gameObject.transform.SetAsLastSibling();
-        playerInventoryUI.gameObject.SetActive(true);
+        playerInventoryUI.UIOpen();
+        OpenUIList.Add(playerInventoryUI);
     }
 
     public void HideInventoryUI()
     {
-        playerInventoryUI.gameObject.SetActive(false);
+        playerInventoryUI.UIHide();
+        OpenUIList.Remove(playerInventoryUI);
     }
 
     public void ShowEquipSpaceUI()
     {
-        playerEquipSpaceUI.gameObject.transform.SetAsLastSibling();
-        playerEquipSpaceUI.gameObject.SetActive(true);
+        playerEquipSpaceUI.UIOpen();
+        OpenUIList.Add(playerEquipSpaceUI);
     }
 
     public void HideEquipSpaceUI()
     {
-        playerEquipSpaceUI.gameObject.SetActive(false);
+        playerEquipSpaceUI.UIHide();
+
+        OpenUIList.Remove(playerEquipSpaceUI);
     }
 
     public void ShowEquipToolTip(EquipmentItemInstance _item, RectTransform _slotRect)
@@ -61,7 +68,7 @@ public class UIManager : MonoBehaviour
         equipToolTip.transform.SetAsLastSibling();
         equipToolTip.Show(_item, _slotRect);
     }
-    
+
     public void HideEquipToolTip()
     {
         equipToolTip.Hide();
@@ -80,13 +87,37 @@ public class UIManager : MonoBehaviour
 
     public void ShowPlayerStatusUI()
     {
-        playerStatusUI.transform.SetAsLastSibling();
-        playerStatusUI.gameObject.SetActive(true);
+        playerStatusUI.UIOpen();
+        OpenUIList.Add(playerStatusUI);
     }
 
     public void HidePlayerStatusUI()
     {
-        playerStatusUI.gameObject.SetActive(false);
+        playerStatusUI.UIHide();
+        OpenUIList.Remove(playerStatusUI);
+    }
+
+    public void InOrderUIHide()
+    {
+        if (OpenUIList.Count == 0)
+        {
+            return;
+        }
+
+        OpenUIList[^1].UIHide();
+        OpenUIList.RemoveAt(OpenUIList.Count - 1);
+    }
+
+    public bool IsOpenUI<T>() where T : UIBase
+    {
+        foreach(UIBase uibase in OpenUIList)
+        {
+            if(uibase is T)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

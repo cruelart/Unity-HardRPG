@@ -6,7 +6,7 @@ public class StatPlusButton : MonoBehaviour
     private StatType statType;
 
     [SerializeField]
-    private PlayerStatusUI statusUI;
+    private PlayerStatusUIManager statusUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

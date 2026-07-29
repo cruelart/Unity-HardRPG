@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipSpaceUIManager : MonoBehaviour
+public class EquipSpaceUIManager : UIBase
 { 
     [Header("장비 이미지 세팅")]
     [SerializeField]

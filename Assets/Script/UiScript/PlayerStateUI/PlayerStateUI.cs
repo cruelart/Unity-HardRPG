@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerStateUI : MonoBehaviour
+public class PlayerStateUI : UIBase
 {
     [SerializeField]
     private TextMeshProUGUI playerNameText;
@@ -69,4 +69,5 @@ public class PlayerStateUI : MonoBehaviour
     {
         playerExpBarImage.fillAmount = (float)_currentExp / _maxExp;
     }
+
 }

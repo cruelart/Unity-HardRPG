@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
-public class InventoryUIManager : MonoBehaviour
+public class InventoryUIManager : UIBase
 {
     [Header("상위 부모 설정")]
     [SerializeField]
