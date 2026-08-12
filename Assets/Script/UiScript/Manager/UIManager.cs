@@ -28,6 +28,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private ConsumerToolTip consumerToolTip;
 
+    [SerializeField]
+    private TraderStoreUI traderStoreUI;
+
+    [SerializeField]
+    private TalkUI talkUI;
+    public TalkUI TalkUI => talkUI;
+    public TalkUI NpcTalkUI => talkUI;
+
+
+    [SerializeField]
+    private IsTrueTraderSellButton isTrueTraderSellButton;
+    public IsTrueTraderSellButton TraderSellButton => isTrueTraderSellButton;
+
     private List<UIBase> OpenUIList = new List<UIBase>();
 
     private void Awake()
@@ -95,6 +108,41 @@ public class UIManager : MonoBehaviour
     {
         playerStatusUI.UIHide();
         OpenUIList.Remove(playerStatusUI);
+    }
+
+
+    public void ShowBuyButton()
+    {
+        isTrueTraderSellButton.UIOpen();
+        OpenUIList.Add(isTrueTraderSellButton);
+    }
+
+    public void HideBuyButton()
+    {
+        isTrueTraderSellButton.UIHide();
+        OpenUIList.Remove(isTrueTraderSellButton);
+    }
+    
+    public void ShowWanderingShop()
+    {
+        traderStoreUI.UIOpen();
+        OpenUIList.Add(traderStoreUI);
+    }
+
+    public void HideWanderingShop()
+    {
+        traderStoreUI.UIHide();
+        OpenUIList.Remove(traderStoreUI);
+    }
+
+    public void ShowNpcTalkUI()
+    {
+        NpcTalkUI.UIOpen();
+    }
+
+    public void HideNpcTalkUI()
+    {
+        NpcTalkUI.UIHide();
     }
 
     public void InOrderUIHide()

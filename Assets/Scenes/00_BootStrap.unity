@@ -207,15 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9877591c1c77dda4e83c4784d49d2a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDB:
-    playerName: New Player
-    level: 1
-    maxExp: 100
-    currentMap: tutorialMap
-    posX: 0
-    posY: 1
-    posZ: 0
-    stats: []
 --- !u!1 &1212691252
 GameObject:
   m_ObjectHideFlags: 0
