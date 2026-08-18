@@ -14,6 +14,8 @@ public class PlayerSaveData
     public int currentHp;
     public int currentMp;
 
+    public long gold;
+
     //플레이어 위치
     public string currentMap; // 플레이어가 현재 위치하고 있는 맵
     public float posX;
@@ -30,6 +32,7 @@ public class PlayerSaveData
         playerName = "New Player";
         level = 1;
         currentExp = 0;
+        gold = 100;
 
         currentMap = "tutorialMap";
         posX = 0;

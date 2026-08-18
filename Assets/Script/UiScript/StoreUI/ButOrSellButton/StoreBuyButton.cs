@@ -24,6 +24,14 @@ public class StoreBuyButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        InventoryManager.Instance.AddItemInInventory(itemDB.itemID, 1);
+        if (PlayerGoldManager.Instance.MinusGold(itemDB.buy_gold))
+        {
+            InventoryManager.Instance.AddItemInInventory(itemDB.itemID, 1);
+        }
+        else
+        {
+            GameEventChannel.OnNotify.Invoke("보유하신 재화가 부족합니다");
+        }
+        
     }
 }

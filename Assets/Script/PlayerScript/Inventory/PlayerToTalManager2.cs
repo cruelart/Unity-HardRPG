@@ -1,7 +1,7 @@
 using UnityEngine;
 
 //더미데이터로 남겨놓자
-public class PlayerInventory : MonoBehaviour
+public class PlayerToTalManager2 : MonoBehaviour
 {
     private Re_Inventory inventoryDB;
     private EquipSpace equipSpaceDB;

@@ -58,7 +58,6 @@ public class NotifyUIPoolManager : MonoBehaviour
 
         NotifyUI notifyUI = notifyUIObj.GetComponent<NotifyUI>();
         notifyUI.notifyText.text = _text;
-
     }
 
     public void ReturnPool(GameObject _gameObject)
