@@ -8,7 +8,7 @@ public class PlayerDBManager : MonoBehaviour
     //싱글톤 사용으로 PlayerToTalManager가 이 인스턴스를 통해 다른 매니저에게 분배할 예정 ㅇㅇ
     public static PlayerDBManager instance;
 
-    public PlayerSaveData playerDB; // 플레이중인 플레이어의 데이터
+    public PlayerSaveData playerDB { get; private set; } // 플레이중인 플레이어의 데이터
 
     private void Awake()
     {
