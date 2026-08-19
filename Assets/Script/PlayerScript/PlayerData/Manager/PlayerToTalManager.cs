@@ -4,7 +4,7 @@ using UnityEngine;
 //플레이어 관련 모든 것을 관리하는 스크립트
 public class PlayerToTalManager : MonoBehaviour
 {
-    private PlayerSaveData playerDB;
+    private PlayerBaseData playerDB;
     private PlayerStatManager playerStatManager;
     private PlayerAnimationEvents playerAnimationEvents;
     private PlayerAttackManager playerAttackManager;

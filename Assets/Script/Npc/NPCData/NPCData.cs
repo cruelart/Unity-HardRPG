@@ -22,6 +22,9 @@ public enum NPCType
 [CreateAssetMenu(fileName = "NPCData", menuName = "Scriptable Objects/NPCData")]
 public class NPCData : ScriptableObject
 {
+    [Header("NPC의 정보")]
+    public int npcID; // 고유 아이디
+    public string npcName; // 이름
 
     public List<NpcTextData> npcTexts = new(); // ncp 대화내용
 

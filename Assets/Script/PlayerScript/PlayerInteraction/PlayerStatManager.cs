@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerStatManager : MonoBehaviour
 {
     //플레이어의 고정 데이터
-    public PlayerSaveData playerBaseDB { get; private set; }
+    public PlayerBaseData playerBaseDB { get; private set; }
 
     //플레이어의 유동 데이터
     //public int currentHp { get; private set; }
@@ -28,7 +28,7 @@ public class PlayerStatManager : MonoBehaviour
     private List<Stat> final_statList;
     private Dictionary<StatType, Stat> final_statDict; // 편의를 위한 해시작성
 
-    public void Init(PlayerSaveData _data)
+    public void Init(PlayerBaseData _data)
     {
         playerBaseDB = _data;
 
