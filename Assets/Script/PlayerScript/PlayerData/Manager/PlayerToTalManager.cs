@@ -4,8 +4,7 @@ using UnityEngine;
 //플레이어 관련 모든 것을 관리하는 스크립트
 public class PlayerToTalManager : MonoBehaviour
 {
-    private PlayerBaseData playerDB;
-    private PlayerStatManager playerStatManager;
+    private PlayerStatData playerDB;
     private PlayerAnimationEvents playerAnimationEvents;
     private PlayerAttackManager playerAttackManager;
     private PlayerReactManager playerReactManager;
@@ -25,8 +24,8 @@ public class PlayerToTalManager : MonoBehaviour
 
     void Start()
     {
-        UIManager.Instance.StatusUI.Init(playerStatManager);
-        UIManager.Instance.StateUI.Init(playerStatManager);
+        UIManager.Instance.StatusUI.Init(PlayerStatManager.Instance);
+        UIManager.Instance.StateUI.Init(PlayerStatManager.Instance);
         UIManager.Instance.EquipSpaceUI.Init(playerEquipSpaceDB);
         UIManager.Instance.InventoryUI.Init(playerInventoryDB);
     }
@@ -39,8 +38,6 @@ public class PlayerToTalManager : MonoBehaviour
 
     public void InitPlayer()
     {
-        playerDB = PlayerDBManager.instance.playerDB; // 플레이어 데이터 관리 매니저에게서 데이터 받아옴
-        playerStatManager = GetComponent<PlayerStatManager>();
         playerAnimationEvents = GetComponent<PlayerAnimationEvents>();
         playerAttackManager = GetComponent<PlayerAttackManager>();
         playerReactManager = GetComponent<PlayerReactManager>();
@@ -53,12 +50,11 @@ public class PlayerToTalManager : MonoBehaviour
             Debug.Log("뭉뭉탱탱이이");
         }
 
-        playerStatManager.Init(playerDB); // 값 넣어줌
         playerAnimationEvents.Init(playerAttackManager);
-        playerAttackManager.Init(playerStatManager);
-        playerReactManager.Init(playerStatManager);
+        playerAttackManager.Init(PlayerStatManager.Instance);
+        playerReactManager.Init(PlayerStatManager.Instance);
         playerInventoryDB.Init();
-        playerEquipSpaceDB.Init(playerStatManager);
+        playerEquipSpaceDB.Init(PlayerStatManager.Instance);
         playerDropItemInteraction.Init(playerInventoryDB);
 
         InventoryManager.Instance.Init(playerInventoryDB);
