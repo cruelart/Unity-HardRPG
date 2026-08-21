@@ -42,8 +42,8 @@ public class PlayerStateUI : UIBase
         playerNameText.text = playerStatManager.GetPlayerName();
         playerLvText.text = playerStatManager.GetPlayerLv().ToString();
 
-        playerHpBarImage.fillAmount = (float)(playerStatManager.playerBaseDB.currentHp / playerStatManager.GetStatValue(StatType.HP));
-        playerExpBarImage.fillAmount = (float)(playerStatManager.playerBaseDB.currentExp / playerStatManager.maxExp);
+        playerHpBarImage.fillAmount = (float)(playerStatManager.playerStatDB.currentHp / playerStatManager.GetStatValue(StatType.HP));
+        playerExpBarImage.fillAmount = (float)(playerStatManager.playerStatDB.currentExp / playerStatManager.maxExp);
 
         playerStatManager.OnHpChanged += ControlHpBar;
         playerStatManager.OnLevelUp += ControlLevelText;

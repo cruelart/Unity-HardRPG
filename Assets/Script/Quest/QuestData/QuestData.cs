@@ -10,7 +10,7 @@ public class QuestData : ScriptableObject
     [TextArea]
     public string questDescription; // 퀘스트 설명
 
-    public int objectCount;
+    public int goalCount;
 
     [Header("퀘스트 제공 NPC")]
     public string StartNpcName;
@@ -34,7 +34,7 @@ public enum QuestState
 
 public class QuestProgressData
 {
-    public QuestData questData; // 어떤 퀘스트?
+    public int questID; // 어떤 퀘스트?
 
     public QuestState questState; // 진행 상태
 

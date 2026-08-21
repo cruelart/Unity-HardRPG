@@ -37,14 +37,13 @@ public class RewardManager : MonoBehaviour
     //몬스터가 지급하는 경험치
     public void GetExpReward(MonsterDeadInfo _monsterDeadInfo)
     {
-        PlayerStatManager targetPlayerStatManager = _monsterDeadInfo.killerPlayer;
         MonsterDB monsterDB = MonsterDBManager.Instance.GetMonsterDB(_monsterDeadInfo.monsterID);
 
-        if (targetPlayerStatManager == null)
+        if (PlayerStatManager.Instance == null)
         {
             Debug.Log("targetPlayerStatManager null인데?");
         }
 
-        targetPlayerStatManager.GetExp(monsterDB.exp_value);
+        PlayerStatManager.Instance.GetExp(monsterDB.exp_value);
     }
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerStatManager : MonoBehaviour
 {
+    public static PlayerStatManager Instance { get; private set; }
     //플레이어의 고정 데이터
-    public PlayerBaseData playerBaseDB { get; private set; }
+    public PlayerStatData playerStatDB { get; private set; }
 
     //플레이어의 유동 데이터
     //public int currentHp { get; private set; }
@@ -25,34 +26,43 @@ public class PlayerStatManager : MonoBehaviour
     public event Action<long, long> OnExpChanged;
     public event Action OnChangeStat;
 
-    private List<Stat> final_statList;
+    private List<Stat> final_statList; // 최종 스탯 (연산 다 끝낸거)
     private Dictionary<StatType, Stat> final_statDict; // 편의를 위한 해시작성
 
-    public void Init(PlayerBaseData _data)
+    private void Awake()
     {
-        playerBaseDB = _data;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void Init(PlayerStatData _data)
+    {
+        playerStatDB = _data;
 
         //깊은 복사시키기
-        final_statList = playerBaseDB.stats.Select(s => new Stat { type = s.type, value = s.value }).ToList();
+        final_statList = playerStatDB.stats.Select(s => new Stat { type = s.type, value = s.value }).ToList();
         final_statDict = final_statList.ToDictionary(s => s.type);
 
-        playerBaseDB.stat_upgradePossibleValue = 5;
+        playerStatDB.stat_upgradePossibleValue = 5;
 
         RefreshStats();
 
-        playerBaseDB.currentHp = (int)final_statDict[StatType.HP].value;
-        playerBaseDB.currentMp = (int)final_statDict[StatType.MP].value;
+        playerStatDB.currentHp = (int)final_statDict[StatType.HP].value;
+        playerStatDB.currentMp = (int)final_statDict[StatType.MP].value;
 
-        maxExp = playerBaseDB.level * 100;
+        maxExp = playerStatDB.level * 100;
     }
 
     public string GetPlayerName()
     {
-        return playerBaseDB.playerName;
+        return playerStatDB.playerName;
     }
     public int GetPlayerLv()
     {
-        return playerBaseDB.level;
+        return playerStatDB.level;
     }
 
     public Stat GetStat(StatType _type)
@@ -67,11 +77,16 @@ public class PlayerStatManager : MonoBehaviour
         return stat.value;
     }
 
+    public PlayerStatData GetPlayerSaveStatData()
+    {
+        return playerStatDB;
+    }
+
 
     public void OnDamaged(int _damage)
     {
-        playerBaseDB.currentHp -= _damage;
-        OnHpChanged?.Invoke(playerBaseDB.currentHp, (int)GetStatValue(StatType.HP)); // hp 변동사항 알림
+        playerStatDB.currentHp -= _damage;
+        OnHpChanged?.Invoke(playerStatDB.currentHp, (int)GetStatValue(StatType.HP)); // hp 변동사항 알림
 
         Debug.Log("PlayerStatManager에 있는 OnDamage함수 호출");
 
@@ -83,55 +98,55 @@ public class PlayerStatManager : MonoBehaviour
 
     public void GetExp(long _exp)
     {
-        playerBaseDB.currentExp += _exp;
+        playerStatDB.currentExp += _exp;
         //경험치가 너무많이 오르면
-        if (maxExp < playerBaseDB.currentExp)
+        if (maxExp < playerStatDB.currentExp)
         {
-            playerBaseDB.currentExp -= maxExp; // 레벨업했으니 경험치 다시 초기화
+            playerStatDB.currentExp -= maxExp; // 레벨업했으니 경험치 다시 초기화
             LevelUp();
         }
 
-        OnExpChanged?.Invoke(playerBaseDB.currentExp, maxExp);
+        OnExpChanged?.Invoke(playerStatDB.currentExp, maxExp);
     }
 
     public void LevelUp()
     {
-        playerBaseDB.level += 1; // 일단 레벨업하고
+        playerStatDB.level += 1; // 일단 레벨업하고
 
-        OnLevelUp?.Invoke(playerBaseDB.level); // 이벤트호출 (확성기 날림)
+        OnLevelUp?.Invoke(playerStatDB.level); // 이벤트호출 (확성기 날림)
 
         //대충 레벨업하면 일어나는 일들
         PlusStat(StatType.STR,1); // 테스트용 힘 상승
-        playerBaseDB.stat_upgradePossibleValue += 5;
+        playerStatDB.stat_upgradePossibleValue += 5;
 
         RefreshStats();
 
-        playerBaseDB.currentHp = (int)final_statDict[StatType.HP].value; // 풀피로 변경
-        playerBaseDB.currentMp = (int)final_statDict[StatType.MP].value;
+        playerStatDB.currentHp = (int)final_statDict[StatType.HP].value; // 풀피로 변경
+        playerStatDB.currentMp = (int)final_statDict[StatType.MP].value;
 
-        OnHpChanged?.Invoke(playerBaseDB.currentHp, (int)final_statDict[StatType.MP].value);
+        OnHpChanged?.Invoke(playerStatDB.currentHp, (int)final_statDict[StatType.MP].value);
     }
 
     public void UpgradeStatusStat(StatType _statType, int _value)
     {
-        if(playerBaseDB.stat_upgradePossibleValue <= 0)
+        if(playerStatDB.stat_upgradePossibleValue <= 0)
         {
             return;
         }
-        playerBaseDB.stat_upgradePossibleValue--;
-        playerBaseDB.statDict[_statType].value += _value;
+        playerStatDB.stat_upgradePossibleValue--;
+        playerStatDB.statDict[_statType].value += _value;
         RefreshStats();
     }
 
     public void PlusStat(StatType _statType, int _value)
     {
-        playerBaseDB.statDict[_statType].value += _value;
+        playerStatDB.statDict[_statType].value += _value;
         RefreshStats();
     }
 
     public void MinusStat(StatType _statType, int _value)
     {
-        playerBaseDB.statDict[_statType].value -= _value;
+        playerStatDB.statDict[_statType].value -= _value;
         RefreshStats();
     }
 
@@ -144,22 +159,22 @@ public class PlayerStatManager : MonoBehaviour
 
     public void CalculateStat()
     {
-        final_statDict[StatType.Attack].value = (int)(playerBaseDB.statDict[StatType.Attack].value + playerBaseDB.statDict[StatType.STR].value * 2 + playerBaseDB.statDict[StatType.DEX].value);
-        final_statDict[StatType.Defense].value = (int)(playerBaseDB.statDict[StatType.Defense].value + playerBaseDB.statDict[StatType.DEX].value * 2 + playerBaseDB.statDict[StatType.STR].value);
-        final_statDict[StatType.Mental].value = (int)(playerBaseDB.statDict[StatType.Mental].value + playerBaseDB.statDict[StatType.INT].value * 2 + playerBaseDB.statDict[StatType.LUK].value);
-        final_statDict[StatType.Accuracy].value = (int)(playerBaseDB.statDict[StatType.Accuracy].value + playerBaseDB.statDict[StatType.DEX].value * 1);
-        final_statDict[StatType.CriticalPercent].value = (int)(playerBaseDB.statDict[StatType.CriticalPercent].value + playerBaseDB.statDict[StatType.LUK].value * 1);
-        final_statDict[StatType.MoveSpeed].value = (int)(playerBaseDB.statDict[StatType.MoveSpeed].value + playerBaseDB.statDict[StatType.DEX].value * 1);
-        final_statDict[StatType.Avoidance].value = (int)(playerBaseDB.statDict[StatType.Avoidance].value + playerBaseDB.statDict[StatType.LUK].value * 1);
-        final_statDict[StatType.HP].value = (int)(playerBaseDB.statDict[StatType.HP].value + playerBaseDB.statDict[StatType.STR].value * 30);
-        final_statDict[StatType.MP].value = (int)(playerBaseDB.statDict[StatType.MP].value + playerBaseDB.statDict[StatType.INT].value * 30);
+        final_statDict[StatType.Attack].value = (int)(playerStatDB.statDict[StatType.Attack].value + playerStatDB.statDict[StatType.STR].value * 2 + playerStatDB.statDict[StatType.DEX].value);
+        final_statDict[StatType.Defense].value = (int)(playerStatDB.statDict[StatType.Defense].value + playerStatDB.statDict[StatType.DEX].value * 2 + playerStatDB.statDict[StatType.STR].value);
+        final_statDict[StatType.Mental].value = (int)(playerStatDB.statDict[StatType.Mental].value + playerStatDB.statDict[StatType.INT].value * 2 + playerStatDB.statDict[StatType.LUK].value);
+        final_statDict[StatType.Accuracy].value = (int)(playerStatDB.statDict[StatType.Accuracy].value + playerStatDB.statDict[StatType.DEX].value * 1);
+        final_statDict[StatType.CriticalPercent].value = (int)(playerStatDB.statDict[StatType.CriticalPercent].value + playerStatDB.statDict[StatType.LUK].value * 1);
+        final_statDict[StatType.MoveSpeed].value = (int)(playerStatDB.statDict[StatType.MoveSpeed].value + playerStatDB.statDict[StatType.DEX].value * 1);
+        final_statDict[StatType.Avoidance].value = (int)(playerStatDB.statDict[StatType.Avoidance].value + playerStatDB.statDict[StatType.LUK].value * 1);
+        final_statDict[StatType.HP].value = (int)(playerStatDB.statDict[StatType.HP].value + playerStatDB.statDict[StatType.STR].value * 30);
+        final_statDict[StatType.MP].value = (int)(playerStatDB.statDict[StatType.MP].value + playerStatDB.statDict[StatType.INT].value * 30);
 
 
-        final_statDict[StatType.STR].value = (int)(playerBaseDB.statDict[StatType.STR].value);
-        final_statDict[StatType.DEX].value = (int)(playerBaseDB.statDict[StatType.DEX].value);
-        final_statDict[StatType.INT].value = (int)(playerBaseDB.statDict[StatType.INT].value);
-        final_statDict[StatType.LUK].value = (int)(playerBaseDB.statDict[StatType.LUK].value);
+        final_statDict[StatType.STR].value = (int)(playerStatDB.statDict[StatType.STR].value);
+        final_statDict[StatType.DEX].value = (int)(playerStatDB.statDict[StatType.DEX].value);
+        final_statDict[StatType.INT].value = (int)(playerStatDB.statDict[StatType.INT].value);
+        final_statDict[StatType.LUK].value = (int)(playerStatDB.statDict[StatType.LUK].value);
 
-        maxExp = playerBaseDB.level * 100;
+        maxExp = playerStatDB.level * 100;
     }
 }
