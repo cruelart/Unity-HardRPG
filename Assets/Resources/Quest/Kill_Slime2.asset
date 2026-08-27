@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cc8cc80854d12e4bb6e63f78a4b46f9, type: 3}
-  m_Name: Kill_Slime1
+  m_Name: Kill_Slime2
   m_EditorClassIdentifier: 
-  questID: 1
-  questName: "\uC2AC\uB77C\uC784\uC744 \uCC98\uCE58\uD574\uB77C1"
+  questID: 2
+  questName: "\uC2AC\uB77C\uC784\uC744 \uCC98\uCE58\uD574\uB77C2"
   questDescription: "\uB9C8\uC744\uC744 \uC5B4\uC9C0\uB7FD\uD788\uB294 \uC2AC\uB77C\uC784\uC744
     10\uB9C8\uB9AC \uCC98\uCE58\uD558\uC790"
-  goalCount: 10
+  goalCount: 15
   StartNpcName: "\uD55C\uC2A4"
   EndNpcName: "\uD55C\uC2A4"
-  ClearItem: {fileID: 11400000, guid: 35d61f31155f0ea4bbc22b51779b22ed, type: 2}
+  ClearItem: {fileID: 11400000, guid: 79d3a57e62ddefe4ea45393ada9115de, type: 2}
   ClearGold: 300
   ClearExp: 36

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerDBManager : MonoBehaviour
@@ -9,6 +11,7 @@ public class PlayerDBManager : MonoBehaviour
     public static PlayerDBManager instance { get; private set; }
 
     public PlayerStatData playerDB { get; private set; } // 플레이중인 플레이어의 데이터
+    //private Dictionary<int, QuestProgressData> questProgressDataTable = new(); // 퀘스트 ID별로 플레이어의 진행현황을 저장하는 해시테이블
 
     private void Awake()
     {

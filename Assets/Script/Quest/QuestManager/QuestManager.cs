@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,10 +13,16 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
 
-    [SerializeField]
-    private List<QuestData> questDataList; // 모든 퀘스트의 목록
+    //데이터 관련
+    public QuestDataBase questDB { get; private set; } = new QuestDataBase(); // 전체 퀘스트 목록
+    public PlayerQuestData playerQuestData { get; private set; } = new PlayerQuestData(); // 플레이어 퀘스트 진행 현황
 
-    private Dictionary<int, QuestProgressData> questProgressDataTable = new(); // 퀘스트 아이디(키), 해당 퀘스트 진행 현황 -> 플레이어 전용
+    //private Dictionary<int, QuestProgressData> questProgressDataTable = new(); // (퀘스트 아이디(키), 모든 퀘스트 진행 현황) -> 플레이어 전용
+
+    //private Dictionary<int, QuestData> questDataTable = new(); // 퀘스트 아이디(키), 해당 퀘스트 데이터 -> 모든 플레이어 공용 Complit성능괜찮네 ㄷ
+
+    //이벤트
+    public Action<QuestState, int> OnQuestChangeNotify; // 퀘스트 상태가 바뀌었을 때 알림 (퀘스트 상태, 퀘스트 아이디)
 
     private void Awake()
     {
@@ -24,7 +31,7 @@ public class QuestManager : MonoBehaviour
             Instance = this;
         }
 
-        InitQuest();
+        questDB.LoadData(); // 전체 퀘스트 목록 불러오기
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -40,31 +47,23 @@ public class QuestManager : MonoBehaviour
         
     }
 
-    private void InitQuest()
-    {
-        foreach(var questData in questDataList)
-        {
-            QuestProgressData questProgressData = new QuestProgressData();
-
-            questProgressData.questID = questData.questID;
-            questProgressData.questState = QuestState.Available; // 처음에는 전부 시작가능
-            questProgressData.currentCount = 0; // 무조건 0으로 시작
-
-            questProgressDataTable.Add(questData.questID, questProgressData);
-        }
-    }
-
+    //LoadManager에서 퀘스트를 받아옴
     public void InitLoadData(List<QuestProgressData> _questProgressDataList)
     {
-        questProgressDataTable = _questProgressDataList.ToDictionary(x => x.questID);
+        if(_questProgressDataList.Count == 0) // 로드했는데 데이터가 비어있다면 -> 파일이 없다는거겠쬬?
+        {
+            playerQuestData.Init(questDB.QuestDataTable.Keys);
+            return;
+        }
+        playerQuestData.LoadQuestProgressData(_questProgressDataList);
+        //-> 여기까지 했으면 퀘스트의 전체적인 것들은 모두 받아온 셈
     }
 
     public QuestProgressDataList GetQuestProgressDataList()
     {
         QuestProgressDataList data = new QuestProgressDataList();
 
-        data.questProgressDatas =
-            new List<QuestProgressData>(questProgressDataTable.Values);
+        data.questProgressDatas = new List<QuestProgressData>(playerQuestData.PlayerQuestProgressTable.Values);
 
         return data;
     }

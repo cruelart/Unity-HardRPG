@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour
     public TalkUI TalkUI => talkUI;
     public TalkUI NpcTalkUI => talkUI;
 
+    [SerializeField]
+    private QuestUI questUI;
+
 
     [SerializeField]
     private IsTrueTraderSellButton isTrueTraderSellButton;
@@ -143,6 +146,18 @@ public class UIManager : MonoBehaviour
     public void HideNpcTalkUI()
     {
         NpcTalkUI.UIHide();
+    }
+
+    public void ShowQuestUI()
+    {
+        questUI.UIOpen();
+        OpenUIList.Add(questUI);
+    }
+
+    public void HideQuestUI()
+    {
+        questUI.UIHide();
+        OpenUIList.Remove(questUI);
     }
 
     public void InOrderUIHide()

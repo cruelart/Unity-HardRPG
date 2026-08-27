@@ -13,11 +13,11 @@ public class LoadManager : MonoBehaviour
 
     //플레이어 
 
-    public static LoadManager Instance { get; private set; }
+    //public static LoadManager Instance { get; private set; }
 
     //불러올 데이터 목록들
     public PlayerStatData playerDB { get; private set; } // 플레이중인 플레이어의 데이터
-    public List<QuestProgressData> playerQuestList { get; private set; } // 플레이어의 현 퀘스트 상황 목록
+    //public List<QuestProgressData> playerQuestList { get; private set; } // 플레이어의 현 퀘스트 상황 목록
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class LoadManager : MonoBehaviour
             QuestProgressDataList data = JsonUtility.FromJson<QuestProgressDataList>(json); 
             return data.questProgressDatas;
         }
-        Debug.Log("PlayerDBManager에서 제이슨파일을 찾지 못해서 새롭게 PlayeDB를 생성합니다");
+
         return new List<QuestProgressData>(); // 파일 없으면 기본값으로 세팅
     }
 }
