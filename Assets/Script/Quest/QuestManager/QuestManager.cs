@@ -73,4 +73,16 @@ public class QuestManager : MonoBehaviour
         playerQuestData.AcceptQuest(_questID);
         OnQuestChangeNotify?.Invoke(QuestState.InProgress, _questID);
     }
+
+    public void CompleteQuest(int _questID)
+    {
+        playerQuestData.CompleteQuest(_questID);
+        OnQuestChangeNotify?.Invoke(QuestState.Completed, _questID);
+    }
+
+    public void GiveUpQuest(int _questID)
+    {
+        playerQuestData.GiveUpQuest(_questID);
+        OnQuestChangeNotify?.Invoke(QuestState.Available, _questID);
+    }
 }

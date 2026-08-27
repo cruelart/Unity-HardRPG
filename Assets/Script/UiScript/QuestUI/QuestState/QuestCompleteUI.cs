@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestCompleteUI : MonoBehaviour
@@ -17,7 +18,9 @@ public class QuestCompleteUI : MonoBehaviour
     [SerializeField]
     private GameObject complete_prefab; // 진행중 프리팹
 
-    private List<QuestContent> completeQuestList = new List<QuestContent>(); // 진행중 퀘스트 리스트
+    //private List<QuestContent> completeQuestList = new List<QuestContent>(); // 진행중 퀘스트 리스트 -> 마찬가지로 해시로 변경
+    private Dictionary<int, QuestContent> completeQuestMap = new Dictionary<int, QuestContent>(); // 해시로 변경
+
 
     [SerializeField]
     private Transform questListTransform; // 퀘스트 리스트ui의 위치(실제 보일 장소) -> content 받아오면 될듯
@@ -49,6 +52,16 @@ public class QuestCompleteUI : MonoBehaviour
         QuestContent inCompleteQuestContent = Instantiate(complete_prefab, questListTransform).GetComponent<QuestContent>();
         inCompleteQuestContent.Init(_questData, _questProgressData);
 
-        completeQuestList.Add(inCompleteQuestContent);
+        completeQuestMap.Add(_questData.questID, inCompleteQuestContent);
+    }
+
+    //사실상 사용하지 않는 함수일거 같긴함
+    public void RemoveCompleteQuest(int _questID)
+    {
+        if (completeQuestMap.TryGetValue(_questID, out QuestContent questContent)) // 실제로  완료한 퀘스트였다면
+        {
+            completeQuestMap.Remove(_questID);
+            Destroy(questContent.gameObject); // 해당 완료 퀘스트 ui 삭제
+        }
     }
 }
