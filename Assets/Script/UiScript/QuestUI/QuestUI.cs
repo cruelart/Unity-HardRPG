@@ -6,7 +6,7 @@ public class QuestUI : UIBase
 
     //시작가능 퀘스트
     [SerializeField]
-    private QuestAvailable questAvailable;
+    private QuestAvailableUI questAvailable;
 
     //진행중 퀘스트
 
@@ -30,6 +30,7 @@ public class QuestUI : UIBase
 
     public void Init()
     {
+        //시작가능 퀘스트 UI 초기화
         foreach(var questID in QuestManager.Instance.playerQuestData.AvailableQuests)
         {
             questAvailable.AddAvailableQuest(QuestManager.Instance.questDB.QuestDataTable[questID], QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[questID]);

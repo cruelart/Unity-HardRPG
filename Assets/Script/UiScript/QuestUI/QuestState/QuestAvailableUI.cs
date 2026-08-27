@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestAvailable : MonoBehaviour
+public class QuestAvailableUI : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI availableText; // 진행중 텍스트 찐하게 만들예정
