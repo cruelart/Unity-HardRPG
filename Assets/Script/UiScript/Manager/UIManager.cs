@@ -36,8 +36,14 @@ public class UIManager : MonoBehaviour
     public TalkUI TalkUI => talkUI;
     public TalkUI NpcTalkUI => talkUI;
 
+    //Äù½ºÆ® °ü·Ã UI
     [SerializeField]
     private QuestUI questUI;
+
+    [SerializeField]
+    private QuestExplainUI questDescriptionUI;
+    public QuestExplainUI QuestDescriptionUI => questDescriptionUI;
+
 
 
     [SerializeField]
@@ -160,6 +166,17 @@ public class UIManager : MonoBehaviour
         OpenUIList.Remove(questUI);
     }
 
+    public void ShowQuestDescriptionUI()
+    {  
+        questDescriptionUI.UIOpen();
+        OpenUIList.Add(questDescriptionUI);
+    }
+
+    public void HideQuestDescriptionUI()
+    {         
+        questDescriptionUI.UIHide();
+        OpenUIList.Remove(questDescriptionUI);
+    }
     public void InOrderUIHide()
     {
         if (OpenUIList.Count == 0)

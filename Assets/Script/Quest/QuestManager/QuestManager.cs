@@ -67,4 +67,10 @@ public class QuestManager : MonoBehaviour
 
         return data;
     }
+
+    public void AcceptQuest(int _questID)
+    {         
+        playerQuestData.AcceptQuest(_questID);
+        OnQuestChangeNotify?.Invoke(QuestState.InProgress, _questID);
+    }
 }
