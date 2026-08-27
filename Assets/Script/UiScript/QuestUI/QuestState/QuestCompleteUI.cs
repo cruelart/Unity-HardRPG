@@ -44,11 +44,11 @@ public class QuestCompleteUI : MonoBehaviour
         completeText.color = onDisableColor;
     }
 
-    public void AddInProgressQuest(QuestData _questData, QuestProgressData _questProgressData)
+    public void AddCompleteQuest(QuestData _questData, QuestProgressData _questProgressData)
     {
-        QuestContent inProgressQuestContent = Instantiate(complete_prefab, questListTransform).GetComponent<QuestContent>();
-        inProgressQuestContent.Init(_questData, _questProgressData);
+        QuestContent inCompleteQuestContent = Instantiate(complete_prefab, questListTransform).GetComponent<QuestContent>();
+        inCompleteQuestContent.Init(_questData, _questProgressData);
 
-        completeQuestList.Add(inProgressQuestContent);
+        completeQuestList.Add(inCompleteQuestContent);
     }
 }
