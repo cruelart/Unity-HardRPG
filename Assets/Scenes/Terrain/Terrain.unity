@@ -56131,7 +56131,7 @@ GameObject:
   - component: {fileID: 1953829184}
   - component: {fileID: 1953829183}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AvailableQuestText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56185,8 +56185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4287861651
+  m_fontColor: {r: 0.5764706, g: 0.5764706, b: 0.5764706, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -61098,6 +61098,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableText: {fileID: 1953829183}
+  onEnableColor: {r: 1, g: 1, b: 1, a: 1}
+  onDisableColor: {r: 0.5764706, g: 0.5764706, b: 0.5764706, a: 1}
   available_prefab: {fileID: 4460562689506244380, guid: a06909e428b1f8947a9108dea08b8a1f, type: 3}
   questListTransform: {fileID: 1030639864}
 --- !u!1 &2114252168

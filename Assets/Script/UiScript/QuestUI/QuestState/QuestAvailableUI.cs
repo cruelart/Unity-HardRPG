@@ -6,8 +6,15 @@ using UnityEngine.UI;
 
 public class QuestAvailableUI : MonoBehaviour
 {
+    [Header("퀘스트 타입 텍스트 수정")]
     [SerializeField]
     private TextMeshProUGUI availableText; // 진행중 텍스트 찐하게 만들예정
+
+    [SerializeField]
+    private Color onEnableColor;
+
+    [SerializeField]
+    private Color onDisableColor;
 
     [SerializeField]
     private GameObject available_prefab; // 진행중 프리팹
@@ -27,6 +34,15 @@ public class QuestAvailableUI : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnEnable()
+    {
+        availableText.color = onEnableColor;
+    }
+
+    private void OnDisable()
+    {
+        availableText.color = onDisableColor;
     }
 
     public void AddAvailableQuest(QuestData _questData, QuestProgressData _questProgressData)
