@@ -14,9 +14,11 @@ public class QuestData : ScriptableObject
 
     [Header("퀘스트 제공 NPC")]
     public string StartNpcName;
+    public Sprite StartNpcImage;
 
     [Header("퀘스트 마감 NPC")]
     public string EndNpcName;
+    public Sprite EndNpcImage;
 
     [Header("클리어 보상")]
     public BaseitemDB ClearItem;
