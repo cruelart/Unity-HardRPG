@@ -22,7 +22,7 @@ public class QuestManager : MonoBehaviour
     //private Dictionary<int, QuestData> questDataTable = new(); // 퀘스트 아이디(키), 해당 퀘스트 데이터 -> 모든 플레이어 공용 Complit성능괜찮네 ㄷ
 
     //이벤트
-    public Action<QuestState, int> OnQuestChangeNotify; // 퀘스트 상태가 바뀌었을 때 알림 (퀘스트 상태, 퀘스트 아이디)
+    public event Action<int, int> OnQuestProgressChanged;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class QuestManager : MonoBehaviour
         }
 
         questDB.LoadData(); // 전체 퀘스트 목록 불러오기
+
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -47,12 +48,22 @@ public class QuestManager : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        MonsterEvent.OnMonsterDead += HandleMonsterDead;
+    }
+
+    private void OnDisable()
+    {
+        MonsterEvent.OnMonsterDead -= HandleMonsterDead;
+    }
+
     //LoadManager에서 퀘스트를 받아옴
     public void InitLoadData(List<QuestProgressData> _questProgressDataList)
     {
         if(_questProgressDataList.Count == 0) // 로드했는데 데이터가 비어있다면 -> 파일이 없다는거겠쬬?
         {
-            playerQuestData.Init(questDB.QuestDataTable.Keys);
+            playerQuestData.Init(questDB.QuestDataTable.Values);
             return;
         }
         playerQuestData.LoadQuestProgressData(_questProgressDataList);
@@ -70,19 +81,77 @@ public class QuestManager : MonoBehaviour
 
     public void AcceptQuest(int _questID)
     {         
-        playerQuestData.AcceptQuest(_questID);
-        OnQuestChangeNotify?.Invoke(QuestState.InProgress, _questID);
+        if(!playerQuestData.AvailableQuests.Contains(_questID))
+        {
+            Debug.LogError($"시작가능한 퀘스트가 아닙니다, 수락불가능합니다");
+            return; // 시작가능한 퀘스트에 존재하지도 않는데 어딜 감히
+        }
+        playerQuestData.AcceptQuest(questDB.GetQuestData(_questID));
+        //OnQuestChangeNotify?.Invoke(QuestState.InProgress, _questID);
     }
 
     public void CompleteQuest(int _questID)
     {
-        playerQuestData.CompleteQuest(_questID);
-        OnQuestChangeNotify?.Invoke(QuestState.Completed, _questID);
+        if (!playerQuestData.InProgressQuests.Contains(_questID))
+        {
+            Debug.LogError($"진행중인 퀘스트가 아닙니다, 완료 불가능합니다");
+            return;
+        }
+
+        QuestData questData = questDB.GetQuestData(_questID);
+
+        for(int i = 0; i < questData.requirements.Count; i++) // 퀘스트가 요구하는 모든 요구사항 갯수만큼
+        {
+            if(questData.requirements[i].requiredCount != playerQuestData.PlayerQuestProgressTable[_questID].requirementProgresses[i].currentCount)
+            {
+                return;
+            }
+        }
+        playerQuestData.CompleteQuest(questDB.GetQuestData(_questID));
+        //OnQuestChangeNotify?.Invoke(QuestState.Completed, _questID);
     }
 
     public void GiveUpQuest(int _questID)
     {
-        playerQuestData.GiveUpQuest(_questID);
-        OnQuestChangeNotify?.Invoke(QuestState.Available, _questID);
+        if (!playerQuestData.InProgressQuests.Contains(_questID))
+        {
+            Debug.LogError($"진행중인 퀘스트가 아닙니다, 포기 불가능합니다");
+            return;
+        }
+        playerQuestData.GiveUpQuest(questDB.GetQuestData(_questID));
+        //OnQuestChangeNotify?.Invoke(QuestState.Available, _questID);
+    }
+
+    private void HandleMonsterDead(MonsterDeadInfo info)
+    {
+        ApplyQuestProgress(QuestRequirementType.Kill, QuestTargetType.Monster, info.monsterID,1);
+    }
+
+    //private void HandleItemChanged(ItemChangedInfo info)
+    //{
+    //    ApplyQuestProgress(
+    //        QuestRequirementType.CollectItem,
+    //        info.itemID,
+    //        info.currentCount,
+    //        QuestProgressUpdateMode.Set);
+    //}
+
+    //private void HandleNpcTalkCompleted(NpcTalkInfo info)
+    //{
+    //    ApplyQuestProgress(
+    //        QuestRequirementType.TalkNpc,
+    //        info.npcID,
+    //        1,
+    //        QuestProgressUpdateMode.Set);
+    //}
+
+    private void ApplyQuestProgress(QuestRequirementType _requireType, QuestTargetType _targetType, int _targetID, int _value)
+    {
+        List<QuestRequirementRef> changed = playerQuestData.UpdateQuestInProgress(_requireType, _targetType, _targetID, _value); // 교체된 리스트
+
+        foreach (QuestRequirementRef requirementRef in changed)
+        {
+            OnQuestProgressChanged?.Invoke(requirementRef.questID,requirementRef.requirementIndex); // 해당 퀘스트 요구사항 requirementIndex번째에 있는 것이 변동사항 있다.
+        }
     }
 }

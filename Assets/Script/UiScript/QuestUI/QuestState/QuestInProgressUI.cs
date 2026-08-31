@@ -45,6 +45,11 @@ public class QuestInProgressUI : MonoBehaviour
         inProgressText.color = onDisableColor;
     }
 
+    public void UpdateInProgressQuest(QuestData _questData, QuestProgressData _questProgressData)
+    {
+        QuestContent questContent = inProgressQuestMap[_questData.questID];
+        questContent.UpdateQuestContent(_questProgressData);
+    }
     public void AddInProgressQuest(QuestData _questData, QuestProgressData _questProgressData)
     {
         QuestContent inProgressQuestContent = Instantiate(inProgress_prefab, questListTransform).GetComponent<QuestContent>();

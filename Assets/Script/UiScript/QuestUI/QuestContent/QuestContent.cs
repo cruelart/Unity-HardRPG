@@ -29,6 +29,13 @@ public class QuestContent : MonoBehaviour
         questProgressData = _questProgressData;
         questContentText.text = _questData.questName;
     }
+
+    public void UpdateQuestContent(QuestProgressData _questProgressData)
+    {
+        questProgressData = _questProgressData;
+        UIManager.Instance.QuestDescriptionUI.UpdateExplainInProgressTextUI(questData, questProgressData);
+    }
+
     public void OnClick()
     {
         UIManager.Instance.ShowQuestDescriptionUI();

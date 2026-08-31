@@ -58,6 +58,11 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
         }
+
+
+        //--테스트용 퀘스트 수락
+        QuestManager.Instance.playerQuestData.AcceptQuest(QuestManager.Instance.questDB.GetQuestData(2));
+        QuestManager.Instance.playerQuestData.AcceptQuest(QuestManager.Instance.questDB.GetQuestData(3));
     }
 
     public void ShowInventoryUI()

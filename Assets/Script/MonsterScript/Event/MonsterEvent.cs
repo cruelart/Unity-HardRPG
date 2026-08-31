@@ -20,5 +20,10 @@ public class MonsterDeadInfo
 }
 public static class MonsterEvent
 {
-    public static Action<MonsterDeadInfo> OnMonsterDead; // 죽은 몬스터의 키 int 값을 받기 ㄱ
+    public static event Action<MonsterDeadInfo> OnMonsterDead; // 죽은 몬스터의 키 int 값을 받기 ㄱ
+
+    public static void RaiseMonsterDead(MonsterDeadInfo info)
+    {
+        OnMonsterDead?.Invoke(info);
+    }
 }
