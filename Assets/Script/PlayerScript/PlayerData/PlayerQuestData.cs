@@ -95,7 +95,23 @@ public class PlayerQuestData
     {
         foreach (var questRequirementRef in _map[_targetID])
         {
-            playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].currentCount += _value;
+            int requireCount = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].requireCount;
+            int currentCount = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].currentCount;
+            bool isCompleted = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].isCompleted;
+
+            int extraCount = currentCount + _value;
+
+            if (extraCount >= requireCount)
+            {
+                extraCount = requireCount;
+                isCompleted = true;
+            }
+            else
+            {
+                isCompleted = false;
+            }
+
+            playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].currentCount = extraCount;
         }
     }
 

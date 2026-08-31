@@ -71,6 +71,7 @@ public class  QuestRequirement
 [Serializable]
 public class QuestRequirementProgress
 {
+    public int requireCount; // 요구 갯수
     public int currentCount; // 현재 갯수
     public bool isCompleted; // 퀘스트 완료 가능 확인
 }
@@ -109,7 +110,7 @@ public class QuestProgressData
 
         foreach(var require in _questData.requirements)
         {
-            requirementProgresses.Add(new QuestRequirementProgress() { currentCount = 0, isCompleted = false });
+            requirementProgresses.Add(new QuestRequirementProgress() { requireCount = require.requiredCount, currentCount = 0, isCompleted = false });
         }
     }
 
