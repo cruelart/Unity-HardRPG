@@ -87,11 +87,11 @@ public readonly struct QuestRequirementRef
         this.requirementIndex = _requirementIndex;
     }
 }
-//public enum QuestProgressUpdateMode
-//{
-//    Add,
-//    Set // 아이템을 땅에 버려서 0개 이렇게 되면 한방에 처리하기 위함
-//}
+public enum QuestProgressUpdateMode
+{
+    Add,
+    Set // 아이템을 땅에 버려서 0개 이렇게 되면 한방에 처리하기 위함
+}
 
 [Serializable]
 public class QuestProgressData

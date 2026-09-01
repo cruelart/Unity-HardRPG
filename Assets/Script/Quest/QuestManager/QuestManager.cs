@@ -51,11 +51,13 @@ public class QuestManager : MonoBehaviour
     private void OnEnable()
     {
         MonsterEvent.OnMonsterDead += HandleMonsterDead;
+        InventoryEvent.OnOwnedItemCountChanged += HandleItemChanged;
     }
 
     private void OnDisable()
     {
         MonsterEvent.OnMonsterDead -= HandleMonsterDead;
+        InventoryEvent.OnOwnedItemCountChanged -= HandleItemChanged;
     }
 
     //LoadManager에서 퀘스트를 받아옴
@@ -127,14 +129,10 @@ public class QuestManager : MonoBehaviour
         ApplyQuestProgress(QuestRequirementType.Kill, QuestTargetType.Monster, info.monsterID,1);
     }
 
-    //private void HandleItemChanged(ItemChangedInfo info)
-    //{
-    //    ApplyQuestProgress(
-    //        QuestRequirementType.CollectItem,
-    //        info.itemID,
-    //        info.currentCount,
-    //        QuestProgressUpdateMode.Set);
-    //}
+    private void HandleItemChanged(int _itemID, int _amount)
+    {
+        ApplyQuestProgress(QuestRequirementType.CollectItem, QuestTargetType.Item, _itemID, _amount);
+    }
 
     //private void HandleNpcTalkCompleted(NpcTalkInfo info)
     //{
@@ -147,7 +145,7 @@ public class QuestManager : MonoBehaviour
 
     private void ApplyQuestProgress(QuestRequirementType _requireType, QuestTargetType _targetType, int _targetID, int _value)
     {
-        List<QuestRequirementRef> changed = playerQuestData.UpdateQuestInProgress(_requireType, _targetType, _targetID, _value); // 교체된 리스트
+        IReadOnlyList<QuestRequirementRef> changed = playerQuestData.UpdateQuestInProgress(_requireType, _targetType, _targetID, _value); // 교체된 리스트
 
         foreach (QuestRequirementRef requirementRef in changed)
         {

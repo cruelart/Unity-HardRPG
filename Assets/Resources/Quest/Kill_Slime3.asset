@@ -33,6 +33,11 @@ MonoBehaviour:
     questText: "\uC2AC\uB77C\uC784 \uCC98\uCE58"
   - requireType: 1
     targetType: 0
-    targetID: 0
+    targetID: 1
     requiredCount: 1
     questText: "\uB098\uBB34\uAC80 \uD68D\uB4DD"
+  - requireType: 1
+    targetType: 0
+    targetID: 3
+    requiredCount: 1
+    questText: "\uB3D9\uAC80 \uD68D\uB4DD"

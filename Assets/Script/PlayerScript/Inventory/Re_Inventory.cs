@@ -95,6 +95,8 @@ public class Re_Inventory : MonoBehaviour
     //장비아이템 인벤토리 추가 함수
     public bool AddEquipmentItem(int _itemID, int _amount)
     {
+        int addedAmount = 0;
+
         string notify_str = "";
 
         //장비창이 꽉찼을 경우
@@ -126,19 +128,22 @@ public class Re_Inventory : MonoBehaviour
 
             OnChangeEquipInventory?.Invoke(emptySlotIndex);
             _amount--;
+            addedAmount++;
         }
-        UpdateItemCount(_itemID, _amount);
+        UpdateItemCount(_itemID, addedAmount);
 
         GameEventChannel.OnNotify?.Invoke(notify_str);
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
 
-        return true;
+        return addedAmount > 0;
 
     }
 
     public bool AddEquipmentItem(EquipmentItemInstance _item, int _amount)
     {
+        int addedAmount = 0;
+
         string notify_str = "";
 
         //장비창이 꽉찼을 경우
@@ -171,11 +176,12 @@ public class Re_Inventory : MonoBehaviour
             current_equipNum++;
 
             OnChangeEquipInventory?.Invoke(emptySlotIndex);
+            addedAmount++;
             _amount--;
         }
 
-        UpdateItemCount(_item.setting.itemID, _amount);
-        return true;
+        UpdateItemCount(_item.setting.itemID, addedAmount);
+        return addedAmount > 0;
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
 
@@ -184,6 +190,8 @@ public class Re_Inventory : MonoBehaviour
     //소비아이템 인벤토리 추가 함수
     public bool AddConsumerItem(int _itemID, int _amount)
     {
+        int addedAmount = 0;
+
         string notify_str = "";
         
         //걸러내기 -> 그냥 인벤토리가 꽉찬 상태면 무시
@@ -223,10 +231,13 @@ public class Re_Inventory : MonoBehaviour
                 OnChangeConsumerInventory?.Invoke(itemSlotIndex, false);
 
                 _amount -= realAddNum;
+                addedAmount += realAddNum;
 
-                if(_amount <= 0) // 다 못채웠는데 amount가 딸리면 그대로 종료
+                if (_amount <= 0) // 다 못채웠는데 amount가 딸리면 그대로 종료
                 {
                     GameEventChannel.OnNotify?.Invoke(notify_str);
+
+                    UpdateItemCount(_itemID, addedAmount);
                     return true; // -> 몇개 채우긴했으니까 add 성공으로 침
                 }
             }
@@ -258,9 +269,10 @@ public class Re_Inventory : MonoBehaviour
             RegisterConsumerItem(_itemID, slotIndex);
             OnChangeConsumerInventory?.Invoke(slotIndex, true);
             _amount -= count;
+            addedAmount += count;
         }
 
-        UpdateItemCount(_itemID, _amount);
+        UpdateItemCount(_itemID, addedAmount);
         GameEventChannel.OnNotify?.Invoke(notify_str);
 
         return true;

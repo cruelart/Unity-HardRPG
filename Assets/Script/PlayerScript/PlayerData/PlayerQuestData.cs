@@ -74,8 +74,9 @@ public class PlayerQuestData
                 switch (_targetType)
                 {
                     case QuestTargetType.Monster:
-                        UpdateInProgress(monsterKillQuestMap, _targetID, _value);
-                        return monsterKillQuestMap[_targetID];
+                        if(UpdateInProgress(QuestProgressUpdateMode.Add, monsterKillQuestMap, _targetID, _value))
+                            return monsterKillQuestMap[_targetID];
+                        break;
 
                     case QuestTargetType.Npc:
                         break;
@@ -83,23 +84,41 @@ public class PlayerQuestData
                 break;
 
             case QuestRequirementType.CollectItem:
-                UpdateInProgress(itemCollectQuestMap, _targetID, _value);
-                return itemCollectQuestMap[_targetID];
+                if (UpdateInProgress(QuestProgressUpdateMode.Set, itemCollectQuestMap, _targetID, _value))
+                    return itemCollectQuestMap[_targetID];
+                break;
 
         }
 
-        return null;
+        return new List<QuestRequirementRef>();
     }
 
-    private void UpdateInProgress(Dictionary<int, List<QuestRequirementRef>> _map, int _targetID, int _value)
+    private bool UpdateInProgress(QuestProgressUpdateMode _udpateMode, Dictionary<int, List<QuestRequirementRef>> _map, int _targetID, int _value)
     {
-        foreach (var questRequirementRef in _map[_targetID])
+        if(!_map.TryGetValue(_targetID, out List<QuestRequirementRef> _questRequirements))
+        {
+            Debug.Log($"해당 타겟ID {_targetID}에 대한 진행중인 퀘스트가 존재하지 않습니다.");
+            return false;
+        }
+
+        foreach (var questRequirementRef in _questRequirements)
         {
             int requireCount = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].requireCount;
             int currentCount = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].currentCount;
             bool isCompleted = playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].isCompleted;
 
-            int extraCount = currentCount + _value;
+            int extraCount = 0;
+
+            switch (_udpateMode)
+            {
+                case QuestProgressUpdateMode.Add:
+
+                    extraCount = currentCount + _value;
+                    break;
+                case QuestProgressUpdateMode.Set:
+                    extraCount = _value;
+                    break;
+            }
 
             if (extraCount >= requireCount)
             {
@@ -113,6 +132,8 @@ public class PlayerQuestData
 
             playerQuestProgressTable[questRequirementRef.questID].requirementProgresses[questRequirementRef.requirementIndex].currentCount = extraCount;
         }
+
+        return true;
     }
 
     //-> 이 함수가 monsterkill, npc대화등 접근을 빠르게 하기 위한 해시를 채워넣을 예정(Accept Quest로 퀘스트를 수락하게되면 등록하기위함)
@@ -144,10 +165,10 @@ public class PlayerQuestData
                     break;
 
                 case QuestRequirementType.CollectItem:
-                    if(questRequirement.targetType == QuestTargetType.Item) // 퀘스트가 요구하는 타겟이 아이템이라면
-                    {
-                        RegisterQuestRequirement(itemCollectQuestMap, questRequirement.targetID, _questData.questID, i);
-                    }
+                    //if(questRequirement.targetType == QuestTargetType.Item) // 퀘스트가 요구하는 타겟이 아이템이라면 -> 이건 Kill에서만 체크할 예정
+                    
+                    RegisterQuestRequirement(itemCollectQuestMap, questRequirement.targetID, _questData.questID, i);
+                    
                     break;
             }
         }
