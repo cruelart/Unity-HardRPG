@@ -51,6 +51,7 @@ public class SlimeAIScript : MonsterAIController, IMonsterDamageable
         {
             root.Evaluate();
         }
+
     }
 
     void LateUpdate()

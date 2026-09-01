@@ -21,7 +21,7 @@ public class PlayerReactManager : MonoBehaviour, IF_OnDamaged
         playerStatManager = _playerStatManager;
     }
 
-    public void OnDamaged(int _damage)
+    public void OnDamaged(int _damage, GameObject _attacker)
     {
         if (playerStatManager != null)
         {

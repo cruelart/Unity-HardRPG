@@ -49,13 +49,12 @@ public class PlayerHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider _col)
     {
-        if (_col.TryGetComponent<IF_OnDamaged>(out IF_OnDamaged target))
+        if (_col.TryGetComponent<IF_OnDamaged>(out IF_OnDamaged target)) // 공격이 가능한 상대이면
         {
-
             if (hitTargets.Contains(target)) // 이미 한대 때렸으면 pass하자
                 return;
 
-            target.OnDamaged(damage); // 맞으면 피격처리
+            target.OnDamaged(damage, transform.root.gameObject); // 맞으면 피격처리
             hitTargets.Add(target); // 맞은 애는 중복처리방지를 위해 Set에 넣어줌
         }
     }

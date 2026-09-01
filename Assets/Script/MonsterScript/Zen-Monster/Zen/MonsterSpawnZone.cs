@@ -12,7 +12,7 @@ public class MonsterSpawnZone : MonoBehaviour
     List<GameObject> activeMonsterList = new List<GameObject>();
 
     [SerializeField]
-    private float active_distance = 20.0f;
+    private float spawnSpace = 10.0f;
 
     private void Awake()
     {
@@ -81,7 +81,7 @@ public class MonsterSpawnZone : MonoBehaviour
                 GameObject monster = monsterList.Dequeue();
                 activeMonsterList.Add(monster);
 
-                monster.transform.position = this.transform.position + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-5.0f, 5.0f));
+                monster.transform.position = this.transform.position + new Vector3(Random.Range(-spawnSpace, spawnSpace), 0.0f, Random.Range(-spawnSpace, spawnSpace));
                 monster.SetActive(true);
             }
             currentSpawnTime = Time.time;

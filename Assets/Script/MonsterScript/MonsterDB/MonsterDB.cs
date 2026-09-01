@@ -14,6 +14,9 @@ public class MonsterDB : ScriptableObject
 
     public List<Stat> stats;
 
+    public int exp_value;
+    public int gold_value;
+
     public float viewAngle;
     public float detectionRange;
     public float attackRange;

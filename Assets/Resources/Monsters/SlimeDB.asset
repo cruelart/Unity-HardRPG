@@ -30,6 +30,8 @@ MonoBehaviour:
     value: 100
   - type: 6
     value: 10
+  exp_value: 25
+  gold_value: 98
   viewAngle: 140
   detectionRange: 10
   attackRange: 2
@@ -37,9 +39,21 @@ MonoBehaviour:
   personalDropItems:
   - itemID: 1
     dropPercent: 40.6
-    minCount: 1
-    maxCount: 1
+    minCount: 10
+    maxCount: 11
   - itemID: 2
     dropPercent: 40.6
+    minCount: 1
+    maxCount: 1
+  - itemID: 3
+    dropPercent: 80.5
+    minCount: 1
+    maxCount: 1
+  - itemID: 4
+    dropPercent: 83.3
+    minCount: 1
+    maxCount: 3
+  - itemID: 100
+    dropPercent: 83.3
     minCount: 1
     maxCount: 1

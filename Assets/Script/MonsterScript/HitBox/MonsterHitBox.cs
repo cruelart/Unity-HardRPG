@@ -30,7 +30,7 @@ public class MonsterHitBox : MonoBehaviour
             if(it_playerDamaged != null)
             {
                 //Debug.Log("몬스터가 플레이어를 공격성공");
-                it_playerDamaged.OnDamaged((int)monsterStatManager.statDict[StatType.Attack].value); // 데미지를 입힌다.
+                it_playerDamaged.OnDamaged((int)monsterStatManager.statDict[StatType.Attack].value, transform.root.gameObject); // 데미지를 입힌다.
             }
         }
     }

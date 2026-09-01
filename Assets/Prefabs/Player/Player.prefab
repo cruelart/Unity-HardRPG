@@ -1981,14 +1981,12 @@ GameObject:
   - component: {fileID: 7038367296663051339}
   - component: {fileID: 2465031016818961794}
   - component: {fileID: 8551932566723348774}
-  - component: {fileID: 5245383074399122332}
   - component: {fileID: 6230714656217602945}
   - component: {fileID: 9116508632634809460}
   - component: {fileID: 2187930009815257726}
   - component: {fileID: 1177832527181550613}
   - component: {fileID: 2712581252963427464}
   - component: {fileID: 8898505847477025229}
-  - component: {fileID: 3690262917706466239}
   - component: {fileID: 5499414286256056278}
   - component: {fileID: -532858869761981847}
   - component: {fileID: -3798451923808063122}
@@ -2121,33 +2119,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5245383074399122332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4866567801438121621}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8866e534d22854bb04a50f63952e30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StaminaBar: {fileID: 9078105376671392269}
-  PlayerSword: {fileID: 0}
-  MainCam: {fileID: 0}
-  AttackArea: {fileID: 0}
-  playerHp: 100
-  PlayerSpeed: 0
-  hungryGage: 0
-  totalhungryGage: 0
-  hungrySpeed: 2
-  staminaGage: 0
-  playerLv: 1
-  playerAttackValue: 4
-  playerExp: 1
-  jumpdelay: 1
-  TFclick: 0
 --- !u!114 &6230714656217602945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2232,18 +2203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3589d2c2c31434a942d5a26210d7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3690262917706466239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4866567801438121621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67881ee13ea2652419665f10e9a42dc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5499414286256056278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2256,7 +2215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be59ff9a69e97e48bf5a47f2a0b0a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackManager: {fileID: 0}
   leftHand_hitBox: {fileID: 3315828325135291758}
   rightHand_hitBox: {fileID: 8320006590590253734}
   leftLeg_hitBox: {fileID: 7993483625257009789}
