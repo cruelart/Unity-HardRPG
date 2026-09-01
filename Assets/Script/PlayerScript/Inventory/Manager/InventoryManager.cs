@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -73,13 +74,15 @@ public class InventoryManager : MonoBehaviour
         {
             //장비
             case BaseitemDB.ItemType.Equipment:
-                inventoryDB.AddEquipmentItem(_itemID, _amount);
+                if (inventoryDB.AddEquipmentItem(_itemID, _amount))
+                    InventoryEvent.RaiseOwnedItemCountChanged(_itemID, GetItemCount(_itemID));
                 break;
 
             //소비
             case BaseitemDB.ItemType.Consumable:
                 Debug.Log("InventoryManager : MonoBehaviour : 소비아이템을 획득하였습니다");
-                inventoryDB.AddConsumerItem(_itemID, _amount);
+                if(inventoryDB.AddConsumerItem(_itemID, _amount))
+                    InventoryEvent.RaiseOwnedItemCountChanged(_itemID, GetItemCount(_itemID));
                 break;
 
             //기타
@@ -90,19 +93,33 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItemInInventory(EquipmentItemInstance _equipItem, int _amount)
     {
-        return inventoryDB.AddEquipmentItem(_equipItem, _amount);
+        if (!inventoryDB.AddEquipmentItem(_equipItem, _amount))
+        {
+            return false;
+        }
+
+        InventoryEvent.RaiseOwnedItemCountChanged(_equipItem.setting.itemID, GetItemCount(_equipItem.setting.itemID));
+        return true;
     }
 
     public void EquipItem(int _slotIndex)
     {
         EquipmentItemInstance item = inventoryDB.equipmentItemSlotList[_slotIndex].item;
 
+        if (!inventoryDB.EquipItem(_slotIndex))
+            return;
+
+        InventoryEvent.RaiseOwnedItemCountChanged(item.setting.itemID, GetItemCount(item.setting.itemID));
         EquipSpaceManager.Instance.EquipItem(item);
-        inventoryDB.EquipItem(_slotIndex);
     }
 
     public bool IsFullEquipSlot(int _amount)
     {
         return inventoryDB.isFullEquipItem(_amount);
+    }
+
+    public int GetItemCount(int _itemID)
+    {
+        return inventoryDB.GetItemCount(_itemID);
     }
 }
