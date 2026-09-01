@@ -11,12 +11,20 @@ public class QuestDataEditor : Editor
     private SerializedProperty questDescription;
     private SerializedProperty requirements;
 
+    private SerializedProperty startNpcName;
+    private SerializedProperty startNpcImage;
+    private SerializedProperty startNpcTransform;
+
     private void OnEnable()
     {
         questID = serializedObject.FindProperty("questID");
         questName = serializedObject.FindProperty("questName");
         questDescription = serializedObject.FindProperty("questDescription");
         requirements = serializedObject.FindProperty("requirements");
+
+        startNpcName = serializedObject.FindProperty("StartNpcName");
+        startNpcImage = serializedObject.FindProperty("StartNpcImage");
+        startNpcTransform = serializedObject.FindProperty("StartNpcTransform");
     }
 
     public override void OnInspectorGUI()
@@ -26,6 +34,10 @@ public class QuestDataEditor : Editor
         EditorGUILayout.PropertyField(questID);
         EditorGUILayout.PropertyField(questName);
         EditorGUILayout.PropertyField(questDescription);
+
+        EditorGUILayout.PropertyField(startNpcName);
+        EditorGUILayout.PropertyField(startNpcImage);
+        EditorGUILayout.PropertyField(startNpcTransform);
 
         EditorGUILayout.Space();
 
