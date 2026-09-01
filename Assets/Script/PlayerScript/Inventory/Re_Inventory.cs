@@ -29,15 +29,15 @@ public class Re_Inventory : MonoBehaviour
 
     //장비 아이템
     public List<EquipInventorySlot> equipmentItemSlotList = new List<EquipInventorySlot>(); // 인벤토리 나열용
-    //public Dictionary<long, EquipmentItemInstance> equipmentItemMap = new Dictionary<long, EquipmentItemInstance>(); // 검색, 탐색용 ex) 퀘스트 아이템확인용? 
     private int equip_ListMaxNum = 40;
     public int current_equipNum { get; private set; }
     public bool isEquipFull { get; private set; }
 
     //소비 아이템
     public List<ConsumerInventorySlot> consumerItemSlotList = new List<ConsumerInventorySlot>(); // 인벤토리 나열용
-    //public Dictionary<long, ConsumerItemInstance> consumerItemMap = new Dictionary<long, ConsumerItemInstance>(); // 아이템 id, 실제 아이템
-    //public Dictionary<long, int> consumerItemMap = new Dictionary<long, int>(); // 아이템 고유id가 인벤토리내에 총 몇개가 있는지 확인하는 용도(퀘스트 체크용도 등등)
+                                                                                                 //public Dictionary<long, int> consumerItemMap = new Dictionary<long, int>(); // 아이템 고유id가 인벤토리내에 총 몇개가 있는지 확인하는 용도(퀘스트 체크용도 등등)
+
+    public Dictionary<int, int> ItemCountMap = new Dictionary<int, int>(); // 인벤토리내 해당 아이템id를 가진 아이템이 몇개있는지 확인하는 용도 -> 퀘스트에 쓰일 예정
 
     private int consumer_ListMaxNum = 40;
     public int current_consumerNum { get; private set; }
@@ -75,9 +75,25 @@ public class Re_Inventory : MonoBehaviour
             consumerItemSlotList.Add(new ConsumerInventorySlot());
         }
     }
+    private void UpdateItemCount(int _itemID, int _amount)
+    {
+        if (!ItemCountMap.TryGetValue(_itemID, out var count))
+        {
+            ItemCountMap.Add(_itemID, _amount);
+        }
+        else
+        {
+            ItemCountMap[_itemID] += _amount;
+        }
+
+        if (ItemCountMap[_itemID] <= 0)
+        {
+            ItemCountMap.Remove(_itemID);
+        }
+    }
 
     //장비아이템 인벤토리 추가 함수
-    public void AddEquipmentItem(int _itemID, int _amount)
+    public bool AddEquipmentItem(int _itemID, int _amount)
     {
         string notify_str = "";
 
@@ -86,7 +102,7 @@ public class Re_Inventory : MonoBehaviour
         {
             notify_str = $"아이템이 가득찼습니다";
             GameEventChannel.OnNotify?.Invoke(notify_str);
-            return;
+            return false;
         }
 
         Debug.Log("여긴 아직 버그가 아님");
@@ -111,10 +127,13 @@ public class Re_Inventory : MonoBehaviour
             OnChangeEquipInventory?.Invoke(emptySlotIndex);
             _amount--;
         }
+        UpdateItemCount(_itemID, _amount);
 
         GameEventChannel.OnNotify?.Invoke(notify_str);
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
+
+        return true;
 
     }
 
@@ -155,6 +174,7 @@ public class Re_Inventory : MonoBehaviour
             _amount--;
         }
 
+        UpdateItemCount(_item.setting.itemID, _amount);
         return true;
         //equipmentItemList.Add(_item);
         //equipmentItemMap.Add(_item.instanceID, _item);
@@ -162,7 +182,7 @@ public class Re_Inventory : MonoBehaviour
     }
 
     //소비아이템 인벤토리 추가 함수
-    public void AddConsumerItem(int _itemID, int _amount)
+    public bool AddConsumerItem(int _itemID, int _amount)
     {
         string notify_str = "";
         
@@ -171,7 +191,7 @@ public class Re_Inventory : MonoBehaviour
         {
             notify_str = $"아이템이 가득찼습니다, 인벤토리를 비워주세요";
             GameEventChannel.OnNotify?.Invoke(notify_str);
-            return;
+            return false;
         }
 
         ConsumerItemDB new_consumerItemDB = ItemDataManager.Instance.GetConsumerItemDB(_itemID);
@@ -207,7 +227,7 @@ public class Re_Inventory : MonoBehaviour
                 if(_amount <= 0) // 다 못채웠는데 amount가 딸리면 그대로 종료
                 {
                     GameEventChannel.OnNotify?.Invoke(notify_str);
-                    return;
+                    return true; // -> 몇개 채우긴했으니까 add 성공으로 침
                 }
             }
         }
@@ -240,7 +260,10 @@ public class Re_Inventory : MonoBehaviour
             _amount -= count;
         }
 
+        UpdateItemCount(_itemID, _amount);
         GameEventChannel.OnNotify?.Invoke(notify_str);
+
+        return true;
     }
 
     //아이템 추가시 등록 함수
@@ -260,22 +283,25 @@ public class Re_Inventory : MonoBehaviour
         list.Add(_slotIndex);
     }
 
-    public void EquipItem(int _slotIndex)
+    public bool EquipItem(int _slotIndex)
     {
-        RemoveEquipmentItem(_slotIndex);
+        return RemoveEquipmentItem(_slotIndex);
     }
 
     //인벤토리에서 장비아이템 제거
     //1. 슬롯자체 번호전달받아서 제거 -> 장비창으로 옮기는 용도
-    public void RemoveEquipmentItem(int _slotIndex)
+    public bool RemoveEquipmentItem(int _slotIndex)
     {
         if(current_equipNum == 0)
         {
-            return;
+            return false;
         }
+        UpdateItemCount(equipmentItemSlotList[_slotIndex].item.setting.itemID, -1);
+
         equipmentItemSlotList[_slotIndex].item = null;
         current_equipNum--;
         OnChangeEquipInventory?.Invoke(_slotIndex);
+        return true;
     }
 
     private int FindEmptyEquipSlot()
@@ -321,6 +347,15 @@ public class Re_Inventory : MonoBehaviour
     public bool isFullEquipItem(int _amount)
     {
         return current_equipNum + _amount > equip_ListMaxNum;
+    }
+
+    public int GetItemCount(int _itemID)
+    {
+        if (ItemCountMap.TryGetValue(_itemID, out var count))
+        {
+            return count;
+        }
+        return 0;
     }
 
     //장비아이템 정렬
