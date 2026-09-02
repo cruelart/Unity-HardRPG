@@ -39,6 +39,8 @@ public class QuestUI : UIBase
         //    }
         //};
         Init(); // 퀘스트 목록들 전부다 UI형식으로 불러오고
+
+        //진행도 변경 구독해서 진행중인 퀘스트UI는 지속적으로 업데이트 예정
         QuestManager.Instance.OnQuestProgressChanged += (_questID, _index) =>
         {
             QuestState questState = QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[_questID].questState;
@@ -53,6 +55,27 @@ public class QuestUI : UIBase
                     //questInProgressUI.AddInProgressQuest(QuestManager.Instance.questDB.QuestDataTable[_questID], QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[_questID]);
                     break;
                 case QuestState.Completed:
+                    break;
+            }
+        };
+
+        //퀘스트 진행도 변경
+        QuestManager.Instance.OnQuestStateChanged += (_questState, _questID) =>
+        {
+            switch (_questState)
+            {
+                case QuestState.Available: // 퀘스트를 포기한 상태(진행중 ->시작가능)
+                    //진행중 퀘스트 UI에서 제거
+                    questInProgressUI.RemoveInProgressQuest(_questID);
+                    questAvailableUI.AddAvailableQuest(QuestManager.Instance.questDB.QuestDataTable[_questID], QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[_questID]);
+                    break;
+                case QuestState.InProgress: // 퀘스트를 수락한 상태(시작가능 -> 진행중)
+                    questAvailableUI.RemoveAvailableQuest(_questID);
+                    questInProgressUI.AddInProgressQuest(QuestManager.Instance.questDB.QuestDataTable[_questID], QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[_questID]);
+                    break;
+                case QuestState.Completed: //  퀘스트를 완료한 상태(진행중 -> 완료)
+                    questInProgressUI.RemoveInProgressQuest(_questID);
+                    questCompletedUI.AddCompleteQuest(QuestManager.Instance.questDB.QuestDataTable[_questID], QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[_questID]);
                     break;
             }
         };

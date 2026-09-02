@@ -5,7 +5,9 @@ public enum TalkButtonType
 {
     OpenShop,
     Cancel,
-    Next
+    Next,
+    AcceptQuest,
+    CompleteQuest
 }
 
 [System.Serializable]
@@ -85,6 +87,8 @@ public class NpcTalkButtonManager : MonoBehaviour
 
             case TalkButtonType.Cancel:
                 return new TalkCancelCommand();
+            case TalkButtonType.AcceptQuest:
+                return new QuestAcceptCommand();
         }
 
         return null;

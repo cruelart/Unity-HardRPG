@@ -23,6 +23,7 @@ public class QuestManager : MonoBehaviour
 
     //이벤트
     public event Action<int, int> OnQuestProgressChanged;
+    public event Action<QuestState, int> OnQuestStateChanged; // 변경된 퀘스트 상태, 퀘스트 id
 
     private void Awake()
     {
@@ -89,6 +90,8 @@ public class QuestManager : MonoBehaviour
             return; // 시작가능한 퀘스트에 존재하지도 않는데 어딜 감히
         }
         playerQuestData.AcceptQuest(questDB.GetQuestData(_questID));
+        OnQuestStateChanged?.Invoke(QuestState.InProgress, _questID);
+        GameEventChannel.OnNotify?.Invoke($"퀘스트 수락 : {questDB.GetQuestData(_questID).questName}");
         //OnQuestChangeNotify?.Invoke(QuestState.InProgress, _questID);
     }
 

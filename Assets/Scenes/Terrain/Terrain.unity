@@ -29446,6 +29446,8 @@ MonoBehaviour:
     button_object: {fileID: 4931491314049407827, guid: 60ba3f85724d1694daeaa8c1dfaf48f8, type: 3}
   - buttonType: 1
     button_object: {fileID: 4361591281339920928, guid: cafde984f0406d5479092f8e9f404e13, type: 3}
+  - buttonType: 3
+    button_object: {fileID: 4931491314049407827, guid: 6a378b0d4cb69d940a0959e347d0da77, type: 3}
 --- !u!1 &1011383304
 GameObject:
   m_ObjectHideFlags: 0
