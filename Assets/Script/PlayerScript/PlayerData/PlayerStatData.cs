@@ -4,8 +4,10 @@ using UnityEngine.UIElements;
 using System.Linq;
 
 //[System.Serializable]
-public class PlayerSaveData
+public class PlayerStatData
 {
+
+    //-----------------------------플레이어 기본 정보-------------------------------
     public string playerName; // 이름
 
     public int level;
@@ -27,7 +29,7 @@ public class PlayerSaveData
 
     public int stat_upgradePossibleValue;
 
-    public PlayerSaveData()
+    public PlayerStatData()
     {
         playerName = "New Player";
         level = 1;
@@ -83,4 +85,5 @@ public class PlayerSaveData
     {
         statDict[_type].value -= value;
     }
+
 }

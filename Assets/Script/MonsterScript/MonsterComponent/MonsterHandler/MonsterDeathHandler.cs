@@ -38,7 +38,7 @@ public class MonsterDeathHandler : MonoBehaviour
     private void HandleDeath()
     {
         monsterDeadInfo.killerPlayer = monsterStatManager.playerStatManager; // 누가 죽였는지 정보 넣어주기
-        MonsterEvent.OnMonsterDead?.Invoke(monsterDeadInfo);
+        MonsterEvent.RaiseMonsterDead(monsterDeadInfo);
         //MonsterZen.instance.ReturnMonster(monsterType, gameObject);
     }
 

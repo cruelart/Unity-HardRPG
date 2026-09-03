@@ -36,6 +36,15 @@ public class UIManager : MonoBehaviour
     public TalkUI TalkUI => talkUI;
     public TalkUI NpcTalkUI => talkUI;
 
+    //퀘스트 관련 UI
+    [SerializeField]
+    private QuestUI questUI;
+
+    [SerializeField]
+    private QuestExplainUI questDescriptionUI;
+    public QuestExplainUI QuestDescriptionUI => questDescriptionUI;
+
+
 
     [SerializeField]
     private IsTrueTraderSellButton isTrueTraderSellButton;
@@ -49,6 +58,11 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
         }
+
+
+        //--테스트용 퀘스트 수락
+        QuestManager.Instance.playerQuestData.AcceptQuest(QuestManager.Instance.questDB.GetQuestData(2));
+        //QuestManager.Instance.playerQuestData.AcceptQuest(QuestManager.Instance.questDB.GetQuestData(3));
     }
 
     public void ShowInventoryUI()
@@ -145,6 +159,29 @@ public class UIManager : MonoBehaviour
         NpcTalkUI.UIHide();
     }
 
+    public void ShowQuestUI()
+    {
+        questUI.UIOpen();
+        OpenUIList.Add(questUI);
+    }
+
+    public void HideQuestUI()
+    {
+        questUI.UIHide();
+        OpenUIList.Remove(questUI);
+    }
+
+    public void ShowQuestDescriptionUI()
+    {  
+        questDescriptionUI.UIOpen();
+        OpenUIList.Add(questDescriptionUI);
+    }
+
+    public void HideQuestDescriptionUI()
+    {         
+        questDescriptionUI.UIHide();
+        OpenUIList.Remove(questDescriptionUI);
+    }
     public void InOrderUIHide()
     {
         if (OpenUIList.Count == 0)

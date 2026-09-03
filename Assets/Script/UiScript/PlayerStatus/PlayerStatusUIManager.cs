@@ -48,7 +48,7 @@ public class PlayerStatusUIManager : UIBase
         //레벨 받아오기
         playerLV_text.text = "LV " + playerStatManager.GetPlayerLv().ToString();
 
-        possibleUpgradeValue_text.text = playerStatManager.playerBaseDB.stat_upgradePossibleValue.ToString();
+        possibleUpgradeValue_text.text = playerStatManager.playerStatDB.stat_upgradePossibleValue.ToString();
 
         //스텟 받아오기
         foreach (var stat in statList)

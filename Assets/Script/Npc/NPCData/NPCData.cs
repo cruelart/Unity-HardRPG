@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,11 +20,21 @@ public enum NPCType
     WanderingTraderShop
 }
 
+[Serializable]
+public class NpcTalkData
+{
+    public List<NpcTextData> npcTexts = new(); // ncp 대화내용
+}
+
 [CreateAssetMenu(fileName = "NPCData", menuName = "Scriptable Objects/NPCData")]
 public class NPCData : ScriptableObject
 {
+    public int npcID;
+    public string npcName;
 
-    public List<NpcTextData> npcTexts = new(); // ncp 대화내용
+    [Header("Npc가 제공할 퀘스트ID들")]
+    public List<int> npcQuestIDs = new(); // npc가 제공할 퀘스트ID들
 
-    public NPCType npcType; // 대화유형을 뭘로 할 것인가 정하기
+    [Header("NPC의 정보")]
+    public List<NpcTalkData> npcTalkDatas = new(); // npc 대화
 }

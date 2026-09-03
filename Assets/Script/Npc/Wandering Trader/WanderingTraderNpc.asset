@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecccff046ee81ab4d816cb7772a9bea6, type: 3}
   m_Name: WanderingTraderNpc
   m_EditorClassIdentifier: 
-  npcTexts:
-  - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
-    npcText: "\uC624, \uC5B4\uC11C\uC624\uAC8C\uB098\n\uB9C8\uCE68 \uC774\uBC88\uC5D0
-      \uC0C8\uB85C \uB4E4\uC5B4\uC628 \uBB3C\uAC74\uC774 \uC788\uB294\uB370\n\uD55C\uBC88
-      \uAD6C\uACBD\uD574\uBCF4\uAC8C\uB098!"
-    buttonTypes: 000000000200000001000000
-  - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
-    npcText: "\uB2E4\uC74C\uC5D0 \uB610 \uCC3E\uC544\uC640\uB2EC\uB77C\uB124!"
-    buttonTypes: 01000000
-  npcType: 1
+  npcID: 0
+  npcName: 
+  npcQuestIDs: 03000000
+  npcTalkDatas:
+  - npcTexts:
+    - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
+      npcText: "\uD018\uC2A4\uD2B8 \uD14C\uC2A4\uD2B8\uC6A9\uB3C4\uB85C \uBC1B\uC544\uBCF4\uAC8C"
+      buttonTypes: 030000000200000001000000
+  - npcTexts:
+    - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
+      npcText: "\uD018\uC2A4\uD2B8 \uC218\uB77D \uC644\uB8CC"
+      buttonTypes: 01000000
