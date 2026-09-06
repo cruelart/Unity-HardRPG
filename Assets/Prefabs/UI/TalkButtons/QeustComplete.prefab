@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7039471416407667390}
   - component: {fileID: 8888109019502428288}
   m_Layer: 5
-  m_Name: QeustAcceptButton
+  m_Name: QeustComplete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD018\uC2A4\uD2B8 \uC218\uB77D"
+  m_text: "\uD018\uC2A4\uD2B8 \uC644\uB8CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ece263a921f713c4ca591d03fe5a9fd8, type: 2}
   m_sharedMaterial: {fileID: 7400006335021578133, guid: ece263a921f713c4ca591d03fe5a9fd8, type: 2}

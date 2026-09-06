@@ -18,10 +18,10 @@ MonoBehaviour:
     10\uB9C8\uB9AC \uCC98\uCE58\uD558\uC790"
   StartNpcName: "\uD55C\uC2A4"
   StartNpcImage: {fileID: 21300000, guid: 58cffc337969e4647828483279fe1fde, type: 3}
-  StartNpcTransform: {x: 0, y: 0, z: 0}
+  StartNpcTransform: {x: 33, y: 35, z: -22}
   EndNpcName: "\uD55C\uC2A4"
-  EndNpcImage: {fileID: 0}
-  EndNpcTransform: {x: 0, y: 0, z: 0}
+  EndNpcImage: {fileID: 21300000, guid: 58cffc337969e4647828483279fe1fde, type: 3}
+  EndNpcTransform: {x: 33, y: 35, z: -22}
   ClearItem: {fileID: 11400000, guid: 79d3a57e62ddefe4ea45393ada9115de, type: 2}
   ClearGold: 300
   ClearExp: 36

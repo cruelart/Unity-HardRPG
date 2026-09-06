@@ -25,13 +25,13 @@ public class PlayerGoldManager : MonoBehaviour
         
     }
 
-    public void PlusGold(int _value)
+    public void PlusGold(long _value)
     {
         PlayerDBManager.instance.playerDB.gold += _value;
         OnChangeGold?.Invoke(PlayerDBManager.instance.playerDB.gold);
     }
 
-    public bool MinusGold(int _value)
+    public bool MinusGold(long _value)
     {
         long currentGold = PlayerDBManager.instance.playerDB.gold;
 

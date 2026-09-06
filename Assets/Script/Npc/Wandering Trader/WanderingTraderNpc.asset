@@ -22,5 +22,6 @@ MonoBehaviour:
       buttonTypes: 030000000200000001000000
   - npcTexts:
     - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
-      npcText: "\uD018\uC2A4\uD2B8 \uC218\uB77D \uC644\uB8CC"
-      buttonTypes: 01000000
+      npcText: "\uC624 \uB0B4\uAC00 \uBD80\uD0C1\uD55C \uAC83\uC744 \uC804\uBD80
+        \uD588\uB098\uBCF4\uAD6C\uB9CC!"
+      buttonTypes: 04000000

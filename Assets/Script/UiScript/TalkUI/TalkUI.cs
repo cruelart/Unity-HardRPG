@@ -2,11 +2,14 @@ using NUnit.Framework;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TalkUI : UIBase
 {
+    public event Action OnHide;// 대화창이 닫힐때 이벤트
+
     private NPCData npcData; // 어떤 타입의 npc 대화창을 띄울건지 데이터 받아오기
     public int questID { get; private set; } = 0; // 
 
@@ -65,6 +68,12 @@ public class TalkUI : UIBase
             case TalkButtonType.OpenShop:
                 break;
         }
+    }
+
+    public override void UIHide()
+    {
+        base.UIHide();
+        OnHide?.Invoke();
     }
 
 }

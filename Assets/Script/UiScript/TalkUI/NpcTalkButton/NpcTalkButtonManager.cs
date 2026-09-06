@@ -89,6 +89,8 @@ public class NpcTalkButtonManager : MonoBehaviour
                 return new TalkCancelCommand();
             case TalkButtonType.AcceptQuest:
                 return new QuestAcceptCommand();
+            case TalkButtonType.CompleteQuest:
+                return new QuestComplete();
         }
 
         return null;
