@@ -39,11 +39,24 @@ public class RewardManager : MonoBehaviour
     {
         MonsterDB monsterDB = MonsterDBManager.Instance.GetMonsterDB(_monsterDeadInfo.monsterID);
 
-        if (PlayerStatManager.Instance == null)
+        if (PlayerStatManager.Instance != null)
         {
-            Debug.Log("targetPlayerStatManager null¿Œµ•?");
+            PlayerStatManager.Instance.GetExp(monsterDB.exp_value);
         }
+    }
 
-        PlayerStatManager.Instance.GetExp(monsterDB.exp_value);
+    public void GetExpReward(long _expValue)
+    {
+        PlayerStatManager.Instance.GetExp(_expValue);
+    }
+
+    public void GetItemReward(int _itemID, int _itemCount)
+    {
+        InventoryManager.Instance.AddItemInInventory(_itemID, _itemCount);
+    }
+
+    public void GetMoneyReward(long _moneyValue)
+    {
+        PlayerGoldManager.Instance.PlusGold(_moneyValue);
     }
 }

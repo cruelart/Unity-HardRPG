@@ -1,9 +1,18 @@
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public interface IInteractable
+{
+    Transform InteractionTransform { get; }
+    void Interact(GameObject _interactor);
+    void ExitInteraction(GameObject _interactor);
+}
+
+public class NPC : MonoBehaviour , IInteractable
 {
     [SerializeField]
     protected NPCData npcData;
+
+    public Transform InteractionTransform => transform;
 
     protected int textIndex = 0;
     protected int questIndex = 0;
@@ -20,4 +29,19 @@ public class NPC : MonoBehaviour
     {
         // 기본 구현은 없음, 필요에 따라 서브클래스에서 오버라이드
     }
+
+    public virtual void Interact(GameObject _interactor)
+    {
+        DecideTextIndex();
+
+        UIManager.Instance.ShowNpcTalkUI();
+        UIManager.Instance.NpcTalkUI.Init(npcData, textIndex, questIndex);
+    }
+
+    public virtual void ExitInteraction(GameObject _interactor)
+    {
+        
+    }
+
+
 }

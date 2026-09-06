@@ -2,38 +2,22 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.iOS;
 
-public class WanderingTraderNav : MonoBehaviour
+public class WanderingTraderNav
 {
-    [SerializeField]
-    private NavigationNode currentNode; // 현재 위치해 있는 노드
+    public NavigationNode currentNode; // 현재 위치해 있는 노드
 
-    NavigationNode nextNode; // 다음으로 갈 노드
+    public NavigationNode nextNode; // 다음으로 갈 노드
 
     private NavMeshAgent agent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    private void Awake()
+    public WanderingTraderNav(NavigationNode _currentNode, NavMeshAgent _agent)
     {
-        this.transform.position = currentNode.transform.position; // 위치 설정
-        agent = GetComponent<NavMeshAgent>();
-    }
-    void Start()
-    {
-        MoveNextNode();
+        currentNode = _currentNode;
+        agent = _agent;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(IsArrived())
-        {
-            currentNode = nextNode;
-            MoveNextNode();
-        }
-    }
-
-    private void MoveNextNode()
+    public void MoveNextNode()
     {
         nextNode = DecideNextNode();
         agent.SetDestination(nextNode.transform.position);
@@ -69,7 +53,7 @@ public class WanderingTraderNav : MonoBehaviour
         return currentNode.Edges[currentNode.Edges.Count - 1].node;
     }
 
-    private bool IsArrived()
+    public bool IsArrived()
     {
         if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {

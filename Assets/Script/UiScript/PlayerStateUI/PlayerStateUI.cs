@@ -46,8 +46,8 @@ public class PlayerStateUI : UIBase
         playerExpBarImage.fillAmount = (float)(playerStatManager.playerStatDB.currentExp / playerStatManager.maxExp);
 
         playerStatManager.OnHpChanged += ControlHpBar;
-        playerStatManager.OnLevelUp += ControlLevelText;
         playerStatManager.OnExpChanged += ControlExpBar;
+        playerStatManager.OnLevelUp += ControlLevelText;
     }
 
     public void ControlHpBar(int _currentHp, int _maxHp)

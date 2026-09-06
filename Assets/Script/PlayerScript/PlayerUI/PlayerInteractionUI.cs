@@ -2,14 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class PlayerUIScript : MonoBehaviour
+public class PlayerInteractionUI : MonoBehaviour
 {
     bool lockCamera = false;
+    IInteractable target;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UIManager.Instance.TalkUI.OnHide += HandleTalkHide;
     }
 
     // Update is called once per frame
@@ -73,6 +74,16 @@ public class PlayerUIScript : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            target?.Interact(transform.parent.gameObject);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            UIManager.Instance.ShowQuestUI();
+        }
+
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             UIManager.Instance.InOrderUIHide();
@@ -89,5 +100,20 @@ public class PlayerUIScript : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        target = other.GetComponent<IInteractable>();
+    }
+
+    private void HandleTalkHide()
+    {
+        target.ExitInteraction(transform.parent.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        target = null;
     }
 }
