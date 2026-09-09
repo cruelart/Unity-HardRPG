@@ -29,7 +29,8 @@ public class EquipSpace : MonoBehaviour
         playerStatManager = _playerStatManager;
     }
 
-    public void Setitem(EquipmentItemInstance _newItem, ref EquipmentItemInstance _usingItem)
+    public void Setitem(EquipmentItemInstance _newItem, 
+        ref EquipmentItemInstance _usingItem)
     {
         //장착중인 장비가 있었다면
         if(_usingItem != null)

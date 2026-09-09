@@ -104,12 +104,14 @@ public class InventoryManager : MonoBehaviour
 
     public void EquipItem(int _slotIndex)
     {
-        EquipmentItemInstance item = inventoryDB.equipmentItemSlotList[_slotIndex].item;
+        EquipmentItemInstance item = 
+            inventoryDB.equipmentItemSlotList[_slotIndex].item;
 
         if (!inventoryDB.EquipItem(_slotIndex))
             return;
 
-        InventoryEvent.RaiseOwnedItemCountChanged(item.setting.itemID, GetItemCount(item.setting.itemID));
+        InventoryEvent.RaiseOwnedItemCountChanged(item.setting.itemID, 
+            GetItemCount(item.setting.itemID));
         EquipSpaceManager.Instance.EquipItem(item);
     }
 

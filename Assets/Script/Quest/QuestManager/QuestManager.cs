@@ -109,11 +109,19 @@ public class QuestManager : MonoBehaviour
         {
             if(questData.requirements[i].requiredCount != playerQuestData.PlayerQuestProgressTable[_questID].requirementProgresses[i].currentCount)
             {
+                GameEventChannel.OnNotify?.Invoke($"퀘스트 조건을 만족하지 못하여 퀘스트를 완료할 수 없습니다.");
                 return;
             }
         }
         playerQuestData.CompleteQuest(questDB.GetQuestData(_questID));
+        OnQuestStateChanged?.Invoke(QuestState.Completed, _questID);
         //OnQuestChangeNotify?.Invoke(QuestState.Completed, _questID);
+        GameEventChannel.OnNotify?.Invoke($"퀘스트 완료 : {questDB.GetQuestData(_questID).questName}");
+
+        //보상 제공
+        RewardManager.Instance.GetMoneyReward(questData.ClearGold);
+        RewardManager.Instance.GetItemReward(questData.ClearItem.itemID, 1);
+        RewardManager.Instance.GetExpReward(questData.ClearExp);
     }
 
     public void GiveUpQuest(int _questID)
