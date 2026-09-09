@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public interface IInteractable
+public interface ITalkInteractable
 {
     Transform InteractionTransform { get; }
     void Interact(GameObject _interactor);
     void ExitInteraction(GameObject _interactor);
 }
 
-public class NPC : MonoBehaviour , IInteractable
+public class NPC : MonoBehaviour , ITalkInteractable
 {
     [SerializeField]
     protected NPCData npcData;
