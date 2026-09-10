@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public interface IInteractable
+public interface ITalkInteractable
 {
     Transform InteractionTransform { get; }
-    void Interact(GameObject _interactor);
-    void ExitInteraction(GameObject _interactor);
+    void Interact(Transform _interactor);
+    void ExitInteraction();
 }
 
-public class NPC : MonoBehaviour , IInteractable
+public class NPC : MonoBehaviour , ITalkInteractable
 {
     [SerializeField]
     protected NPCData npcData;
@@ -30,7 +30,7 @@ public class NPC : MonoBehaviour , IInteractable
         // 기본 구현은 없음, 필요에 따라 서브클래스에서 오버라이드
     }
 
-    public virtual void Interact(GameObject _interactor)
+    public virtual void Interact(Transform _interactor)
     {
         DecideTextIndex();
 
@@ -38,7 +38,7 @@ public class NPC : MonoBehaviour , IInteractable
         UIManager.Instance.NpcTalkUI.Init(npcData, textIndex, questIndex);
     }
 
-    public virtual void ExitInteraction(GameObject _interactor)
+    public virtual void ExitInteraction()
     {
         
     }
