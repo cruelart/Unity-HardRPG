@@ -12,17 +12,17 @@ public class WanderingTrader : NPC
         wanderingTraderAIController = GetComponent<WanderingTraderAIController>();
     }
 
-    public override void Interact(GameObject _interactor)
+    public override void Interact(Transform _targetTransform)
     {
-        base.Interact(_interactor);
+        base.Interact(_targetTransform);
 
-        wanderingTraderAIController.SetTargetTransform(_interactor.transform); // 상호작용하는 플레이어를 타겟으로 설정
+        wanderingTraderAIController.SetTargetTransform(_targetTransform.transform); // 상호작용하는 플레이어를 타겟으로 설정
         wanderingTraderAIController.ChangeNpcState(NpcState.Interact); // 해당 Npc 상호작용 모드로 변경
     }
 
-    public override void ExitInteraction(GameObject _interactor)
+    public override void ExitInteraction()
     {
-        base.ExitInteraction(_interactor);
+        base.ExitInteraction();
         wanderingTraderAIController.ChangeNpcState(NpcState.Move); // 떠돌이 상인 Npc 이동 모드로 변경
     }
 

@@ -40,7 +40,6 @@ public class TalkUI : UIBase
 
     public void Init(NPCData _npcData, int _textIndex, int _questIndex)
     {
-
         currentIndex = 0;
 
         npcData = _npcData;

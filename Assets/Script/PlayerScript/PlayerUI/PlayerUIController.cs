@@ -2,13 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+[RequireComponent(typeof(PlayerInputReader))]
 public class PlayerUIController : MonoBehaviour
 {
     bool lockCamera = false;
     //private ITalkInteractable target; // 대화할 대상
-
-    [SerializeField]
     private PlayerInputReader playerInputReader; // 입력 담당
+
+    private void Awake()
+    {
+        playerInputReader = GetComponent<PlayerInputReader>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +22,7 @@ public class PlayerUIController : MonoBehaviour
         playerInputReader.OnEquipSpacePressed += EquipSpaceToggle;
         playerInputReader.OnPlayerStatusPressed += PlayerStatusToggle;
         playerInputReader.OnQuestPressed += PlayerQuestToggle;
-        playerInputReader.OnUIExitPressed += UIManager.Instance.InOrderUIHide;
+        playerInputReader.OnUIExitPressed += UIExit;
     }
 
     // Update is called once per frame
@@ -28,12 +32,6 @@ public class PlayerUIController : MonoBehaviour
         {
             GameEventChannel.OnLockCamera?.Invoke(!lockCamera);
             lockCamera = !lockCamera;
-        }
-
-        //target과의 상호작용
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-            //target?.Interact(transform.parent.gameObject);
         }
     }
 
@@ -124,5 +122,10 @@ public class PlayerUIController : MonoBehaviour
                 UIManager.Instance.ShowQuestUI();
                 break;
         }
+    }
+
+    private void UIExit()
+    {
+        UIManager.Instance.InOrderUIHide();
     }
 }
