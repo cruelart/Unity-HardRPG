@@ -14,14 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcID: 0
   npcName: 
-  npcQuestIDs: 03000000
   npcTalkDatas:
-  - npcTexts:
+  - questID: 2
+    npcTexts:
     - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
       npcText: "\uD018\uC2A4\uD2B8 \uD14C\uC2A4\uD2B8\uC6A9\uB3C4\uB85C \uBC1B\uC544\uBCF4\uAC8C"
       buttonTypes: 030000000200000001000000
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+      npcText: "\uC694\uC998 \uC2AC\uB77C\uC784\uC774 \uCC38 \uACE8\uCE6B\uB369\uC774\uB780
+        \uB9D0\uC774\uC57C.."
+      buttonTypes: 0200000001000000
+    - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
+      npcText: "\uD639\uC2DC \uC790\uB124\uC5D0\uAC8C \uC2AC\uB77C\uC784 \uCC98\uB9AC\uB97C
+        \uBD80\uD0C1\uD574\uB3C4 \uAD1C\uCC2E\uC744\uAE4C?"
+      buttonTypes: 0300000001000000
+<<<<<<< Updated upstream
+=======
+=======
+<<<<<<< Updated upstream
+      npcText: "\uD018\uC2A4\uD2B8 \uD14C\uC2A4\uD2B8\uC6A9\uB3C4\uB85C \uBC1B\uC544\uBCF4\uAC8C"
+      buttonTypes: 030000000200000001000000
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   - npcTexts:
+=======
+      npcText: "\uC694\uC998 \uC2AC\uB77C\uC784\uC774 \uCC38 \uACE8\uCE6B\uB369\uC774\uB780
+        \uB9D0\uC774\uC57C.."
+      buttonTypes: 0200000001000000
+    - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
+      npcText: "\uD639\uC2DC \uC790\uB124\uC5D0\uAC8C \uC2AC\uB77C\uC784 \uCC98\uB9AC\uB97C
+        \uBD80\uD0C1\uD574\uB3C4 \uAD1C\uCC2E\uC744\uAE4C?"
+      buttonTypes: 0300000001000000
+  - questID: 2
+    npcTexts:
+>>>>>>> Stashed changes
     - npcName: "\uB5A0\uB3CC\uC774 \uC0C1\uC778"
       npcText: "\uC624 \uB0B4\uAC00 \uBD80\uD0C1\uD55C \uAC83\uC744 \uC804\uBD80
         \uD588\uB098\uBCF4\uAD6C\uB9CC!"
-      buttonTypes: 04000000
+      buttonTypes: 0400000001000000

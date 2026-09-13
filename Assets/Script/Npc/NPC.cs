@@ -1,21 +1,14 @@
 using UnityEngine;
-
-public interface IInteractable
+public class NPC : MonoBehaviour
 {
-    Transform InteractionTransform { get; }
-    void Interact(GameObject _interactor);
-    void ExitInteraction(GameObject _interactor);
-}
+    protected WanderingTraderAIController npcController;
+    protected NpcTalkInteraction npcTalkInteraction;
 
-public class NPC : MonoBehaviour , IInteractable
-{
-    [SerializeField]
-    protected NPCData npcData;
-
-    public Transform InteractionTransform => transform;
-
-    protected int textIndex = 0;
-    protected int questIndex = 0;
+    protected virtual void Awake()
+    {
+        npcController = GetComponent<WanderingTraderAIController>();
+        npcTalkInteraction = GetComponent<NpcTalkInteraction>();
+    }
 
     public Transform npcTransform { get; private set; }
     
@@ -24,24 +17,5 @@ public class NPC : MonoBehaviour , IInteractable
         npcTransform = this.transform;
         //NpcManager.Instance.AddNpc(npcData.npcName, this);
     }
-
-    protected virtual void DecideTextIndex()
-    {
-        // 기본 구현은 없음, 필요에 따라 서브클래스에서 오버라이드
-    }
-
-    public virtual void Interact(GameObject _interactor)
-    {
-        DecideTextIndex();
-
-        UIManager.Instance.ShowNpcTalkUI();
-        UIManager.Instance.NpcTalkUI.Init(npcData, textIndex, questIndex);
-    }
-
-    public virtual void ExitInteraction(GameObject _interactor)
-    {
-        
-    }
-
 
 }

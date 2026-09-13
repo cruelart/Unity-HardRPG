@@ -86,7 +86,8 @@ public class PlayerStatManager : MonoBehaviour
     public void OnDamaged(int _damage)
     {
         playerStatDB.currentHp -= _damage;
-        OnHpChanged?.Invoke(playerStatDB.currentHp, (int)GetStatValue(StatType.HP)); // hp 변동사항 알림
+        OnHpChanged?.Invoke(playerStatDB.currentHp, 
+            (int)GetStatValue(StatType.HP)); // hp 변동사항 알림
 
         Debug.Log("PlayerStatManager에 있는 OnDamage함수 호출");
 

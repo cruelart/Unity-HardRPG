@@ -10,7 +10,7 @@ public class TalkUI : UIBase
 {
     public event Action OnHide;// 대화창이 닫힐때 이벤트
 
-    private NPCData npcData; // 어떤 타입의 npc 대화창을 띄울건지 데이터 받아오기
+    private NpcTalkData npcTalkData; // 어떤 타입의 npc 대화창을 띄울건지 데이터 받아오기
     public int questID { get; private set; } = 0; // 
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class TalkUI : UIBase
     private NpcTalkText npcTalkText;
 
     [SerializeField]
-    private NpcTalkButtonManager npcTalkButton;
+    private NpcTalkButtonManager npcTalkButtonPanel;
 
     private List<NpcTextData> npcTexts; // 보여줄 대화 내용
 
@@ -38,26 +38,25 @@ public class TalkUI : UIBase
         
     }
 
-    public void Init(NPCData _npcData, int _textIndex, int _questIndex)
+    public void Init(NpcTalkData _npcTalkData)
     {
-
         currentIndex = 0;
 
-        npcData = _npcData;
-        npcTexts = npcData.npcTalkDatas[_textIndex].npcTexts; // 참조
-        questID = npcData.npcQuestIDs[_questIndex];
+        npcTalkData = _npcTalkData;
+        npcTexts = npcTalkData.npcTexts; // 참조
+        //questID = npcData.npcQuestIDs[_questIndex];
 
-        npcName.text = npcData.npcTalkDatas[_textIndex].npcTexts[currentIndex].npcName; // 수정예정 -> 따로 이름 변경하는 스크립트 짤까 고민중
+        npcName.text = npcTexts[currentIndex].npcName; // 수정예정 -> 따로 이름 변경하는 스크립트 짤까 고민중
 
         npcTalkText.ShowNpcTalkText(npcTexts, currentIndex);
-        npcTalkButton.ShowButton(npcTexts[currentIndex].buttonTypes);
+        npcTalkButtonPanel.ShowButton(npcTexts[currentIndex].buttonTypes);
     }
 
     public void NextText()
     {
         npcTalkText.ShowNpcTalkText(npcTexts, ++currentIndex);
         npcName.text = npcTexts[currentIndex].npcName;
-        npcTalkButton.ShowButton(npcTexts[currentIndex].buttonTypes);
+        npcTalkButtonPanel.ShowButton(npcTexts[currentIndex].buttonTypes);
         Debug.Log("다음");
     }
 

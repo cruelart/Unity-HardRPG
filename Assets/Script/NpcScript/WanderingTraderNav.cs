@@ -42,12 +42,10 @@ public class WanderingTraderNav
 
         foreach (var edge in currentNode.Edges)
         {
-            randomNum -= edge.weight;
-
-            if(randomNum <= 0)
-            {
+            if (randomNum < edge.weight)
                 return edge.node;
-            }
+
+            randomNum -= edge.weight;
         }
 
         return currentNode.Edges[currentNode.Edges.Count - 1].node;
