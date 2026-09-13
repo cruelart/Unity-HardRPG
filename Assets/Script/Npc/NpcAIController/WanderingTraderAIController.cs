@@ -9,24 +9,15 @@ public enum NpcState
     Interact
 }
 
-public class WanderingTraderAIController : MonoBehaviour
+public class WanderingTraderAIController : NpcAIController
 {
-    private Transform targetTransform;
-
-    private NpcState npcState = NpcState.Move; // NPC 상태
-
-    private Node root; // 루트노드
 
     [SerializeField]
     private NavigationNode startNode; // 시작점 노드 설정
 
-    private NavMeshAgent agent;
-
     private WanderingTraderNav wanderingTraderNav;
 
-    private Animator animator;
-
-    private void Awake()
+    protected override void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -59,30 +50,12 @@ public class WanderingTraderAIController : MonoBehaviour
         root.Evaluate();
     }
 
-    public void ChangeNpcState(NpcState _newState)
+    public override void ChangeNpcState(NpcState _newState)
     {
         if (npcState == _newState)
             return;
 
         npcState = _newState;
-
-        switch (npcState)
-        {
-            case NpcState.Interact:
-                agent.isStopped = true;
-                animator.CrossFade("Interaction", 0.2f);
-                break;
-
-            case NpcState.Move:
-                agent.isStopped = false;
-                animator.CrossFade("Move", 0.2f);
-                break;
-
-            case NpcState.Idle:
-                agent.isStopped = true;
-                animator.CrossFade("Idle", 0.2f);
-                break;
-        }
     }
 
     public void SetTargetTransform(Transform _targetTransform)
