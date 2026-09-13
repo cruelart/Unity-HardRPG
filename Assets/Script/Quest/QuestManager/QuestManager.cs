@@ -135,6 +135,11 @@ public class QuestManager : MonoBehaviour
         //OnQuestChangeNotify?.Invoke(QuestState.Available, _questID);
     }
 
+    public QuestState GetQuestState(int _questID)
+    {
+        return playerQuestData.GetQuestState(_questID);
+    }
+
     private void HandleMonsterDead(MonsterDeadInfo info)
     {
         ApplyQuestProgress(QuestRequirementType.Kill, QuestTargetType.Monster, info.monsterID,1);
