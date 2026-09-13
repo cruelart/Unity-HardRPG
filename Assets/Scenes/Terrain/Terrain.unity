@@ -17910,7 +17910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77641826da20f047b37702ff8fa8239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: 0b8e10a392128fd48951d5ec8e37d0d0, type: 2}
 --- !u!114 &644708809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17924,6 +17923,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startNode: {fileID: 74523357}
+--- !u!114 &644708810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644708802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d9c183fa6c76f439449cb65aa3d5a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &651475250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33767,7 +33778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: {fileID: 661775311}
   npcTalkText: {fileID: 1513638255}
-  npcTalkButton: {fileID: 1010764094}
+  npcTalkButtonPanel: {fileID: 0}
 --- !u!4 &1168900158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4071750753398162, guid: a397f10d7b785064e9d0f7b5ab603003, type: 3}
@@ -34809,6 +34820,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 473015699298511306, guid: d56a61b7b0540114392a813f8f54b499, type: 3}
       insertIndex: -1
       addedObject: {fileID: 644708809}
+    - targetCorrespondingSourceObject: {fileID: 473015699298511306, guid: d56a61b7b0540114392a813f8f54b499, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 644708810}
   m_SourcePrefab: {fileID: 100100000, guid: d56a61b7b0540114392a813f8f54b499, type: 3}
 --- !u!1001 &1202295000
 PrefabInstance:

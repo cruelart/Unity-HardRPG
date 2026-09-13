@@ -26,6 +26,6 @@ public class WanderingTraderInteraction : NpcTalkInteraction
 
     protected override void DecideTextIndex()
     {
-        //1. 어떤 퀘스트도 받은 적이 없다면
+        //
     }
 }
