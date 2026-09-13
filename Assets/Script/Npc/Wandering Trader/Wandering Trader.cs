@@ -26,23 +26,22 @@ public class WanderingTrader : NPC
         wanderingTraderAIController.ChangeNpcState(NpcState.Move); // 떠돌이 상인 Npc 이동 모드로 변경
     }
 
-    protected override void DecideTextIndex()
-    {
+    //protected override void DecideTextIndex()
+    //{
+    //    //questIndex = 0;
+    //    //QuestState questState0 = QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[npcData.npcQuestIDs[0]].questState;
 
-        questIndex = 0;
-        QuestState questState0 = QuestManager.Instance.playerQuestData.PlayerQuestProgressTable[npcData.npcQuestIDs[0]].questState;
-
-        if(questState0 == QuestState.Available)
-        {
-            textIndex = 0; // 아직 퀘스트를 받기 전이니까 0으로
-        }
-        else if(questState0 == QuestState.InProgress)
-        {
-            textIndex = 1; //받은 상태니까 1로
-        }
-        else if(questState0 == QuestState.Completed)
-        {
-            textIndex = 2; // 완료했으니까 2로
-        }
-    }
+    //    //if(questState0 == QuestState.Available)
+    //    //{
+    //    //    textIndex = 0; // 아직 퀘스트를 받기 전이니까 0으로
+    //    //}
+    //    //else if(questState0 == QuestState.InProgress)
+    //    //{
+    //    //    textIndex = 1; //받은 상태니까 1로
+    //    //}
+    //    //else if(questState0 == QuestState.Completed)
+    //    //{
+    //    //    textIndex = 2; // 완료했으니까 2로
+    //    //}
+    //}
 }
