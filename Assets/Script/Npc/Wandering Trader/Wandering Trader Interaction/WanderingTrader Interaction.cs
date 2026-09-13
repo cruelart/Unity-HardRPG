@@ -14,6 +14,11 @@ public class WanderingTraderInteraction : NpcTalkInteraction
         
     }
 
+    public override void Interact(Transform _targetTransform)
+    {
+        base.Interact(_targetTransform);
+    }
+
     public override void ExitInteraction()
     {
 

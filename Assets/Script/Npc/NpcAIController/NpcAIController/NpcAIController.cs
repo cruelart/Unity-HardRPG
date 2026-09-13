@@ -23,4 +23,10 @@ public abstract class NpcAIController : MonoBehaviour
     }
 
     public abstract void ChangeNpcState(NpcState _newState);
+
+    public void NpcInteraction(Transform _transform)
+    {
+        targetTransform = _transform;
+        npcState = NpcState.Interact;
+    }
 }
