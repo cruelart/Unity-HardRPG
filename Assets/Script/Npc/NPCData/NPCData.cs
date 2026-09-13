@@ -23,6 +23,7 @@ public enum NPCType
 [Serializable]
 public class NpcTalkData
 {
+    public int questID; // 해당 대화가 진행되는 퀘스트ID
     public List<NpcTextData> npcTexts = new(); // ncp 대화내용
 }
 
@@ -32,8 +33,8 @@ public class NPCData : ScriptableObject
     public int npcID;
     public string npcName;
 
-    [Header("Npc가 제공할 퀘스트ID들")]
-    public List<int> npcQuestIDs = new(); // npc가 제공할 퀘스트ID들
+    //[Header("Npc가 제공할 퀘스트ID들")]
+    //public List<int> npcQuestIDs = new(); // npc가 제공할 퀘스트ID들
 
     [Header("NPC의 정보")]
     public List<NpcTalkData> npcTalkDatas = new(); // npc 대화
