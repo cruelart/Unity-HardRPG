@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Re_Camera : MonoBehaviour
 {
-
     [Header("카메라 세팅")]
     public Transform target;
     public float PlCaDistance = 10f; // 플레이어와 카메라의 거리
@@ -22,10 +21,13 @@ public class Re_Camera : MonoBehaviour
     private float currentX = 0f;
     private float currentY = 0f;
 
+    private bool isOpenUI = false;
+
     private void Awake()
     {
         //초기 변수 설정
         InitDistance = PlCaDistance;
+        GameEventChannel.OnLockCamera += SetIsOpenUI;
     }
 
     void Start()
@@ -49,24 +51,27 @@ public class Re_Camera : MonoBehaviour
             return;
         }
 
-        //일단 마우스 움직임이 감지계산
-        currentX += Input.GetAxis("Mouse X") * sensitivity;
-        currentY -= Input.GetAxis("Mouse Y") * sensitivity;
+        if (!isOpenUI)
+        {
+            //일단 마우스 움직임이 감지계산
+            currentX += Input.GetAxis("Mouse X") * sensitivity;
+            currentY -= Input.GetAxis("Mouse Y") * sensitivity;
 
-        currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle); // 위아래 제한걸기
+            currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle); // 위아래 제한걸기
 
-        //회전값
-        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
+            //회전값
+            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
 
-        Vector3 dir = new Vector3(0, 0, -PlCaDistance);
+            Vector3 dir = new Vector3(0, 0, -PlCaDistance);
 
-        //메인 카메라의 위치 target중심으로 변경
-        this.transform.position = target.position + (rotation * dir);
-        //Debug.Log("플레이어 현재 위치: " + target.position);
+            //메인 카메라의 위치 target중심으로 변경
+            this.transform.position = target.position + (rotation * dir);
+            //Debug.Log("플레이어 현재 위치: " + target.position);
 
-        transform.LookAt(target.position); // 플레이어 중심 바라보기;
+            transform.LookAt(target.position); // 플레이어 중심 바라보기;
 
-        ZoomView(rotation);
+            ZoomView(rotation);
+        }
 
     }
 
@@ -87,5 +92,10 @@ public class Re_Camera : MonoBehaviour
                 PlCaDistance = Mathf.Lerp(PlCaDistance, InitDistance, 30 * Time.deltaTime);
             }
         }
+    }
+
+    private void SetIsOpenUI(bool _isOpenUI)
+    {
+        isOpenUI = _isOpenUI;
     }
 }

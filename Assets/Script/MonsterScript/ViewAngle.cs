@@ -12,6 +12,8 @@ public static class ViewAngle
 
         Debug.DrawRay(_monsterTransform.position + _monsterTransform.up, playerMonsterDirection, Color.red);
 
+        //Debug.Log("플레이어와 몬스터의 거리는 " + playerMonsterDistance);
+
         if (playerMonsterDistance < _viewDistance) // 몬스터가 시야거리 안에 들어왔고
         {
             //Debug.Log("플레이어가 시야거리안에 들어왔다");
@@ -19,7 +21,7 @@ public static class ViewAngle
             {
                 Debug.Log("플레이어가 시야각안에 들어왔다");
                 RaycastHit Rayhit;
-                if (Physics.Raycast(_monsterTransform.position + _monsterTransform.up*2, playerMonsterDirection, out Rayhit, _viewDistance))
+                if (Physics.Raycast(_monsterTransform.position, playerMonsterDirection, out Rayhit, _viewDistance))
                 {
                     if (Rayhit.transform.tag == "Wall") // 플레이어가 장애물에 막혀 보이지않다면
                     {
@@ -32,9 +34,14 @@ public static class ViewAngle
                         return true;
                     }
                 }
+
+                Debug.Log("예외발생");
+
+                Debug.Log("예외발생");
+                Debug.Log(_monsterTransform.position + Vector3.up * 2);
             }
         }
-
+        //Debug.Log(playerMonsterDirection);
         return false;
     }
     private static Vector3 BoundaryAngle(float _angle, Transform _monsterTransform)

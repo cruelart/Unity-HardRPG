@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
-    public PlayerAttackManager playerAttackManager;
+    private PlayerAttackManager playerAttackManager;
     //맨손 격투용-------------------------------------------
     [SerializeField]
     private PlayerHitBox leftHand_hitBox;

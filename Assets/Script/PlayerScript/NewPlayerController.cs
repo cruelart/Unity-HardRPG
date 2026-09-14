@@ -5,10 +5,10 @@ using UnityEngine;
 public class NewPlayerController : MonoBehaviour
 {
     PlayerState player_state;
-    PlayerState pastplayer_state;
-    Command command;
-    CommandManager command_manager = new CommandManager(); // 커맨드 관리 변수
-    KeyboardCommand keyboardCommand;
+    //PlayerState pastplayer_state;
+    //Command command;
+    //CommandManager command_manager = new CommandManager(); // 커맨드 관리 변수
+    //KeyboardCommand keyboardCommand;
 
     Rigidbody playerRigid;
     Animator player_anime;
@@ -20,17 +20,17 @@ public class NewPlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HpPotion hpPotion = new HpPotion();
-        PlayerData.playerData.consume_inventory.Add(hpPotion);
+        //HpPotion hpPotion = new HpPotion();
+        //PlayerData.playerData.consume_inventory.Add(hpPotion);
 
-        EpicSword epicSword = new EpicSword();
-        PlayerData.playerData.weapon_inventory.Add(epicSword);
+        //EpicSword epicSword = new EpicSword();
+        //PlayerData.playerData.weapon_inventory.Add(epicSword);
 
-        PlayerData.playerData.isCallInventory = true;
+        //PlayerData.playerData.isCallInventory = true;
 
         playerRigid = GetComponent<Rigidbody>();
         player_anime = GetComponent<Animator>();
-        keyboardCommand = new KeyboardCommand();
+        //keyboardCommand = new KeyboardCommand();
         player_state = new Idle(this.transform, playerRigid, this.player_anime, MainCam); // 처음 플레이어의 상태는 대기 상태인 IDLE로 표현
         player_state.Enter();
     }
@@ -57,46 +57,46 @@ public class NewPlayerController : MonoBehaviour
         player_state.DoAction();
 
     }
+    //-> 바보시절떄 만들었던 안좋은 코드
+    //void OnTriggerEnter(Collider col)
+    //{
+    //    if (col.CompareTag("AttackSecion")) // 일반 공격을 받은 상태라면
+    //    {
+    //        if (!PlayerData.playerData.isSuperMode && PlayerData.playerData.player_hp>=0)
+    //        {
+    //            Debug.Log("AttackSECION 접근");
+    //            player_state.Exit();
+    //            player_state = new PlayerReact(this.transform, playerRigid, this.player_anime, MainCam); // 즉시 피격 상태로 전환
+    //            player_state.Enter();
 
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("AttackSecion")) // 일반 공격을 받은 상태라면
-        {
-            if (!PlayerData.playerData.isSuperMode && PlayerData.playerData.player_hp>=0)
-            {
-                Debug.Log("AttackSECION 접근");
-                player_state.Exit();
-                player_state = new PlayerReact(this.transform, playerRigid, this.player_anime, MainCam); // 즉시 피격 상태로 전환
-                player_state.Enter();
+    //            return;
+    //        }
+    //    }
 
-                return;
-            }
-        }
+    //    if (col.CompareTag("BigAttackSecion")) // 넉백 공격을 받은 상태라면
+    //    {
+    //        if (!PlayerData.playerData.isSuperMode && PlayerData.playerData.player_hp >= 0)
+    //        {
+    //            Debug.Log("BigAttackSECION 접근");
+    //            this.transform.LookAt(col.transform.parent.transform.position);
+    //            player_state.Exit();
+    //            player_state = new PlayerFlyingBack(this.transform, playerRigid, this.player_anime, MainCam); // 즉시 넉백 상태로 전환
+    //            player_state.Enter();
 
-        if (col.CompareTag("BigAttackSecion")) // 넉백 공격을 받은 상태라면
-        {
-            if (!PlayerData.playerData.isSuperMode && PlayerData.playerData.player_hp >= 0)
-            {
-                Debug.Log("BigAttackSECION 접근");
-                this.transform.LookAt(col.transform.parent.transform.position);
-                player_state.Exit();
-                player_state = new PlayerFlyingBack(this.transform, playerRigid, this.player_anime, MainCam); // 즉시 넉백 상태로 전환
-                player_state.Enter();
+    //            return;
+    //        }
+    //    }
 
-                return;
-            }
-        }
+    //    if (PlayerData.playerData.player_hp <= 0 && PlayerData.playerData.player_hp > -100)
+    //    {
+    //        PlayerData.playerData.player_hp = -1000;
+    //        player_state.Exit();
+    //        player_state = new PlayerDeath(this.transform, playerRigid, this.player_anime, MainCam);
+    //        player_state.Enter();
 
-        if (PlayerData.playerData.player_hp <= 0 && PlayerData.playerData.player_hp > -100)
-        {
-            PlayerData.playerData.player_hp = -1000;
-            player_state.Exit();
-            player_state = new PlayerDeath(this.transform, playerRigid, this.player_anime, MainCam);
-            player_state.Enter();
-
-            return;
-        }
-    }
+    //        return;
+    //    }
+    //}
 
 
 }
