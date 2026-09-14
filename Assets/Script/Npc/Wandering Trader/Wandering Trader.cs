@@ -6,25 +6,26 @@ public class WanderingTrader : NPC
     private WanderingTraderAIController wanderingTraderAIController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         NpcInit();
         wanderingTraderAIController = GetComponent<WanderingTraderAIController>();
     }
 
-    public override void Interact(Transform _targetTransform)
-    {
-        base.Interact(_targetTransform);
+    //public override void Interact(Transform _targetTransform)
+    //{
+    //    base.Interact(_targetTransform);
 
-        wanderingTraderAIController.SetTargetTransform(_targetTransform.transform); // 상호작용하는 플레이어를 타겟으로 설정
-        wanderingTraderAIController.ChangeNpcState(NpcState.Interact); // 해당 Npc 상호작용 모드로 변경
-    }
+    //    wanderingTraderAIController.SetTargetTransform(_targetTransform.transform); // 상호작용하는 플레이어를 타겟으로 설정
+    //    wanderingTraderAIController.ChangeNpcState(NpcState.Interact); // 해당 Npc 상호작용 모드로 변경
+    //}
 
-    public override void ExitInteraction()
-    {
-        base.ExitInteraction();
-        wanderingTraderAIController.ChangeNpcState(NpcState.Move); // 떠돌이 상인 Npc 이동 모드로 변경
-    }
+    //public override void ExitInteraction()
+    //{
+    //    base.ExitInteraction();
+    //    wanderingTraderAIController.ChangeNpcState(NpcState.Move); // 떠돌이 상인 Npc 이동 모드로 변경
+    //}
 
     //protected override void DecideTextIndex()
     //{

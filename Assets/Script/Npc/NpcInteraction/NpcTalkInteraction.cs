@@ -18,7 +18,7 @@ public abstract class NpcTalkInteraction : MonoBehaviour, ITalkInteractable
 
     //이벤트
     public event Action<Transform> OnNpcInteraction; // 상호작용 반응이 일어났음을 알림
-    public event Action<Transform> OffNpcInteraction; // 상호작용 반응이 끝났음을 알림
+    public event Action OffNpcInteraction; // 상호작용 반응이 끝났음을 알림
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,9 +43,14 @@ public abstract class NpcTalkInteraction : MonoBehaviour, ITalkInteractable
 
         UIManager.Instance.ShowNpcTalkUI();
         UIManager.Instance.NpcTalkUI.Init(npcTalkDatas[textIndex]);
+
+        OnNpcInteraction?.Invoke(_targetTransform);
     }
 
-    public abstract void ExitInteraction();
+    public virtual void ExitInteraction()
+    {
+        OffNpcInteraction?.Invoke();
+    }
 
     protected abstract void DecideTextIndex();
 }

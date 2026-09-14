@@ -313,6 +313,11 @@ public class PlayerQuestData
         RemoveQuestRequirements(_questData);
     }
 
+    public QuestState GetQuestState(int _questID)
+    {
+        return playerQuestProgressTable[_questID].questState;
+    }
+
     ////퀘스트 요구사항 관련 함수 (게임 확성기 채널에서 띄울 목적)
     //public IReadOnlyCollection<int> GetQuestByMonsterID(int _monsterID)
     //{

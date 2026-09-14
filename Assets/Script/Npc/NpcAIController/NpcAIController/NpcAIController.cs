@@ -14,11 +14,24 @@ public abstract class NpcAIController : MonoBehaviour
 
     //private WanderingTraderNav wanderingTraderNav;
 
-    private Animator animator;
+    protected Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+    }
+
+    public abstract void ChangeNpcState(NpcState _newState);
+
+    public void NpcInteraction(Transform _transform)
+    {
+        targetTransform = _transform;
+        ChangeNpcState(NpcState.Interact);
+    }
+
+    public void NpcExitInteraction()
+    {
+        ChangeNpcState(NpcState.Idle);
     }
 }

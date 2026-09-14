@@ -1,13 +1,32 @@
+using Unity.VisualScripting;
 using UnityEngine;
+
 public class NPC : MonoBehaviour
 {
-    protected WanderingTraderAIController npcController;
+    [SerializeField]
+    protected NPCData npcData;
+
+    protected NpcAIController npcAIController;
     protected NpcTalkInteraction npcTalkInteraction;
 
     protected virtual void Awake()
     {
-        npcController = GetComponent<WanderingTraderAIController>();
+        npcAIController = GetComponent<NpcAIController>();
         npcTalkInteraction = GetComponent<NpcTalkInteraction>();
+
+        npcTalkInteraction.Init(npcData.npcTalkDatas);
+    }
+
+    protected virtual void OnEnable()
+    {
+        npcTalkInteraction.OnNpcInteraction += npcAIController.NpcInteraction;
+        npcTalkInteraction.OffNpcInteraction += npcAIController.NpcExitInteraction;
+    }
+
+    protected virtual void OnDisable()
+    {
+        npcTalkInteraction.OnNpcInteraction -= npcAIController.NpcInteraction;
+        npcTalkInteraction.OffNpcInteraction -= npcAIController.NpcExitInteraction;
     }
 
     public Transform npcTransform { get; private set; }
