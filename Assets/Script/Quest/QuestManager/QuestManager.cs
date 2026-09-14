@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public interface IQuestStateReader
+{
+    QuestState GetQuestState(int _questID);
+
+    bool CanCompleteQuest(int _questID);
+}
+
 [System.Serializable]
 public class QuestProgressDataList
 {
     public List<QuestProgressData> questProgressDatas;
 }
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : MonoBehaviour, IQuestStateReader
 {
     public static QuestManager Instance { get; private set; }
 
@@ -135,10 +142,48 @@ public class QuestManager : MonoBehaviour
         //OnQuestChangeNotify?.Invoke(QuestState.Available, _questID);
     }
 
+    //--------------------------------인터페이스 구현----------------------------
+
     public QuestState GetQuestState(int _questID)
     {
         return playerQuestData.GetQuestState(_questID);
     }
+
+    public bool CanCompleteQuest(int _questID) // 해당 퀘스트가 클리어가 가능한 상태인가 함수
+    {
+        if(GetQuestState(_questID) != QuestState.InProgress) // 진행중이 아니면 바로 return
+        {
+            return false;
+        }
+
+        QuestData questData = questDB.GetQuestData(_questID);
+
+        if(questData == null) // 해당 퀘스트 ID가 존재조차 하지 않는다면 return
+        {
+            return false;
+        }
+
+        if(!playerQuestData.PlayerQuestProgressTable.TryGetValue(_questID, out var progressTable)) // 퀘스트 진행도쪽에 퀘스트 존재하지 않으면 return
+        {
+            return false;
+        }
+
+        for(int i = 0; i < questData.requirements.Count; i++)
+        {
+            int requiredCount = questData.requirements[i].requiredCount;
+
+            int currentCount = progressTable.requirementProgresses[i].currentCount;
+
+            if(currentCount < requiredCount)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    //------------------------------------------------------------------------
 
     private void HandleMonsterDead(MonsterDeadInfo info)
     {
