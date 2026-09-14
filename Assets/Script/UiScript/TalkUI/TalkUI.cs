@@ -44,7 +44,7 @@ public class TalkUI : UIBase
 
         npcTalkData = _npcTalkData;
         npcTexts = npcTalkData.npcTexts; // 참조
-        //questID = npcData.npcQuestIDs[_questIndex];
+        questID = _npcTalkData.questID;
 
         npcName.text = npcTexts[currentIndex].npcName; // 수정예정 -> 따로 이름 변경하는 스크립트 짤까 고민중
 
