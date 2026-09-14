@@ -2,6 +2,10 @@ using BehaviorTree;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Read Me
+
+//--> 구성요소 애니메이션(상태 전환별 한번 호출용) , 행동트리(지속 호출)
+
 public enum NpcState
 {
     Idle,
@@ -41,7 +45,7 @@ public class WanderingTraderAIController : NpcAIController
         root = rootSelector;
 
         wanderingTraderNav.MoveNextNode();
-        ChangeNpcState(NpcState.Move);
+        //ChangeNpcState(NpcState.Move);
     }
 
     // Update is called once per frame
@@ -56,6 +60,29 @@ public class WanderingTraderAIController : NpcAIController
             return;
 
         npcState = _newState;
+        
+        PlayAnime(npcState);
+    }
+
+    private void PlayAnime(NpcState _newState)
+    {
+        switch(_newState)
+        {
+            case NpcState.Interact:
+                agent.isStopped = true;
+                animator.CrossFade("Interaction", 0.2f);
+                break;
+
+            case NpcState.Move:
+                agent.isStopped = false;
+                animator.CrossFade("Move", 0.2f);
+                break;
+
+            case NpcState.Idle:
+                agent.isStopped = false;
+                animator.CrossFade("Move", 0.2f);
+                break;
+        }
     }
 
     public void SetTargetTransform(Transform _targetTransform)

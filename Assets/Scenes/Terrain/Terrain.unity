@@ -17910,6 +17910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77641826da20f047b37702ff8fa8239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcData: {fileID: 11400000, guid: 0b8e10a392128fd48951d5ec8e37d0d0, type: 2}
 --- !u!114 &644708809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33778,7 +33779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: {fileID: 661775311}
   npcTalkText: {fileID: 1513638255}
-  npcTalkButtonPanel: {fileID: 0}
+  npcTalkButtonPanel: {fileID: 1010764094}
 --- !u!4 &1168900158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4071750753398162, guid: a397f10d7b785064e9d0f7b5ab603003, type: 3}

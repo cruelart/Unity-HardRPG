@@ -21,7 +21,7 @@ public class WanderingTraderInteraction : NpcTalkInteraction
 
     public override void ExitInteraction()
     {
-
+        base .ExitInteraction();
     }
 
     protected override void DecideTextIndex()
